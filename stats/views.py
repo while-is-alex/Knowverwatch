@@ -1,0 +1,9 @@
+from OWLAPI import Owl
+from django.shortcuts import render
+
+
+def index(request):
+    return render(
+        request,
+        'stats/index.html',
+    )

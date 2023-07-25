@@ -67,6 +67,12 @@ class Owl:
         except ValueError:
             return 'Player not found.'
 
+    def all_players(self):
+        data = self.summary()
+        all_players = list(data['players'].items())
+
+        return all_players
+
     def get_team_id(self, team_name):
         """Receives a team name and returns its id."""
         data = self.summary()
@@ -92,6 +98,12 @@ class Owl:
 
         except ValueError:
             return 'Team not found.'
+
+    def all_teams(self):
+        data = self.summary()
+        all_teams = list(data['teams'].items())
+
+        return all_teams
 
     def get_segment_id(self, segment_name):
         """Receives a tournament name and returns its id."""

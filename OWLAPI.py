@@ -39,6 +39,12 @@ class Owl:
 
         return summary_data
 
+    def all_players(self):
+        data = self.summary()
+        all_players = list(data['players'].items())
+
+        return all_players
+
     def get_player_id(self, player_name):
         """Receives a player name and returns their id."""
         data = self.summary()
@@ -49,7 +55,7 @@ class Owl:
             if name.lower() == player_name.lower():
                 return player[1]['id']
 
-    def players(self, player_id):
+    def get_player(self, player_id):
         """Receives a player id and returns all data about that player."""
         players_api = '/owl/v1/players/'
 
@@ -67,11 +73,11 @@ class Owl:
         except ValueError:
             return 'Player not found.'
 
-    def all_players(self):
+    def all_teams(self):
         data = self.summary()
-        all_players = list(data['players'].items())
+        all_teams = list(data['teams'].items())
 
-        return all_players
+        return all_teams
 
     def get_team_id(self, team_name):
         """Receives a team name and returns its id."""
@@ -82,7 +88,7 @@ class Owl:
             if team_name.title() in team[1]['name']:
                 return team[1]['id']
 
-    def teams(self, team_id):
+    def get_team(self, team_id):
         """Receives a team id and returns all data about that team."""
         teams_api = '/owl/v1/teams/'
 
@@ -98,12 +104,6 @@ class Owl:
 
         except ValueError:
             return 'Team not found.'
-
-    def all_teams(self):
-        data = self.summary()
-        all_teams = list(data['teams'].items())
-
-        return all_teams
 
     def get_segment_id(self, segment_name):
         """Receives a tournament name and returns its id."""

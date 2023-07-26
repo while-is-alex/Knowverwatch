@@ -20,7 +20,7 @@
     <img src="{{ team.logo }}" alt="" class="team-logo">
     <h3>Roster:</h3>
     {% for player in players %}
-        <p>{{ player.name }}</p>
+        <p><a href="{% url 'player-details-page' player.id %}">{{ player.name }}</a></p>
         <p>Given name: {{ player.givenName }} {{ player.familyName }}</p>
         <img src="{{ player.headshotUrl }}" alt="" class="player-headshot" style="background-color:{{ team.secondaryColor }};">
         <p>{{ player.role }}</p>

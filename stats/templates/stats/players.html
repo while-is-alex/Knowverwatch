@@ -21,8 +21,7 @@
     <ul>
         {% for player in players %}
             <li><img src="{{ player.1.headshotUrl }}" alt="" class="player-headshot"></li>
-            <li class="player-name">{{ player.1.name }}</li>
-            <li class="team-code">{{ team.1.code }}</li>
+            <li class="player-name"><a href="{% url 'player-details-page' player.1.id %}">{{ player.1.name }}</a></li>
             <li class="team-details"><a href="{% url 'team-details-page' player.1.currentTeam %}">Current team</a></li>
         {% endfor %}
     </ul>

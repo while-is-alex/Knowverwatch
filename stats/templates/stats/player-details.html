@@ -1,0 +1,24 @@
+{% extends 'stats/base/base.html' %}
+{% load static %}
+
+{% block title %}
+    Overwatch League Players
+{% endblock %}
+
+{% block css_styles %}
+    <link rel="stylesheet" href="{% static 'stats/styles/players.css' %}">
+{% endblock %}
+
+{% block main_heading %}
+    {{ player.name }}
+{% endblock %}
+
+{% block header_content %}
+{% endblock %}
+
+{% block body %}
+    <ul>
+        <li><img src="{{ player.headshotUrl }}" alt="" class="player-headshot"></li>
+        <li class="player-name">{{ player.name }}</li>
+    </ul>
+{% endblock %}

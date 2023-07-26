@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'stats/base/base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block title %}
+    Overwatch League
+{% endblock %}
+
+{% block css_styles %}
+    <link rel="stylesheet" href="{% static 'stats/styles/index.css' %}">
+{% endblock %}
+
+{% block main_heading %}
+    Overwatch League
+{% endblock %}
+
+{% block header_content %}
+    <p></p>
+{% endblock %}
+
+{% block body %}
+{% endblock %}

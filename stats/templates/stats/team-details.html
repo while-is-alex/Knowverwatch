@@ -1,0 +1,28 @@
+{% extends 'stats/base/base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ team.name }}
+{% endblock %}
+
+{% block css_styles %}
+    <link rel="stylesheet" href="{% static 'stats/styles/team-details.css' %}">
+{% endblock %}
+
+{% block main_heading %}
+{% endblock %}
+
+{% block header_content %}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ team.name }} ({{ team.code }})</h1>
+    <img src="{{ team.logo }}" alt="" class="team-logo">
+    <h3>Roster:</h3>
+    {% for player in players %}
+        <p>{{ player.name }}</p>
+        <p>Given name: {{ player.givenName }} {{ player.familyName }}</p>
+        <img src="{{ player.headshotUrl }}" alt="" class="player-headshot" style="background-color:{{ team.secondaryColor }};">
+        <p>{{ player.role }}</p>
+    {% endfor %}
+{% endblock %}

@@ -1,10 +1,27 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{% block title %}OWL{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'stats/styles/base.css' %}">
+    {% block css_styles %}
+    {% endblock %}
 </head>
 <body>
-
+    <header id="main-navigation">
+        <h1><a href="{% url 'home-page' %}" id="main-logo">OWL</a></h1>
+        <nav>
+            <a href="{% url 'teams-page' %}">Teams</a>
+            <a href="{% url 'players-page' %}">Players</a>
+        </nav>
+        <h1>{% block main_heading %}{% endblock %}</h1>
+        {% block header_content %}{% endblock %}
+    </header>
+    <main>
+        {% block body %}
+        {% endblock %}
+    </main>
 </body>
 </html>

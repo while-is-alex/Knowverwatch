@@ -55,6 +55,8 @@ class Owl:
             if name.lower() == player_name.lower():
                 return player[1]['id']
 
+        return 'Not found'
+
     def get_player(self, player_id):
         """Receives a player id and returns all data about that player."""
         players_api = '/owl/v1/players/'
@@ -71,7 +73,7 @@ class Owl:
             return player_data
 
         except ValueError:
-            return 'Player not found.'
+            return 'Not found'
 
     def all_teams(self):
         data = self.summary()
@@ -87,6 +89,8 @@ class Owl:
         for team in all_teams:
             if team_name.title() in team[1]['name']:
                 return team[1]['id']
+
+        return 'Not found'
 
     def get_team(self, team_id):
         """Receives a team id and returns all data about that team."""

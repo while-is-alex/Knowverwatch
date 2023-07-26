@@ -1,6 +1,8 @@
 from OWLAPI import Owl
 from django.shortcuts import render
 from django.views import View
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 
 class HomeView(View):
@@ -59,3 +61,51 @@ class PlayersView(View):
                 'players': all_players,
             }
         )
+
+
+class PlayerDetailsView(View):
+    def get(self, request, player_id):
+        owl = Owl()
+        selected_player = owl.get_player(player_id)
+
+        if selected_player == 'Not found':
+            return HttpResponseRedirect(
+                reverse(
+                    'home-page',
+                )
+            )
+
+        return render(
+            request,
+            'stats/player-details.html',
+            {
+                'player': selected_player,
+            }
+        )
+
+
+class SearchView(View):
+    def get(self, request):
+        owl = Owl()
+        search = request.GET['search']
+        team_id = owl.get_team_id(search)
+        player_id = owl.get_player_id(search)
+
+        if team_id != 'Not found':
+            print('team not found')
+
+            return HttpResponseRedirect(
+                reverse(
+                    'team-details-page',
+                    args=[team_id],
+                )
+            )
+
+        if player_id != 'Not found':
+
+            return HttpResponseRedirect(
+                reverse(
+                    'player-details-page',
+                    args=[player_id],
+                )
+            )

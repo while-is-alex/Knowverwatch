@@ -19,7 +19,7 @@ class HomeView(View):
 class TeamsView(View):
     def get(self, request):
         owl = Owl()
-        all_teams = owl.all_teams()
+        all_teams = owl.get_all_teams()
 
         return render(
             request,
@@ -34,6 +34,7 @@ class TeamDetailsView(View):
     def get(self, request, team_id):
         owl = Owl()
         selected_team = owl.get_team(team_id)
+
         roster = []
         for player in selected_team['roster']:
             current_player = owl.get_player(player)
@@ -52,7 +53,7 @@ class TeamDetailsView(View):
 class PlayersView(View):
     def get(self, request):
         owl = Owl()
-        all_players = owl.all_players()
+        all_players = owl.get_all_players()
 
         return render(
             request,
@@ -68,7 +69,8 @@ class PlayerDetailsView(View):
         owl = Owl()
         selected_player = owl.get_player(player_id)
 
-        if selected_player == 'Not found':
+        if selected_player is None:
+
             return HttpResponseRedirect(
                 reverse(
                     'home-page',
@@ -91,8 +93,7 @@ class SearchView(View):
         team_id = owl.get_team_id(search)
         player_id = owl.get_player_id(search)
 
-        if team_id != 'Not found':
-            print('team not found')
+        if team_id is not None:
 
             return HttpResponseRedirect(
                 reverse(
@@ -101,7 +102,7 @@ class SearchView(View):
                 )
             )
 
-        if player_id != 'Not found':
+        if player_id is not None:
 
             return HttpResponseRedirect(
                 reverse(

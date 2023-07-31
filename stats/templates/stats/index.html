@@ -18,11 +18,4 @@
 {% endblock %}
 
 {% block body %}
-    <div>
-        <form action="{% url 'search' %}">
-            {% csrf_token %}
-            <input type="text" placeholder="Search" name="search">
-            <button type="submit">Submit</button>
-        </form>
-    </div>
 {% endblock %}

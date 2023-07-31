@@ -9,21 +9,15 @@
     <link rel="stylesheet" href="{% static 'stats/styles/teams.css' %}">
 {% endblock %}
 
-{% block main_heading %}
-    Overwatch League Teams
-{% endblock %}
-
-{% block header_content %}
-    <p></p>
-{% endblock %}
-
 {% block body %}
-    <ul>
+    <h1 class="title">Overwatch League Teams</h1>
+    <div class="main-content">
         {% for team in teams %}
-            <li><img src="{{ team.1.logo }}" class="team-logo"></li>
-            <li class="team-name">{{ team.1.name }}</li>
-            <li class="team-code">{{ team.1.code }}</li>
-            <li class="team-details"><a href="{% url 'team-details-page' team.1.id %}">Roster</a></li>
+            <a href="{% url 'team-details-page' team.1.id %}" class="team-card">
+                <img src="{{ team.1.logo }}" class="team-logo" alt="team-logo">
+                <div class="team-name">{{ team.1.name }}</div>
+                <div class="team-code">{{ team.1.code }}</div>
+            </a>
         {% endfor %}
-    </ul>
+    </div>
 {% endblock %}

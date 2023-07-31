@@ -1,4 +1,50 @@
+.main-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: -8px 0;
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.team-card {
+  width: calc(20% - 16px); /* 100% divided by 5 (number of cards per line) minus margins */
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  text-decoration: none;
+  color: #212020;
+}
+
 .team-logo {
-    width: 10rem;
-    height: 10rem;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 5px;
+  display: block;
+  margin: 0 auto 10px;
+  object-fit: scale-down;
+}
+
+.team-name {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.team-code {
+  font-size: 14px;
+}
+
+.team-card:hover {
+  background-color: #f8f8f8;
 }

@@ -1,3 +1,85 @@
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.main-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: -8px 0;
+  padding: 20px;
+}
+
+.player-card {
+  width: calc(15% - 16px); /* 100% divided by 5 (number of cards per line) minus margins */
+  height: 250px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  text-decoration: none;
+  color: #212020;
+}
+
 .player-headshot {
-    width: 10rem;
+  width: 120px;
+  height: 120px;
+  border-radius: 5px;
+  display: block;
+  margin: 0 auto 10px;
+  object-fit: cover;
+  background-color: #fab358;
+}
+
+.player-name {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.player-role {
+  width: 35%;
+}
+
+.player-card:hover {
+  background-color: #f8f8f8;
+}
+
+.player-name a {
+  color: #212020;
+  text-decoration: none;
+}
+
+.player-name a:hover {
+  color: #625f5f;
+}
+
+.pagination {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.pagination a {
+  padding: 8px 12px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #212020;
+  margin: 0 5px;
+}
+
+.pagination .current {
+  padding: 8px 12px;
+  background-color: #fab358;
+  border: 1px solid #fab358;
+  border-radius: 5px;
+  color: #fff;
+  margin: 0 5px;
 }

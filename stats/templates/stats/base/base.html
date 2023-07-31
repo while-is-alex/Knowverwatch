@@ -6,22 +6,41 @@
     <meta charset="UTF-8">
     <title>{% block title %}OWL{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'stats/styles/base.css' %}">
+    <link rel="stylesheet" href="{% static 'stats/styles/background.css' %}">
     {% block css_styles %}
     {% endblock %}
 </head>
+
 <body>
+    <div class="background-container">
+        <div class="background-center">
+{#            <img src="{% static 'stats/images/background.png' %}" alt="background-image">#}
+        </div>
+    </div>
+
+
     <header id="main-navigation">
-        <h1><a href="{% url 'home-page' %}" id="main-logo">OWL</a></h1>
+        <a href="{% url 'home-page' %}" id="main-logo"><img src="{% static 'stats/images/owl-logo.png' %}" alt="home"></a>
         <nav>
-            <a href="{% url 'teams-page' %}">Teams</a>
-            <a href="{% url 'players-page' %}">Players</a>
+            <a href="{% url 'teams-page' %}" {% if request.path == '/teams' %}class="current"{% endif %}>Teams</a>
+            <a href="{% url 'players-page' %}" {% if request.path == '/players' %}class="current"{% endif %}>Players</a>
+            <div class="search-bar">
+                <form action="{% url 'search' %}">
+                    {% csrf_token %}
+                    <label>
+                        <input type="text" placeholder="Search" name="search">
+                    </label>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
         </nav>
-        <h1>{% block main_heading %}{% endblock %}</h1>
-        {% block header_content %}{% endblock %}
     </header>
-    <main>
-        {% block body %}
-        {% endblock %}
-    </main>
+
+    <div class="content-container">
+        <main>
+            {% block body %}
+            {% endblock %}
+        </main>
+    </div>
 </body>
 </html>

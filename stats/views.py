@@ -74,7 +74,9 @@ class PlayerDetailsView(View):
     def get(self, request, player_id):
         owl = Owl()
         selected_player = owl.get_player(player_id)
-        team = owl.get_team(selected_player['teams'][0]['id'])
+        team = owl.get_team(selected_player['teams'][-1]['id'])
+        if team is None:
+            team = owl.get_team(selected_player['teams'][0]['id'])
 
         if selected_player is None:
 

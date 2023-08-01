@@ -58,13 +58,13 @@ class PlayersView(View):
 
         paginator = Paginator(all_players, 20)
         page_number = request.GET.get('page')
-        page_object = paginator.get_page(page_number)
+        page_obj = paginator.get_page(page_number)
 
         return render(
             request,
             'stats/players.html',
             {
-                'players': page_object,
+                'page_obj': page_obj,
                 'request': request,
                 'teams': all_teams,
             }

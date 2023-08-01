@@ -12,7 +12,7 @@
 {% block body %}
     <h1 class="title">Overwatch League Players</h1>
     <div class="main-content">
-        {% for player in players %}
+        {% for player in page_obj %}
             <a href="{% url 'player-details-page' player.1.id %}" class="player-card">
                 <img src="{{ player.1.headshotUrl }}" alt="" class="player-headshot">
                 <div class="player-name">{{ player.1.name }}</div>

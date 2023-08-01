@@ -25,7 +25,7 @@
   color: #212020;
   position: relative;
   overflow: hidden; /* Hide overflow to make the image and role icon fit inside the card */
-  border: 7px solid #383838;
+  border: 7px solid #151515;
 }
 
 .player-name {

@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f5f5f5;
+    font-family: 'Barlow', sans-serif;
 }
 
 header#main-navigation {
@@ -10,6 +11,7 @@ header#main-navigation {
     align-items: center;
     justify-content: space-between;
     padding: 12px 10px 10px;
+    font-family: 'Barlow', sans-serif;
 }
 
 #main-logo img {
@@ -20,12 +22,14 @@ header#main-navigation {
 nav {
     display: flex;
     align-items: center;
+    font-family: 'Barlow', sans-serif;
 }
 
 nav a {
     text-decoration: none;
     color: #000;
     margin-left: 20px;
+    font-family: 'Barlow', sans-serif;
 }
 
 nav a.current {
@@ -37,17 +41,20 @@ nav a.current {
     margin-left: 20px;
     display: flex;
     align-items: center;
+    font-family: 'Barlow', sans-serif;
 }
 
 .search-bar form {
     display: flex;
     align-items: center;
+    font-family: 'Barlow', sans-serif;
 }
 
 .search-bar input[type="text"] {
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-family: 'Barlow', sans-serif;
 }
 
 .search-bar button {
@@ -58,4 +65,5 @@ nav a.current {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-family: 'Barlow', sans-serif;
 }

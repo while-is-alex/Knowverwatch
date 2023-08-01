@@ -15,7 +15,7 @@
         {% for team in teams %}
             <a href="{% url 'team-details-page' team.1.id %}" class="team-card">
                 <img src="{{ team.1.logo }}" class="team-logo" alt="team-logo">
-                <div class="team-name">{{ team.1.name }}</div>
+                <div class="team-name">{{ team.1.name|upper }}</div>
                 <div class="team-code">{{ team.1.code }}</div>
             </a>
         {% endfor %}

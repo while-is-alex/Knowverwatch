@@ -12,10 +12,11 @@
 {% block body %}
     <h1 class="title">Overwatch League Players</h1>
     <div class="main-content">
-        {% for player in page_obj %}
+        {% for player in players %}
             <a href="{% url 'player-details-page' player.1.id %}" class="player-card">
                 <img src="{{ player.1.headshotUrl }}" alt="" class="player-headshot">
                 <div class="player-name">{{ player.1.name }}</div>
+
                 {% if player.1.role == 'offense' %}
                     <img src="https://static.wikia.nocookie.net/overwatch/images/1/14/OffenseIcon.png/revision/latest?cb=20160625040759" class="player-role" alt="DPS-role">
                 {% elif player.1.role == 'support' %}
@@ -23,6 +24,15 @@
                 {% elif player.1.role == 'tank' %}
                     <img src="https://static.wikia.nocookie.net/overwatch/images/6/69/TankIcon.png/revision/latest?cb=20160625041805" class="player-role" alt="tank-role">
                 {% endif %}
+
+                <p><strong>First name:</strong> {{ player.1.givenName }}</p>
+                <p><strong>Last name:</strong> {{ player.1.familyName }}</p>
+
+                {% for team in teams %}
+                    {% if player.1.currentTeam == team.1.id %}
+                        <img src="{{ team.1.icon }}" alt="team-icon" class="team-icon">
+                    {% endif %}
+                {% endfor %}
             </a>
         {% endfor %}
     </div>

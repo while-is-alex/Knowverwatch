@@ -5,10 +5,11 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.core.paginator import Paginator
 
+owl = Owl()
+
 
 class HomeView(View):
     def get(self, request):
-        owl = Owl()
 
         return render(
             request,
@@ -18,7 +19,6 @@ class HomeView(View):
 
 class TeamsView(View):
     def get(self, request):
-        owl = Owl()
         all_teams = owl.get_all_teams()
 
         return render(
@@ -33,7 +33,6 @@ class TeamsView(View):
 
 class TeamDetailsView(View):
     def get(self, request, team_id):
-        owl = Owl()
         selected_team = owl.get_team(team_id)
 
         roster = []
@@ -54,27 +53,29 @@ class TeamDetailsView(View):
 
 class PlayersView(View):
     def get(self, request):
-        owl = Owl()
+        all_teams = owl.get_all_teams()
         all_players = owl.get_all_players()
-        paginator = Paginator(all_players, 18)
+
+        paginator = Paginator(all_players, 20)
         page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
+        page_object = paginator.get_page(page_number)
 
         return render(
             request,
             'stats/players.html',
             {
-                'page_obj': page_obj,
+                'players': page_object,
                 'request': request,
+                'teams': all_teams,
             }
         )
 
 
 class PlayerDetailsView(View):
     def get(self, request, player_id):
-        owl = Owl()
         selected_player = owl.get_player(player_id)
         team = owl.get_team(selected_player['teams'][-1]['id'])
+
         if team is None:
             team = owl.get_team(selected_player['teams'][0]['id'])
 
@@ -100,18 +101,9 @@ class PlayerDetailsView(View):
 class SearchView(View):
     def get(self, request):
         search = request.GET['search']
-        owl = Owl()
-        team_id = owl.get_team_id(search)
+
         player_id = owl.get_player_id(search)
-
-        if team_id is not None:
-
-            return HttpResponseRedirect(
-                reverse(
-                    'team-details-page',
-                    args=[team_id],
-                )
-            )
+        team_id = owl.get_team_id(search)
 
         if player_id is not None:
 
@@ -119,5 +111,14 @@ class SearchView(View):
                 reverse(
                     'player-details-page',
                     args=[player_id],
+                )
+            )
+
+        if team_id is not None:
+
+            return HttpResponseRedirect(
+                reverse(
+                    'team-details-page',
+                    args=[team_id],
                 )
             )

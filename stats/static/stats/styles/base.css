@@ -11,7 +11,6 @@ header#main-navigation {
     align-items: center;
     justify-content: space-between;
     padding: 12px 10px 10px;
-    font-family: 'Barlow', sans-serif;
 }
 
 #main-logo img {
@@ -30,11 +29,14 @@ nav a {
     color: #000;
     margin-left: 20px;
     font-family: 'Barlow', sans-serif;
+    font-weight: bold;
 }
 
 nav a.current {
     color: #fe9f2b;
     font-weight: bold;
+    font-family: 'Barlow', sans-serif;
+    /*font-size: 1.1rem;*/
 }
 
 .search-bar {

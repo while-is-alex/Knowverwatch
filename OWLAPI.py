@@ -150,19 +150,24 @@ class Owl:
 
             return None
 
-    def get_match_id(self, team_1_name, team_2_name):
-        """Receives 2 team names and returns the ids for all matches in between those teams."""
-        t1 = self.get_team_id(team_1_name)
-        t2 = self.get_team_id(team_2_name)
+    def get_match_id(self, team_1_name, team_2_name=None):
+        """Receives at least 1 team name (up to 2)
+        and returns the ids for all matches in between those teams."""
+        t1 = str(self.get_team_id(team_1_name))
+        searched_teams = {t1}
+
+        if team_2_name is not None:
+            t2 = str(self.get_team_id(team_2_name))
+            searched_teams = {t1, t2}
 
         summary_data = self.summary()
 
         matches_list = []
-        matches = summary_data['matches'].items()
+        matches = list(summary_data['matches'].items())
         for match in matches:
             teams = list(match[1]['teams'].keys())
 
-            if {t1, t2}.issubset(teams):
+            if searched_teams.issubset(teams):
                 matches_list.append(match[1]['id'])
 
         return matches_list

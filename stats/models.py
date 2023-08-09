@@ -11,6 +11,15 @@ class Team(models.Model):
     )
     name = models.CharField(max_length=250)
     code = models.CharField(max_length=4)
+    region = models.CharField(
+        max_length=200,
+        null=True,
+        choices=[
+            ('W', 'west'),
+            ('E', 'east'),
+            ('C', 'contenders'),
+        ]
+    )
     logo = models.URLField()
     icon = models.URLField()
     primary_color = models.CharField(

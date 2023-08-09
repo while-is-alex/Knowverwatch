@@ -4,6 +4,7 @@ from django.views import View
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.core.paginator import Paginator
+from .models import Team, Player, Segment, Match
 
 owl = Owl()
 

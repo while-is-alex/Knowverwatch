@@ -98,8 +98,8 @@ class Segment(models.Model):
     teams = models.JSONField(null=True)
     players = models.JSONField(null=True)
     standings = models.JSONField(null=True)
-    first_match = models.DateTimeField()
-    last_match = models.DateTimeField()
+    first_match = models.DateTimeField(null=True)
+    last_match = models.DateTimeField(null=True)
     slug = models.SlugField(
         default='',
         blank=True,
@@ -150,3 +150,6 @@ class Match(models.Model):
 
     def get_absolute_url(self):
         return reverse('match-details-page', args=[self.slug])
+
+    class Meta:
+        verbose_name_plural = 'Matches'

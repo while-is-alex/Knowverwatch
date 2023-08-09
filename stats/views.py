@@ -91,31 +91,33 @@ class SearchView(View):
     def get(self, request):
         search = request.GET['search']
 
-        try:
-            team = Team.objects.get(name__icontains=search)
-        except Team.DoesNotExist:
-            team = None
+        all_players = Player.objects.all()
+        player_found = None
+        for player in all_players:
+            if search.lower() in player.name.lower().split():
+                player_found = player
 
-        if team is not None:
-            print('team found')
-            return HttpResponseRedirect(
-                reverse(
-                    'team-details-page',
-                    args=[team.slug]
-                )
-            )
+        if player_found is not None:
 
-        try:
-            player = Player.objects.get(name__icontains=search)
-        except Player.DoesNotExist:
-            player = None
-
-        if player is not None:
-            print('player found')
             return HttpResponseRedirect(
                 reverse(
                     'player-details-page',
-                    args=[player.slug]
+                    args=[player_found.slug]
+                )
+            )
+
+        all_teams = Team.objects.all()
+        team_found = None
+        for team in all_teams:
+            if search.lower() in team.name.lower().split():
+                team_found = team
+
+        if team_found is not None:
+
+            return HttpResponseRedirect(
+                reverse(
+                    'team-details-page',
+                    args=[team_found.slug]
                 )
             )
 

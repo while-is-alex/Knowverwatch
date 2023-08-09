@@ -20,26 +20,23 @@ class HomeView(View):
 
 class TeamsView(View):
     def get(self, request):
-        all_teams = owl.get_all_teams()
+        all_teams = Team.objects.all().order_by('name')
 
         return render(
             request,
             'stats/teams.html',
             {
                 'teams': all_teams,
-                'request': request,
             }
         )
 
 
 class TeamDetailsView(View):
-    def get(self, request, team_id):
-        selected_team = owl.get_team(team_id)
-
+    def get(self, request, slug):
+        selected_team = Team.objects.get(slug=slug)
         roster = []
-        for player in selected_team['roster']:
-            current_player = owl.get_player(player)
-            roster.append(current_player)
+        for player in selected_team.players.all().order_by('role'):
+            roster.append(player)
 
         return render(
             request,
@@ -47,15 +44,13 @@ class TeamDetailsView(View):
             {
                 'team': selected_team,
                 'players': roster,
-                'request': request,
             }
         )
 
 
 class PlayersView(View):
     def get(self, request):
-        all_teams = owl.get_all_teams()
-        all_players = owl.get_all_players()
+        all_players = Player.objects.all().order_by('name')
 
         paginator = Paginator(all_players, 20)
         page_number = request.GET.get('page')
@@ -67,18 +62,13 @@ class PlayersView(View):
             {
                 'page_obj': page_obj,
                 'request': request,
-                'teams': all_teams,
             }
         )
 
 
 class PlayerDetailsView(View):
-    def get(self, request, player_id):
-        selected_player = owl.get_player(player_id)
-        team = owl.get_team(selected_player['teams'][-1]['id'])
-
-        if team is None:
-            team = owl.get_team(selected_player['teams'][0]['id'])
+    def get(self, request, slug):
+        selected_player = Player.objects.get(slug=slug)
 
         if selected_player is None:
 
@@ -93,8 +83,6 @@ class PlayerDetailsView(View):
             'stats/player-details.html',
             {
                 'player': selected_player,
-                'team': team,
-                'request': request,
             }
         )
 
@@ -103,23 +91,35 @@ class SearchView(View):
     def get(self, request):
         search = request.GET['search']
 
-        player_id = owl.get_player_id(search)
-        team_id = owl.get_team_id(search)
+        try:
+            team = Team.objects.get(name__icontains=search)
+        except Team.DoesNotExist:
+            team = None
 
-        if player_id is not None:
-
-            return HttpResponseRedirect(
-                reverse(
-                    'player-details-page',
-                    args=[player_id],
-                )
-            )
-
-        if team_id is not None:
-
+        if team is not None:
+            print('team found')
             return HttpResponseRedirect(
                 reverse(
                     'team-details-page',
-                    args=[team_id],
+                    args=[team.slug]
                 )
             )
+
+        try:
+            player = Player.objects.get(name__icontains=search)
+        except Player.DoesNotExist:
+            player = None
+
+        if player is not None:
+            print('player found')
+            return HttpResponseRedirect(
+                reverse(
+                    'player-details-page',
+                    args=[player.slug]
+                )
+            )
+
+        return render(
+            request,
+            'stats/index.html',
+        )

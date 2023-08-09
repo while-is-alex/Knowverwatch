@@ -24,10 +24,12 @@ class Team(models.Model):
     icon = models.URLField()
     primary_color = models.CharField(
         null=True,
-        max_length=1
+        blank=True,
+        max_length=100,
     )
     secondary_color = models.CharField(
         null=True,
+        blank=True,
         max_length=100,
     )
     slug = models.SlugField(

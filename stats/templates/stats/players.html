@@ -13,26 +13,24 @@
     <h1 class="title">Overwatch League Players</h1>
     <div class="main-content">
         {% for player in page_obj %}
-            <a href="{% url 'player-details-page' player.1.id %}" class="player-card">
-                <img src="{{ player.1.headshotUrl }}" alt="" class="player-headshot">
-                <div class="player-name">{{ player.1.name }}</div>
+            <a href="{{ player.get_absolute_url }}" class="player-card grow" style="background-color: {{ player.team.primary_color }}; border: 7px solid {{ player.team.secondary_color }};">
+                <img src="{{ player.headshot_url }}" alt="" class="player-headshot">
+                <div class="player-name" style="color: {{ player.team.secondary_color }}">{{ player.name }}</div>
 
-                {% if player.1.role == 'offense' %}
-                    <img src="https://static.wikia.nocookie.net/overwatch/images/1/14/OffenseIcon.png/revision/latest?cb=20160625040759" class="player-role" alt="DPS-role">
-                {% elif player.1.role == 'support' %}
-                    <img src="https://static.wikia.nocookie.net/overwatch/images/5/5f/SupportIcon.png/revision/latest?cb=20160625042024" class="player-role" alt="support-role">
-                {% elif player.1.role == 'tank' %}
-                    <img src="https://static.wikia.nocookie.net/overwatch/images/6/69/TankIcon.png/revision/latest?cb=20160625041805" class="player-role" alt="tank-role">
+                {% if player.role == 'DPS' %}
+                    <img src="https://static.wikia.nocookie.net/overwatch/images/1/14/OffenseIcon.png/revision/latest?cb=20160625040759" class="player-role" alt="DPS-role" style="background-color: {{ player.team.secondary_color }}">
+                {% elif player.role == 'SUPPORT' %}
+                    <img src="https://static.wikia.nocookie.net/overwatch/images/5/5f/SupportIcon.png/revision/latest?cb=20160625042024" class="player-role" alt="support-role" style="background-color: {{ player.team.secondary_color }}">
+                {% elif player.role == 'TANK' %}
+                    <img src="https://static.wikia.nocookie.net/overwatch/images/6/69/TankIcon.png/revision/latest?cb=20160625041805" class="player-role" alt="tank-role" style="background-color: {{ player.team.secondary_color }}">
                 {% endif %}
 
-                <p><strong>First name:</strong> {{ player.1.givenName }}</p>
-                <p><strong>Last name:</strong> {{ player.1.familyName }}</p>
+                <p style="color: {{ player.team.secondary_color }}"><strong>First name:</strong> {{ player.first_name }}</p>
+                <p style="color: {{ player.team.secondary_color }}"><strong>Last name:</strong> {{ player.last_name }}</p>
 
-                {% for team in teams %}
-                    {% if player.1.currentTeam == team.1.id %}
-                        <img src="{{ team.1.icon }}" alt="team-icon" class="team-icon">
-                    {% endif %}
-                {% endfor %}
+                {% if player.team %}
+                    <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon" style="border: 3px solid {{ player.team.secondary_color }};">
+                {% endif %}
             </a>
         {% endfor %}
     </div>

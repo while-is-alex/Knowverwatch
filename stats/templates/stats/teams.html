@@ -13,10 +13,10 @@
     <h1 class="title">Overwatch League Teams</h1>
     <div class="main-content">
         {% for team in teams %}
-            <a href="{% url 'team-details-page' team.1.id %}" class="team-card">
-                <img src="{{ team.1.logo }}" class="team-logo" alt="team-logo">
-                <div class="team-name">{{ team.1.name|upper }}</div>
-                <div class="team-code">{{ team.1.code }}</div>
+            <a href="{{ team.get_absolute_url }}" class="team-card">
+                <img src="{{ team.logo }}" class="team-logo" alt="team-logo">
+                <div class="team-name">{{ team.name|upper }}</div>
+                <div class="team-code">{{ team.code }}</div>
             </a>
         {% endfor %}
     </div>

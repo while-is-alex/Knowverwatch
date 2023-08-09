@@ -5,7 +5,10 @@ from django.urls import reverse
 
 class Team(models.Model):
     id = models.IntegerField(primary_key=True)
-    alternate_id = models.IntegerField(null=True)
+    alternate_id = models.IntegerField(
+        null=True,
+        blank=True,
+    )
     name = models.CharField(max_length=250)
     code = models.CharField(max_length=4)
     logo = models.URLField()
@@ -38,12 +41,24 @@ class Team(models.Model):
 
 class Player(models.Model):
     id = models.IntegerField(primary_key=True)
-    alternate_id = models.IntegerField()
-    headshot_url = models.URLField()
+    alternate_id = models.IntegerField(
+        null=True,
+        blank=True,
+    )
+    headshot_url = models.URLField(null=True)
     name = models.CharField(max_length=250)
-    first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
-    role = models.CharField(max_length=100)
+    first_name = models.CharField(
+        max_length=200,
+        null=True,
+    )
+    last_name = models.CharField(
+        max_length=200,
+        null=True,
+    )
+    role = models.CharField(
+        max_length=100,
+        null=True
+    )
     team = models.ForeignKey(
         Team,
         on_delete=models.SET_NULL,
@@ -80,9 +95,9 @@ class Segment(models.Model):
     )
     name = models.CharField(max_length=300)
     season = models.IntegerField()
-    teams = models.IntegerField(null=True)
+    teams = models.JSONField(null=True)
     players = models.JSONField(null=True)
-    standings = models.JSONField()
+    standings = models.JSONField(null=True)
     first_match = models.DateTimeField()
     last_match = models.DateTimeField()
     slug = models.SlugField(

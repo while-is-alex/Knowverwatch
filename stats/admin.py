@@ -6,6 +6,10 @@ class TeamAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'code',
+        'region',
+    )
+    list_filter = (
+        'region',
     )
     prepopulated_fields = {
         'slug': (
@@ -17,16 +21,18 @@ class TeamAdmin(admin.ModelAdmin):
 class PlayerAdmin(admin.ModelAdmin):
     list_display = (
         'name',
+        'role',
         'team',
+    )
+    list_filter = (
+        'team',
+        'role',
     )
     prepopulated_fields = {
         'slug': (
             'name',
         )
     }
-    list_filter = (
-        'team',
-    )
 
 
 class SegmentAdmin(admin.ModelAdmin):
@@ -34,14 +40,14 @@ class SegmentAdmin(admin.ModelAdmin):
         'name',
         'season',
     )
+    list_filter = (
+        'season',
+    )
     prepopulated_fields = {
         'slug': (
             'name',
         )
     }
-    list_filter = (
-        'season',
-    )
 
 
 class MatchAdmin(admin.ModelAdmin):
@@ -50,15 +56,15 @@ class MatchAdmin(admin.ModelAdmin):
         'segment',
         'season',
     )
+    list_filter = (
+        'segment',
+        'season',
+    )
     prepopulated_fields = {
         'slug': (
             'id',
         )
     }
-    list_filter = (
-        'segment',
-        'season',
-    )
 
 
 admin.site.register(Team, TeamAdmin)

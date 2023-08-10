@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.core.paginator import Paginator
 from .models import Team, Player, Segment, Match
+from datetime import datetime
 
 owl = Owl()
 
@@ -33,17 +34,24 @@ class TeamsView(View):
 
 class TeamDetailsView(View):
     def get(self, request, slug):
+        all_teams = Team.objects.all()
         selected_team = Team.objects.get(slug=slug)
+
         roster = []
         for player in selected_team.players.all().order_by('role'):
             roster.append(player)
+
+        # Fetches the most recent 5 matches for that team
+        matches = Match.objects.filter(teams__has_key=selected_team.id).order_by('date').filter(date__year=2023)[::-1]
 
         return render(
             request,
             'stats/team-details.html',
             {
+                'all_teams': all_teams,
                 'team': selected_team,
                 'players': roster,
+                'matches': matches[:5],
             }
         )
 

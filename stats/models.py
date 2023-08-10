@@ -144,7 +144,7 @@ class Match(models.Model):
     games = models.JSONField()
     players = models.JSONField()
     winner_id = models.IntegerField(null=True)
-    match_url = models.URLField()
+    match_url = models.URLField(null=True)
     slug = models.SlugField(
         default='',
         blank=True,

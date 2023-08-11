@@ -7,5 +7,6 @@ urlpatterns = [
     path('teams/<slug:slug>', views.TeamDetailsView.as_view(), name='team-details-page'),
     path('players', views.PlayersView.as_view(), name='players-page'),
     path('players/<slug:slug>', views.PlayerDetailsView.as_view(), name='player-details-page'),
-    path('find/', views.SearchView.as_view(), name='search')
+    path('matches/<slug:slug>', views.MatchDetailsView.as_view(), name='match-details-page'),
+    path('find/', views.SearchView.as_view(), name='search'),
 ]

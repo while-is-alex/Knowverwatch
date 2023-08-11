@@ -43,6 +43,18 @@ class TeamDetailsView(View):
 
         # Fetches the most recent 5 matches for that team
         matches = Match.objects.filter(teams__has_key=selected_team.id).order_by('date').filter(date__year=2023)[::-1]
+        matches_list = []
+        for match in matches[:5]:
+            match_details = {}
+            team_one = list(match.teams.items())[0][1]
+            team_two = list(match.teams.items())[1][1]
+            match_details['home'] = team_one
+            match_details['away'] = team_two
+            match_details['date'] = match.date
+            match_details['slug'] = match.slug
+            matches_list.append(match_details)
+            print(match_details['home'])
+            print(match_details['away'])
 
         return render(
             request,
@@ -51,7 +63,7 @@ class TeamDetailsView(View):
                 'all_teams': all_teams,
                 'team': selected_team,
                 'players': roster,
-                'matches': matches[:5],
+                'matches': matches_list,
             }
         )
 
@@ -91,6 +103,19 @@ class PlayerDetailsView(View):
             'stats/player-details.html',
             {
                 'player': selected_player,
+            }
+        )
+
+
+class MatchDetailsView(View):
+    def get(self, request, slug):
+        selected_match = Match.objects.get(slug=slug)
+
+        return render(
+            request,
+            'stats/match-details.html',
+            {
+                'match': selected_match,
             }
         )
 

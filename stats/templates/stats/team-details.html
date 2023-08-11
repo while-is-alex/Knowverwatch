@@ -35,7 +35,8 @@
     <div class="main-content">
         <h1 class="team-name">{{ team.name }} ({{ team.code }})</h1>
         <img src="{{ team.logo }}" alt="" class="team-logo">
-        <h3>Roster:</h3>
+
+        <h2>Roster:</h2>
         <div class="roster">
             {% for player in players %}
                 <a href="{{ player.get_absolute_url }}" class="player-card grow">
@@ -52,6 +53,50 @@
 
                     <p><strong>First name:</strong> {{ player.first_name }}</p>
                     <p><strong>Last name:</strong> {{ player.last_name }}</p>
+                </a>
+            {% endfor %}
+        </div>
+
+        <h2 style="margin-top: 30px;">Latest matches:</h2>
+        <div class="matches">
+            {% for match in matches %}
+                <p class="match-date">{{ match.date.day }}/{{ match.date.month }}/{{ match.date.year }}</p>
+                <a href="{% url 'match-details-page' match.slug %}" class="match-card grow" style="text-decoration: none;">
+                    {% for current_team in all_teams %}
+                        {% if current_team.id == match.home.id %}
+                            {% if current_team.primary_color %}
+                                <div class="home-team" style="background-color: {{ current_team.primary_color }}; color: {{ current_team.secondary_color }};">
+                            {% else %}
+                                <div class="home-team" style="background-color: {{ current_team.primary_color }}; color: black;">
+                            {% endif %}
+                                <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon"/>
+                                <p class="home-team-name">{{ current_team.name }}</p>
+                                {% if match.home.score %}
+                                    <p class="home-team-score">{{ match.home.score }}</p>
+                                {% else %}
+                                    <p class="home-team-score">0</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% for current_team in all_teams %}
+                        {% if current_team.id == match.away.id %}
+                            {% if current_team.primary_color %}
+                                <div class="away-team" style="background-color: {{ current_team.primary_color }}; color: {{ current_team.secondary_color }};">
+                            {% else %}
+                                <div class="away-team" style="background-color: {{ current_team.primary_color }}; color: black;">
+                            {% endif %}
+                                {% if match.away.score %}
+                                    <p class="home-team-score">{{ match.away.score }}</p>
+                                {% else %}
+                                    <p class="home-team-score">0</p>
+                                {% endif %}
+                                <p class="away-team-name">{{ current_team.name }}</p>
+                                <img src="{{ current_team.icon }}" alt="" class="away-team-icon"/>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </a>
             {% endfor %}
         </div>

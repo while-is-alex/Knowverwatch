@@ -29,7 +29,25 @@
                 <p style="color: {{ player.team.secondary_color }}"><strong>Last name:</strong> {{ player.last_name }}</p>
 
                 {% if player.team %}
-                    <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon" style="border: 3px solid {{ player.team.secondary_color }};">
+                    {% if player.team.name == 'Boston Uprising' %}
+                        <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon boston-filter">
+                    {% elif player.team.name == 'Hangzhou Spark' %}
+                        <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon hangzhou-filter">
+                    {% elif player.team.name == 'Houston Outlaws' %}
+                        <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon houston-filter">
+                    {% elif player.team.name == 'Shanghai Dragons' %}
+                        <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon shanghai-filter">
+                    {% elif player.team.name == 'New York Excelsior' %}
+                        <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon new-york-filter">
+                    {% elif player.team.name == 'Toronto Defiant' %}
+                        <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon toronto-filter">
+                    {% elif player.team.name == 'Twisted Minds' %}
+                        <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon twisted-filter">
+                    {% elif player.team.name == 'WISP' %}
+                        <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon wisp-filter">
+                    {% else %}
+                        <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon">
+                    {% endif %}
                 {% endif %}
             </a>
         {% endfor %}

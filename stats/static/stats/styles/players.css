@@ -16,8 +16,7 @@
 .player-card {
   width: 200px;
   height: 300px;
-  background-color: #8f8f8f;
-  /*background: linear-gradient(to left top, #838487, #8A8B8F, #AFB0B3, #A8A9AD, #A1A2A5, #929396);*/
+  background-color: #d7d5d5;
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
@@ -43,7 +42,7 @@
   height: 15px;
   padding: 3px;
   border-radius: 50%;
-  background-color: #fa8b20;
+  background-color: #3f3d3c;
   border: 1px solid #000;
   position: absolute;
   bottom: 10px;
@@ -75,14 +74,14 @@
 }
 
 .team-icon {
-  width: 30px;
-  height: 30px;
+  width: 45px;
+  height: 45px;
   position: absolute;
   bottom: 20px;
   transform: translateX(-50%);
-  background-color: #efefef;
-  border: 3px solid #151515;
-  padding: 3px;
+  /*padding: 3px;*/
+  object-fit: contain;
+  /*display: block;*/
 }
 
 .pagination {
@@ -116,4 +115,36 @@ transition: all .2s ease-in-out;
 
 .grow:hover {
 transform: scale(1.1);
+}
+
+.boston-filter {
+  filter: invert(82%) sepia(82%) saturate(450%) hue-rotate(370deg) brightness(120%) contrast(98%);
+}
+
+.hangzhou-filter {
+  filter: invert(51%) sepia(10%) saturate(2889%) hue-rotate(175deg) brightness(102%) contrast(70%);
+}
+
+.houston-filter {
+  filter: contrast(60%);
+}
+
+.new-york-filter {
+  filter: invert(72%) sepia(6%) saturate(128%) hue-rotate(169deg) brightness(104%) contrast(96%);
+}
+
+.shanghai-filter {
+  filter: contrast(140%);
+}
+
+.toronto-filter {
+  filter: invert(24%) sepia(99%) saturate(3644%) hue-rotate(337deg) brightness(72%) contrast(115%);
+}
+
+.twisted-filter {
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(79deg) brightness(202%) contrast(102%);
+}
+
+.wisp-filter {
+  filter: invert(9%) sepia(6%) saturate(0%) hue-rotate(22deg) brightness(15%) contrast(84%);
 }

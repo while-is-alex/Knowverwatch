@@ -21,7 +21,16 @@ class HomeView(View):
 
 class TeamsView(View):
     def get(self, request):
-        all_teams = Team.objects.all().order_by('name')
+        try:
+            if request.GET['regions'] == 'all':
+                all_teams = Team.objects.all().order_by('name')
+            else:
+                selected_region = request.GET['regions']
+                print(selected_region)
+                teams_in_region = Team.objects.filter(region=selected_region).order_by('name')
+                all_teams = teams_in_region
+        except KeyError:
+            all_teams = Team.objects.all().order_by('name')
 
         return render(
             request,
@@ -37,9 +46,26 @@ class TeamDetailsView(View):
         all_teams = Team.objects.all()
         selected_team = Team.objects.get(slug=slug)
 
+        # Sorts the players by role and finds their top 3 most played heroes
         roster = []
         for player in selected_team.players.all().order_by('role'):
-            roster.append(player)
+
+            heroes_played = []
+            for hero in player.heroes.keys():
+                hero_details = {}
+                try:
+                    time_played = int(player.heroes[hero]['timePlayed'])
+                except KeyError:
+                    time_played = 0
+
+                hero_details['name'] = hero
+                hero_details['time_played'] = time_played
+
+                heroes_played.append(hero_details)
+
+            top3_heroes_by_time_played = sorted(heroes_played, key=lambda x: x['time_played'], reverse=True)[:3]
+
+            roster.append((player, top3_heroes_by_time_played))
 
         # Fetches the most recent 5 matches for that team
         matches = Match.objects.filter(teams__has_key=selected_team.id).order_by('date').filter(date__year=2023)[::-1]
@@ -53,8 +79,6 @@ class TeamDetailsView(View):
             match_details['date'] = match.date
             match_details['slug'] = match.slug
             matches_list.append(match_details)
-            print(match_details['home'])
-            print(match_details['away'])
 
         return render(
             request,

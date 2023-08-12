@@ -11,6 +11,16 @@
 
 {% block body %}
     <h1 class="title">Overwatch League Teams</h1>
+    <form action="{% url 'teams-page' %}" method="GET" class="select-region" id="region-form">
+        <label for="regions">Regions:</label>
+        <select name="regions" id="regions">
+            <option></option>
+            <option value="all" name="all">All</option>
+            <option value="W" name="west">West</option>
+            <option value="E" name="east">East</option>
+            <option value="C" name="contenders">Contenders</option>
+        </select>
+    </form>
     <div class="main-content">
         {% for team in teams %}
             <a href="{{ team.get_absolute_url }}" class="team-card">
@@ -20,4 +30,10 @@
             </a>
         {% endfor %}
     </div>
+
+    <script>
+        document.getElementById('regions').addEventListener('change', function() {
+            document.getElementById('region-form').submit();
+        });
+    </script>
 {% endblock %}

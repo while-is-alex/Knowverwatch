@@ -45,6 +45,8 @@ class TeamDetailsView(View):
     def get(self, request, slug):
         all_teams = Team.objects.all()
         selected_team = Team.objects.get(slug=slug)
+        see_spoilers = request.session.get('see_spoilers')
+        print(see_spoilers)
 
         # Sorts the players by role and finds their top 3 most played heroes
         roster = []
@@ -88,6 +90,7 @@ class TeamDetailsView(View):
                 'team': selected_team,
                 'players': roster,
                 'matches': matches_list,
+                'see_spoilers': see_spoilers,
             }
         )
 
@@ -113,6 +116,12 @@ class PlayersView(View):
 class PlayerDetailsView(View):
     def get(self, request, slug):
         selected_player = Player.objects.get(slug=slug)
+
+        heroes_played = list(selected_player.heroes)
+        for hero in heroes_played:
+            hero_name = hero
+            print(hero_name)
+            print(f'{selected_player.heroes[hero_name]}\n\n')
 
         if selected_player is None:
 
@@ -181,4 +190,22 @@ class SearchView(View):
         return render(
             request,
             'stats/index.html',
+        )
+
+
+class SeeSpoilersView(View):
+    def get(self, request, slug):
+        if request.session.get('see_spoilers') is None:
+            see_spoilers = False
+        else:
+            # if it's true, it turns into false, and vice-versa
+            see_spoilers = not request.session.get('see_spoilers')
+
+        request.session['see_spoilers'] = see_spoilers
+
+        return HttpResponseRedirect(
+            reverse(
+                'team-details-page',
+                args=[slug],
+            )
         )

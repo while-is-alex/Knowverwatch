@@ -9,4 +9,5 @@ urlpatterns = [
     path('players/<slug:slug>', views.PlayerDetailsView.as_view(), name='player-details-page'),
     path('matches/<slug:slug>', views.MatchDetailsView.as_view(), name='match-details-page'),
     path('find/', views.SearchView.as_view(), name='search'),
+    path('spoilers/<slug:slug>', views.SeeSpoilersView.as_view(), name='see-spoilers'),
 ]

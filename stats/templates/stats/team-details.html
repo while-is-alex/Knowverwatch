@@ -54,8 +54,8 @@
                         <img src="https://static.wikia.nocookie.net/overwatch/images/6/69/TankIcon.png/revision/latest?cb=20160625041805" class="player-role" alt="tank-role">
                     {% endif %}
 
-                    <p><strong>First name:</strong> {{ player.0.first_name }}</p>
-                    <p><strong>Last name:</strong> {{ player.0.last_name }}</p>
+                    <p class="player-first-name"><strong>First name:</strong> {{ player.0.first_name }}</p>
+                    <p class="player-last-name"><strong>Last name:</strong> {{ player.0.last_name }}</p>
 
                     {% for hero in player.1 %}
                         {% with 'stats/images/heroes/'|add:hero.name|add:'.png' as path_to_hero_headshot %}

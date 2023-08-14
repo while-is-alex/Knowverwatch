@@ -61,6 +61,11 @@
   left: 12px;
 }
 
+.player-name a {
+  color: #212020;
+  text-decoration: none;
+}
+
 .player-role {
   width: 15px;
   height: 15px;
@@ -87,9 +92,13 @@
   position: relative;
 }
 
-.player-name a {
-  color: #212020;
-  text-decoration: none;
+.player-first-name {
+  margin-bottom: 10px;
+}
+
+.player-last-name {
+  margin-top: 2px;
+  margin-bottom: 20px;
 }
 
 .heroes-icons {
@@ -203,7 +212,7 @@
   align-items: center;
   justify-content: center;
   background-color: #f2f2f2;
-  border: 2px dashed #dcdcdc;
+  /*border: 2px dashed #2a2a2a;*/
   color: #a0a0a0;
   font-weight: bold;
   font-size: 1.2rem;

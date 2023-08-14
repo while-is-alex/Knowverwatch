@@ -19,12 +19,10 @@
 
 .team-code {
   font-size: 2rem;
-  color: #777777; /* Secondary information color */
-  margin-top: -30px; /* Adjust the margin to bring it closer to team-name */
+  color: #777777;
+  margin-top: -30px;
 }
 
-
-/* Style the team logo */
 .team-logo {
     max-width: 200px;
     margin: 10px;
@@ -111,10 +109,28 @@
   margin-bottom: 50px;
 }
 
+.spoilers-link {
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 1rem;
+  color: #ffffff;
+  background-color: #737373;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.spoilers-link:hover {
+  background-color: #c0392b;
+}
+
+.spoilers-link:focus {
+  outline: none;
+}
+
 .match-date {
   font-size: 1.1rem;
   font-weight: bold;
-  /*margin-top: 60px;*/
   color: #777777;
 }
 
@@ -128,8 +144,8 @@
   margin: 0px 0 40px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow: hidden; /* Hide any overflowing content */
-  background-color: #ffffff; /* Set the background color for the match card */
+  overflow: hidden;
+  background-color: #ffffff;
 }
 
 .match-card-inner {
@@ -137,7 +153,7 @@
   align-items: center;
   width: 100%;
   padding: 10px;
-  background-color: #ffffff; /* Set the background color for the match card */
+  background-color: #ffffff;
 }
 
 .match-card a {
@@ -148,10 +164,10 @@
 .away-team {
   display: flex;
   align-items: center;
-  flex: 1; /* Distribute available space equally */
+  flex: 1;
   padding: 20px;
-  background-color: inherit; /* Use the background color of match-card */
-  justify-content: space-between; /* Spread elements horizontally */
+  background-color: inherit;
+  justify-content: space-between;
 }
 
 .home-team-icon,
@@ -159,40 +175,47 @@
   width: 70px;
   height: 70px;
   margin: 5px;
-  flex: 0 0 auto; /* Prevent icons from growing */
-  position: relative; /* Create a stacking context */
-}
-
-.home-team-icon::before,
-.away-team-icon::before {
-  content: ""; /* Create a pseudo-element for overlay */
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(131, 234, 11, 0.5); /* Set the desired overlay color and transparency */
-  z-index: -1; /* Place the overlay beneath the icon */
+  flex: 0 0 auto;
+  position: relative;
 }
 
 .home-team-name,
 .away-team-name {
   font-size: 1.7rem;
   font-weight: bold;
-  flex: 1 1 auto; /* Allow names to grow to fill space */
-  margin: 0 10px; /* Add margin for spacing */
-  text-align: left; /* Align to the left within home-team */
+  flex: 1 1 auto;
+  margin: 0 10px;
+}
+
+.home-team-name {
+  text-align: left;
 }
 
 .away-team-name {
-  text-align: right; /* Align to the right within away-team */
+  text-align: right;
+}
+
+.home-team-score-container,
+.away-team-score-container {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f2f2f2;
+  border: 2px dashed #dcdcdc;
+  color: #a0a0a0;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  margin: 0 10px;
 }
 
 .home-team-score,
 .away-team-score {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #dcdcdc;
+  color: #282828;
 }
 
 .match-details {

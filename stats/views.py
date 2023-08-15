@@ -1,4 +1,5 @@
 from OWLAPI import Owl
+from statsfy import Stats
 from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponseRedirect
@@ -46,7 +47,6 @@ class TeamDetailsView(View):
         all_teams = Team.objects.all()
         selected_team = Team.objects.get(slug=slug)
         see_spoilers = request.session.get('see_spoilers')
-        print(see_spoilers)
 
         # Sorts the players by role and finds their top 3 most played heroes
         roster = []
@@ -117,25 +117,39 @@ class PlayerDetailsView(View):
     def get(self, request, slug):
         selected_player = Player.objects.get(slug=slug)
 
+        player_all_teams = selected_player.all_teams
+        past_teams = []
+        for team in player_all_teams:
+            try:
+                team = Team.objects.get(id=team['id'])
+                if team != selected_player.team:
+                    past_teams.append(team)
+            except Team.DoesNotExist:
+                continue
+
         heroes_played = list(selected_player.heroes)
+        heroes_details = []
+        stats = Stats()
         for hero in heroes_played:
             hero_name = hero
-            print(hero_name)
-            print(f'{selected_player.heroes[hero_name]}\n\n')
+            hero_stats = selected_player.heroes[hero_name]
+            formatted_details = stats.format_details(hero_name, hero_stats)
+            try:
+                if formatted_details[1]:
+                    heroes_details.append(stats.format_details(hero_name, hero_stats))
+                else:
+                    continue
+            except TypeError:
+                continue
 
-        if selected_player is None:
-
-            return HttpResponseRedirect(
-                reverse(
-                    'home-page',
-                )
-            )
 
         return render(
             request,
             'stats/player-details.html',
             {
                 'player': selected_player,
+                'past_teams': past_teams,
+                'heroes': heroes_details,
             }
         )
 

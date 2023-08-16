@@ -1,5 +1,5 @@
 from OWLAPI import Owl
-from statsfy import Stats
+from classes import Stats
 from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponseRedirect

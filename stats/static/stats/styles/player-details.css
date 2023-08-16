@@ -1,11 +1,11 @@
 .main-content {
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   text-align: center;
   justify-content: center;
@@ -104,19 +104,19 @@
   bottom: 20px;
   transform: translateX(-50%);
   object-fit: contain;
-  padding: 0; /* Remove padding */
-  border: 2px solid transparent; /* Set a transparent border initially */
-  border-radius: 5px; /* Add border radius for rounded corners */
-  box-sizing: border-box; /* Ensure the border is included in the dimensions */
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  box-sizing: border-box;
   cursor: pointer;
   transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
-  background-clip: padding-box; /* Make sure the background does not extend into the border area */
+  background-clip: padding-box;
   margin-top: 5px;
 }
 
 .team-icon:hover {
-  transform: translateX(-50%) scale(1.05); /* Slightly enlarge on hover */
-  border-color: #262626; /* Change border color on hover */
+  transform: translateX(-50%) scale(1.05);
+  border-color: #262626;
 }
 
 .past-teams h2 {
@@ -131,19 +131,19 @@
 
 .past-teams a {
   display: inline-block;
-  margin: 5px; /* Add some spacing between the past team icons */
-  padding: 0; /* Remove padding */
-  border: 2px solid transparent; /* Set a transparent border initially */
-  border-radius: 5px; /* Add border radius for rounded corners */
-  box-sizing: border-box; /* Ensure the border is included in the dimensions */
+  margin: 5px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  box-sizing: border-box;
   cursor: pointer;
   transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
-  background-clip: padding-box; /* Make sure the background does not extend into the border area */
+  background-clip: padding-box;
 }
 
 .past-teams a:hover {
-  transform: scale(1.05); /* Slightly enlarge on hover */
-  border-color: #262626; /* Change border color on hover */
+  transform: scale(1.05);
+  border-color: #262626;
 }
 
 .past-teams img {
@@ -151,12 +151,12 @@
   height: 50px;
   object-fit: contain;
   border-radius: 5px;
-  transition: box-shadow 0.3s ease-in-out; /* Add transition for the glow effect */
+  transition: box-shadow 0.3s ease-in-out;
   padding: 5px;
 }
 
 .past-teams img:hover {
-  box-shadow: 0 0 10px rgba(38, 38, 38, 0.7); /* Add a glowing shadow on hover */
+  box-shadow: 0 0 10px rgba(38, 38, 38, 0.7);
 }
 
 .heroes-title {
@@ -183,7 +183,7 @@
   margin: 10px 20px;
   background-color: #d7d5d5;
   border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -197,18 +197,19 @@
   border-radius: 10%;
   object-fit: cover;
   margin-top: 10px;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   background-color: #427ace;
-  border: 2px solid #d5d4d4;
+  border: 2px solid #262626;
   background-image: url("../images/player-headshot-background.png");
   background-size: contain;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .hero-name {
   font-size: 1.5rem;
   font-weight: bold;
   color: #212020;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   margin-top: 15px;
 }
 
@@ -231,7 +232,7 @@
   align-items: flex-start;
   width: calc(100% - 20px);
   margin: 5px;
-  transform: translateX(113px);
+  transform: translateX(112px);
   transition: transform 0.5s ease-in-out;
 }
 
@@ -241,9 +242,19 @@
   padding: 10px;
   background-color: #ffffff;
   border-radius: 5px;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   text-align: center;
   flex-shrink: 0; /* Prevent stats from shrinking */
+}
+
+.hero-stat.empty {
+  width: calc(40% - 10px);
+  margin: 5px;
+  padding: 10px;
+  background-color: transparent; /* Make it invisible */
+  border: none;
+  flex-shrink: 0; /* Prevent it from shrinking */
+  box-shadow: none;
 }
 
 .hero-stat-name {

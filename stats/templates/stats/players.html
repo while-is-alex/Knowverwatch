@@ -14,7 +14,7 @@
     <div class="main-content">
         {% for player in page_obj %}
             <a href="{{ player.get_absolute_url }}" class="player-card grow" style="background-color: {{ player.team.primary_color }}; border: 7px solid {{ player.team.secondary_color }};">
-                <img src="{{ player.headshot_url }}" alt="" class="player-headshot">
+                <img src="{{ player.headshot_url }}" alt="player-headshot" class="player-headshot">
                 <div class="player-name" style="color: {{ player.team.secondary_color }}">{{ player.name }}</div>
 
                 {% if player.role == 'DPS' %}

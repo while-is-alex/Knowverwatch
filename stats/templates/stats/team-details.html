@@ -35,126 +35,126 @@
     {% with 'stats/images/teams/'|add:team.name|add:'.png' as path_to_team_background %}
         <div class="main-content" style="background-image: url({% static path_to_team_background %});">
     {% endwith %}
-        <h1 class="team-name">{{ team.name }}</h1>
-        <h2 class="team-code">{{ team.code }}</h2>
-        <img src="{{ team.logo }}" alt="" class="team-logo">
+            <h1 class="team-name">{{ team.name }}</h1>
+            <h2 class="team-code">{{ team.code }}</h2>
+            <img src="{{ team.logo }}" alt="team-logo" class="team-logo">
 
-        <h2 class="roster-title" style="margin-top: 50px;">Roster:</h2>
-        <div class="roster">
-            {% for player in players %}
-                <a href="{{ player.0.get_absolute_url }}" class="player-card grow">
-                    <img src="{{ player.0.headshot_url }}" alt="" class="player-headshot">
-                    <div class="player-name">{{ player.0.name }}</div>
+            <h2 class="roster-title" style="margin-top: 50px;">Roster:</h2>
+            <div class="roster">
+                {% for player in players %}
+                    <a href="{{ player.0.get_absolute_url }}" class="player-card grow">
+                        <img src="{{ player.0.headshot_url }}" alt="player-headshot" class="player-headshot">
+                        <div class="player-name">{{ player.0.name }}</div>
 
-                    {% if player.0.role == 'DPS' %}
-                        <img src="https://static.wikia.nocookie.net/overwatch/images/1/14/OffenseIcon.png/revision/latest?cb=20160625040759" class="player-role" alt="DPS-role">
-                    {% elif player.0.role == 'SUPPORT' %}
-                        <img src="https://static.wikia.nocookie.net/overwatch/images/5/5f/SupportIcon.png/revision/latest?cb=20160625042024" class="player-role" alt="support-role">
-                    {% elif player.0.role == 'TANK' %}
-                        <img src="https://static.wikia.nocookie.net/overwatch/images/6/69/TankIcon.png/revision/latest?cb=20160625041805" class="player-role" alt="tank-role">
-                    {% endif %}
-
-                    <p class="player-first-name"><strong>First name:</strong> {{ player.0.first_name }}</p>
-                    <p class="player-last-name"><strong>Last name:</strong> {{ player.0.last_name }}</p>
-
-                    {% for hero in player.1 %}
-                        {% with 'stats/images/heroes/'|add:hero.name|add:'.png' as path_to_hero_headshot %}
-                            <img src="{% static path_to_hero_headshot %}" alt="{{ hero.name }}" class="heroes-icons" style="border: 3px solid {{ team.secondary_color }};">
-                        {% endwith %}
-                    {% endfor %}
-                </a>
-            {% endfor %}
-        </div>
-
-        <h2 class="schedule-title" style="margin-top: 50px;">Schedule:</h2>
-        <div class="spoilers">
-            <a class="spoilers-link" href="{% url 'see-spoilers' team.slug %}">See Results</a>
-        </div>
-        <div class="matches">
-            {% for match in matches %}
-                <p class="match-date">{{ match.date.day }}/{{ match.date.month }}/{{ match.date.year }}</p>
-
-                <a href="{% url 'match-details-page' match.slug %}" class="match-card grow" style="text-decoration: none;">
-
-                    {% for current_team in all_teams %}
-                        {% if current_team.id == match.home.id %}
-                            {% if current_team.primary_color %}
-                                <div class="home-team" style="background-color: {{ current_team.primary_color }}; color: {{ current_team.secondary_color }};">
-                            {% else %}
-                                <div class="home-team" style="background-color: {{ current_team.primary_color }}; color: black;">
-                            {% endif %}
-                            {% if current_team.name == 'Boston Uprising' %}
-                                <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon boston-filter"/>
-                            {% elif current_team.name == 'Hangzhou Spark' %}
-                                <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon hangzhou-filter"/>
-                            {% elif current_team.name == 'Houston Outlaws' %}
-                                <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon houston-filter"/>
-                            {% elif current_team.name == 'Shanghai Dragons' %}
-                                <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon shanghai-filter"/>
-                            {% elif current_team.name == 'New York Excelsior' %}
-                                <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon new-york-filter"/>
-                            {% elif current_team.name == 'Toronto Defiant' %}
-                                <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon toronto-filter"/>
-                            {% elif current_team.name == 'Twisted Minds' %}
-                                <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon twisted-filter"/>
-                            {% elif current_team.name == 'WISP' %}
-                                <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon wisp-filter"/>
-                            {% else %}
-                                <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon"/>
-                            {% endif %}
-                            <p class="home-team-name">{{ current_team.name }}</p>
-                            <div class="home-team-score-container">
-                                {% if match.home.score %}
-                                    <p class="home-team-score">{% if see_spoilers == True %}{{ match.home.score }}{% endif %}</p>
-                                {% else %}
-                                    <p class="home-team-score">{% if see_spoilers == True %}0{% endif %}</p>
-                                {% endif %}
-                            </div>
-                            </div>
+                        {% if player.0.role == 'DPS' %}
+                            <img src="https://static.wikia.nocookie.net/overwatch/images/1/14/OffenseIcon.png/revision/latest?cb=20160625040759" class="player-role" alt="DPS-role">
+                        {% elif player.0.role == 'SUPPORT' %}
+                            <img src="https://static.wikia.nocookie.net/overwatch/images/5/5f/SupportIcon.png/revision/latest?cb=20160625042024" class="player-role" alt="support-role">
+                        {% elif player.0.role == 'TANK' %}
+                            <img src="https://static.wikia.nocookie.net/overwatch/images/6/69/TankIcon.png/revision/latest?cb=20160625041805" class="player-role" alt="tank-role">
                         {% endif %}
-                    {% endfor %}
 
-                    {% for current_team in all_teams %}
-                        {% if current_team.id == match.away.id %}
-                            {% if current_team.primary_color %}
-                                <div class="away-team" style="background-color: {{ current_team.primary_color }}; color: {{ current_team.secondary_color }};">
-                            {% else %}
-                                <div class="away-team" style="background-color: {{ current_team.primary_color }}; color: black;">
-                            {% endif %}
-                            <div class="away-team-score-container">
-                                {% if match.away.score %}
-                                    <p class="away-team-score">{% if see_spoilers == True %}{{ match.away.score }}{% endif %}</p>
+                        <p class="player-first-name"><strong>First name:</strong> {{ player.0.first_name }}</p>
+                        <p class="player-last-name"><strong>Last name:</strong> {{ player.0.last_name }}</p>
+
+                        {% for hero in player.1 %}
+                            {% with 'stats/images/heroes/'|add:hero.name|add:'.png' as path_to_hero_headshot %}
+                                <img src="{% static path_to_hero_headshot %}" alt="{{ hero.name }}-icon" class="heroes-icons" style="border: 3px solid {{ team.secondary_color }};">
+                            {% endwith %}
+                        {% endfor %}
+                    </a>
+                {% endfor %}
+            </div>
+
+            <h2 class="schedule-title" style="margin-top: 50px;">Schedule:</h2>
+            <div class="spoilers">
+                <a class="spoilers-link" href="{% url 'see-spoilers' team.slug %}">See Results</a>
+            </div>
+            <div class="matches">
+                {% for match in matches %}
+                    <p class="match-date">{{ match.date.day }}/{{ match.date.month }}/{{ match.date.year }}</p>
+
+                    <a href="{% url 'match-details-page' match.slug %}" class="match-card grow" style="text-decoration: none;">
+
+                        {% for current_team in all_teams %}
+                            {% if current_team.id == match.home.id %}
+                                {% if current_team.primary_color %}
+                                    <div class="home-team" style="background-color: {{ current_team.primary_color }}; color: {{ current_team.secondary_color }};">
                                 {% else %}
-                                    <p class="away-team-score">{% if see_spoilers == True %}0{% endif %}</p>
+                                    <div class="home-team" style="background-color: {{ current_team.primary_color }}; color: black;">
                                 {% endif %}
-                            </div>
-                                <p class="away-team-name">{{ current_team.name }}</p>
                                 {% if current_team.name == 'Boston Uprising' %}
-                                    <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon boston-filter"/>
+                                    <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon boston-filter"/>
                                 {% elif current_team.name == 'Hangzhou Spark' %}
-                                    <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon hangzhou-filter"/>
+                                    <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon hangzhou-filter"/>
                                 {% elif current_team.name == 'Houston Outlaws' %}
-                                    <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon houston-filter"/>
+                                    <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon houston-filter"/>
                                 {% elif current_team.name == 'Shanghai Dragons' %}
-                                    <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon shanghai-filter"/>
+                                    <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon shanghai-filter"/>
                                 {% elif current_team.name == 'New York Excelsior' %}
-                                    <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon new-york-filter"/>
+                                    <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon new-york-filter"/>
                                 {% elif current_team.name == 'Toronto Defiant' %}
-                                    <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon toronto-filter"/>
+                                    <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon toronto-filter"/>
                                 {% elif current_team.name == 'Twisted Minds' %}
-                                    <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon twisted-filter"/>
+                                    <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon twisted-filter"/>
                                 {% elif current_team.name == 'WISP' %}
-                                    <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon wisp-filter"/>
+                                    <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon wisp-filter"/>
                                 {% else %}
-                                    <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon"/>
+                                    <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon"/>
                                 {% endif %}
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+                                <p class="home-team-name">{{ current_team.name }}</p>
+                                <div class="home-team-score-container">
+                                    {% if match.home.score %}
+                                        <p class="home-team-score">{% if see_spoilers == True %}{{ match.home.score }}{% endif %}</p>
+                                    {% else %}
+                                        <p class="home-team-score">{% if see_spoilers == True %}0{% endif %}</p>
+                                    {% endif %}
+                                </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
 
-                </a>
+                        {% for current_team in all_teams %}
+                            {% if current_team.id == match.away.id %}
+                                {% if current_team.primary_color %}
+                                    <div class="away-team" style="background-color: {{ current_team.primary_color }}; color: {{ current_team.secondary_color }};">
+                                {% else %}
+                                    <div class="away-team" style="background-color: {{ current_team.primary_color }}; color: black;">
+                                {% endif %}
+                                <div class="away-team-score-container">
+                                    {% if match.away.score %}
+                                        <p class="away-team-score">{% if see_spoilers == True %}{{ match.away.score }}{% endif %}</p>
+                                    {% else %}
+                                        <p class="away-team-score">{% if see_spoilers == True %}0{% endif %}</p>
+                                    {% endif %}
+                                </div>
+                                    <p class="away-team-name">{{ current_team.name }}</p>
+                                    {% if current_team.name == 'Boston Uprising' %}
+                                        <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon boston-filter"/>
+                                    {% elif current_team.name == 'Hangzhou Spark' %}
+                                        <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon hangzhou-filter"/>
+                                    {% elif current_team.name == 'Houston Outlaws' %}
+                                        <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon houston-filter"/>
+                                    {% elif current_team.name == 'Shanghai Dragons' %}
+                                        <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon shanghai-filter"/>
+                                    {% elif current_team.name == 'New York Excelsior' %}
+                                        <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon new-york-filter"/>
+                                    {% elif current_team.name == 'Toronto Defiant' %}
+                                        <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon toronto-filter"/>
+                                    {% elif current_team.name == 'Twisted Minds' %}
+                                        <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon twisted-filter"/>
+                                    {% elif current_team.name == 'WISP' %}
+                                        <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon wisp-filter"/>
+                                    {% else %}
+                                        <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon"/>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
 
-            {% endfor %}
+                    </a>
+
+                {% endfor %}
+            </div>
         </div>
-    </div>
 {% endblock %}

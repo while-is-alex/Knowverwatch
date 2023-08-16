@@ -232,7 +232,7 @@
   align-items: flex-start;
   width: calc(100% - 20px);
   margin: 5px;
-  transform: translateX(112px);
+  transform: translateX(115px);
   transition: transform 0.5s ease-in-out;
 }
 
@@ -244,7 +244,7 @@
   border-radius: 5px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   text-align: center;
-  flex-shrink: 0; /* Prevent stats from shrinking */
+  flex-shrink: 0;
 }
 
 .hero-stat.empty {
@@ -253,7 +253,7 @@
   padding: 10px;
   background-color: transparent; /* Make it invisible */
   border: none;
-  flex-shrink: 0; /* Prevent it from shrinking */
+  flex-shrink: 0;
   box-shadow: none;
 }
 
@@ -265,7 +265,7 @@
 
 .hero-stat-value {
   font-size: 1.1rem;
-  color: #212020;
+  /*color: #212020;*/
   font-weight: bold;
   margin: 5px 0;
 }

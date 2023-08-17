@@ -9,6 +9,7 @@ from .models import Team, Player, Segment, Match
 from datetime import datetime
 
 owl = Owl()
+stats = Stats()
 
 
 class HomeView(View):
@@ -127,21 +128,21 @@ class PlayerDetailsView(View):
             except Team.DoesNotExist:
                 continue
 
-        heroes_played = list(selected_player.heroes)
+        heroes_played_sorted = stats.sort_by_time_played(selected_player.heroes)
+        heroes_played_list = list(heroes_played_sorted)
+
         heroes_details = []
-        stats = Stats()
-        for hero in heroes_played:
-            hero_name = hero
+        for hero_name in heroes_played_list:
             hero_stats = selected_player.heroes[hero_name]
             formatted_details = stats.format_details(hero_name, hero_stats)
+
             try:
                 if formatted_details[1]:
-                    heroes_details.append(stats.format_details(hero_name, hero_stats))
+                    heroes_details.append(formatted_details)
                 else:
                     continue
             except TypeError:
                 continue
-
 
         return render(
             request,

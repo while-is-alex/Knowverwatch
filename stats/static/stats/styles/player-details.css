@@ -16,7 +16,7 @@
 
 .page-title {
   font-size: 4rem;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 .container {
@@ -64,6 +64,7 @@
   padding: 3px;
   border-radius: 50%;
   border: 1px solid #000;
+  background-color: #3f3d3c;
   position: absolute;
   bottom: 10px;
   right: 10px;

@@ -35,8 +35,44 @@ class Stats:
 
         return sorted_heroes_by_time_played
 
+    def get_stats_per_10(self, stats_list):
+        hero_minutes_played = 0
+
+        for stat in stats_list:
+            try:
+                if stat['name'] == 'Time Played':
+                    hero_minutes_played = stat['value']
+
+            except TypeError:
+                continue
+
+        print(hero_minutes_played)
+
+        list_per_10 = []
+        if hero_minutes_played == 0:
+            return stats_list
+
+        for stat in stats_list:
+            try:
+                stat_name = stat['name']
+                stat_value = stat['value']
+            except TypeError:
+                continue
+
+            if stat_name == 'Time Played':
+                list_per_10.append(stat)
+            else:
+                stat_per_10 = round((stat_value / hero_minutes_played) * 10)
+                stat['value'] = stat_per_10
+                list_per_10.append(stat)
+
+        return list_per_10
+
     def format_details(self, hero_name, stats_dictionary):
         stats_dictionary_keys = stats_dictionary.keys()
+
+        print(hero_name)
+        print(f'{stats_dictionary}\n\n')
 
         stats_list = [None] * 12
         for key in stats_dictionary_keys:
@@ -44,7 +80,10 @@ class Stats:
             if stat_name == 'Hero Damage Done':
                 stat_name = 'Damage Done'
 
-            stat_value = int(stats_dictionary[key])
+            if stat_name == 'Time Played':
+                stat_value = round(int(stats_dictionary[key]) / 60)
+            else:
+                stat_value = int(stats_dictionary[key])
 
             current_stat = {'name': stat_name, 'value': stat_value}
 
@@ -77,9 +116,11 @@ class Stats:
             else:
                 stats_list.append(current_stat)
 
-        for stat in stats_list:
+        stats_list_per_10 = self.get_stats_per_10(stats_list)
+
+        for stat in stats_list_per_10:
             try:
-                if stat['name'] == 'Time Played' and stat['value'] > 60:
+                if stat['name'] == 'Time Played' and stat['value'] > 1:
                     hero_details = (hero_name.title(), stats_list)
 
                     return hero_details

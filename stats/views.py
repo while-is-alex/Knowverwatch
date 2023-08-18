@@ -123,8 +123,13 @@ class PlayerDetailsView(View):
         for team in player_all_teams:
             try:
                 team = Team.objects.get(id=team['id'])
+
+                if team in past_teams:
+                    continue
+
                 if team != selected_player.team:
                     past_teams.append(team)
+
             except Team.DoesNotExist:
                 continue
 

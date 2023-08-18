@@ -71,9 +71,6 @@ class Stats:
     def format_details(self, hero_name, stats_dictionary):
         stats_dictionary_keys = stats_dictionary.keys()
 
-        print(hero_name)
-        print(f'{stats_dictionary}\n\n')
-
         stats_list = [None] * 12
         for key in stats_dictionary_keys:
             stat_name = self.split_camel_case(key)

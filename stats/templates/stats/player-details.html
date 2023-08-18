@@ -94,10 +94,21 @@
 
                         <div class="hero-stats">
                             {% for stat in hero.1 %}
-                                <div class="hero-stat {% if forloop.first %}active{% endif %}">
-                                    <p class="hero-stat-name">{{ stat.name }}:</p>
-                                    <p class="hero-stat-value">{{ stat.value }}</p>
-                                </div>
+                                {% if stat %}
+                                    <div class="hero-stat {% if forloop.first %}active{% endif %}">
+                                        <p class="hero-stat-name">
+                                            {{ stat.name }}
+                                            {% if stat.name == 'Time Played' %}<br>(mins)
+                                            {% else %}<br>(per 10)
+                                            {% endif %}:
+                                        </p>
+                                        <p class="hero-stat-value">
+                                            {% if stat.name == 'Time Spent On Fire' %}{{ stat.value }} secs
+                                            {% else %}{{ stat.value }}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                {% endif %}
                             {% endfor %}
                             <div class="hero-stat empty non-interactable"></div>
                         </div>

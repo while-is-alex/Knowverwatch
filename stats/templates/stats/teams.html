@@ -24,7 +24,7 @@
     <div class="main-content">
         {% for team in teams %}
             <a href="{{ team.get_absolute_url }}" class="team-card">
-                <img src="{{ team.logo }}" class="team-logo" alt="team-logo">
+                <img src="{{ team.logo }}" class="team-logo" alt="team-logo" loading="lazy">
                 <div class="team-name">{{ team.name|upper }}</div>
                 <div class="team-code">{{ team.code }}</div>
             </a>

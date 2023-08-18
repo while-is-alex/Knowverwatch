@@ -21,11 +21,11 @@
 
 {% block body %}
     <div class="main-content">
-        <h1 class="page-title">Player Details</h1>
+        <h1 class="page-title">{{ player.first_name }} "{{ player.name }}" {{ player.last_name }}</h1>
 
         <div class="container">
             <span href="{{ player.get_absolute_url }}" class="player-card" style="background-color: {{ player.team.primary_color }}; border: 7px solid {{ player.team.secondary_color }};">
-                <img src="{{ player.headshot_url }}" alt="" class="player-headshot">
+                <img src="{{ player.headshot_url }}" alt="" class="player-headshot" loading="lazy">
                 <div class="player-name" style="color: {{ player.team.secondary_color }}">{{ player.name }}</div>
 
                 {% if player.role == 'DPS' %}
@@ -42,23 +42,23 @@
                 {% if player.team %}
                     <a href="{% url 'team-details-page' player.team.slug %}">
                         {% if player.team.name == 'Boston Uprising' %}
-                            <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon boston-filter">
+                            <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon boston-filter" loading="lazy">
                         {% elif player.team.name == 'Hangzhou Spark' %}
-                            <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon hangzhou-filter">
+                            <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon hangzhou-filter" loading="lazy">
                         {% elif player.team.name == 'Houston Outlaws' %}
-                            <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon houston-filter">
+                            <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon houston-filter" loading="lazy">
                         {% elif player.team.name == 'Shanghai Dragons' %}
-                            <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon shanghai-filter">
+                            <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon shanghai-filter" loading="lazy">
                         {% elif player.team.name == 'New York Excelsior' %}
-                            <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon new-york-filter">
+                            <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon new-york-filter" loading="lazy">
                         {% elif player.team.name == 'Toronto Defiant' %}
-                            <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon toronto-filter">
+                            <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon toronto-filter" loading="lazy">
                         {% elif player.team.name == 'Twisted Minds' %}
-                            <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon twisted-filter">
+                            <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon twisted-filter" loading="lazy">
                         {% elif player.team.name == 'WISP' %}
-                            <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon wisp-filter">
+                            <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon wisp-filter" loading="lazy">
                         {% else %}
-                            <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon">
+                            <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon" loading="lazy">
                         {% endif %}
                     </a>
                 {% endif %}
@@ -71,7 +71,7 @@
                 <h2>Past teams:</h2>
                 {% for team in past_teams %}
                     <a href="{% url 'team-details-page' team.slug %}" class="past-team">
-                        <img src="{{ team.logo }}">
+                        <img src="{{ team.logo }}" loading="lazy">
                     </a>
                 {% endfor %}
             </div>
@@ -85,7 +85,7 @@
                 <div class="hero-card" style="background-color: {{ player.team.primary_color }}; border: 7px solid {{ player.team.secondary_color }}">
 
                     {% with 'stats/images/heroes/'|add:hero.0|add:'.png' as path_to_hero_headshot %}
-                        <img src="{% static path_to_hero_headshot %}" alt="hero-headshot" class="hero-headshot">
+                        <img src="{% static path_to_hero_headshot %}" alt="hero-headshot" class="hero-headshot" loading="lazy">
                     {% endwith %}
 
                     <p class="hero-name" style="color: {{ player.team.secondary_color }}">{{ hero.0 }}</p>

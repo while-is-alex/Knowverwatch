@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    {{ team.name }}
+    {{ team.name }} Details
 {% endblock %}
 
 {% block css_styles %}
@@ -11,10 +11,6 @@
         .player-card {
             background-color: {{ team.primary_color }};
             border: 7px solid {{ team.secondary_color }};
-        }
-
-        .player-card:hover {
-            background-color: {{ team.primary_color }};
         }
 
         .player-name {
@@ -81,35 +77,41 @@
                                 {% if current_team.primary_color %}
                                     <div class="home-team" style="background-color: {{ current_team.primary_color }}; color: {{ current_team.secondary_color }};">
                                 {% else %}
-                                    <div class="home-team" style="background-color: {{ current_team.primary_color }}; color: black;">
+                                    <div class="home-team" style="background-color: #d7d5d5; color: black;">
                                 {% endif %}
-                                {% if current_team.name == 'Boston Uprising' %}
-                                    <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon boston-filter" loading="lazy"/>
-                                {% elif current_team.name == 'Hangzhou Spark' %}
-                                    <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon hangzhou-filter" loading="lazy"/>
-                                {% elif current_team.name == 'Houston Outlaws' %}
-                                    <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon houston-filter" loading="lazy"/>
-                                {% elif current_team.name == 'Shanghai Dragons' %}
-                                    <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon shanghai-filter" loading="lazy"/>
-                                {% elif current_team.name == 'New York Excelsior' %}
-                                    <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon new-york-filter" loading="lazy"/>
-                                {% elif current_team.name == 'Toronto Defiant' %}
-                                    <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon toronto-filter" loading="lazy"/>
-                                {% elif current_team.name == 'Twisted Minds' %}
-                                    <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon twisted-filter" loading="lazy"/>
-                                {% elif current_team.name == 'WISP' %}
-                                    <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon wisp-filter" loading="lazy"/>
-                                {% else %}
-                                    <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon" loading="lazy"/>
-                                {% endif %}
-                                <p class="home-team-name">{{ current_team.name }}</p>
-                                <div class="home-team-score-container">
-                                    {% if match.home.score %}
-                                        <p class="home-team-score">{% if see_spoilers == True %}{{ match.home.score }}{% endif %}</p>
+                                    {% if current_team.name == 'Boston Uprising' %}
+                                        <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon boston-filter" loading="lazy"/>
+                                    {% elif current_team.name == 'Hangzhou Spark' %}
+                                        <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon hangzhou-filter" loading="lazy"/>
+                                    {% elif current_team.name == 'Houston Outlaws' %}
+                                        <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon houston-filter" loading="lazy"/>
+                                    {% elif current_team.name == 'Shanghai Dragons' %}
+                                        <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon shanghai-filter" loading="lazy"/>
+                                    {% elif current_team.name == 'New York Excelsior' %}
+                                        <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon new-york-filter" loading="lazy"/>
+                                    {% elif current_team.name == 'Toronto Defiant' %}
+                                        <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon toronto-filter" loading="lazy"/>
+                                    {% elif current_team.name == 'Twisted Minds' %}
+                                        <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon twisted-filter" loading="lazy"/>
+                                    {% elif current_team.name == 'WISP' %}
+                                        <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon wisp-filter" loading="lazy"/>
                                     {% else %}
-                                        <p class="home-team-score">{% if see_spoilers == True %}0{% endif %}</p>
+                                        <img src="{{ current_team.icon }}" alt="team-icon" class="home-team-icon" loading="lazy"/>
                                     {% endif %}
-                                </div>
+                                    <p class="home-team-name">{{ current_team.name }}</p>
+                                    <div class="home-team-score-container">
+                                        {% if match.home.score == 0 and match.away.score == 0 %}
+                                            <p class="home-team-score">{% if see_spoilers == True %}-{% endif %}</p>
+                                        {% elif match.home.score %}
+                                            <p class="home-team-score">{% if see_spoilers == True %}{{ match.home.score }}{% endif %}</p>
+                                        {% else %}
+                                            {% if not match.home.score and not match.away.score %}
+                                                <p class="home-team-score">{% if see_spoilers == True %}-{% endif %}</p>
+                                            {% else %}
+                                                <p class="home-team-score">{% if see_spoilers == True %}0{% endif %}</p>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
                                 </div>
                             {% endif %}
                         {% endfor %}
@@ -119,15 +121,19 @@
                                 {% if current_team.primary_color %}
                                     <div class="away-team" style="background-color: {{ current_team.primary_color }}; color: {{ current_team.secondary_color }};">
                                 {% else %}
-                                    <div class="away-team" style="background-color: {{ current_team.primary_color }}; color: black;">
+                                    <div class="away-team" style="background-color: #d7d5d5; color: black;">
                                 {% endif %}
-                                <div class="away-team-score-container">
-                                    {% if match.away.score %}
-                                        <p class="away-team-score">{% if see_spoilers == True %}{{ match.away.score }}{% endif %}</p>
-                                    {% else %}
-                                        <p class="away-team-score">{% if see_spoilers == True %}0{% endif %}</p>
-                                    {% endif %}
-                                </div>
+                                    <div class="away-team-score-container">
+                                        {% if match.away.score %}
+                                            <p class="away-team-score">{% if see_spoilers == True %}{{ match.away.score }}{% endif %}</p>
+                                        {% else %}
+                                            {% if not match.home.score and not match.away.score %}
+                                                <p class="away-team-score">{% if see_spoilers == True %}-{% endif %}</p>
+                                            {% else %}
+                                                <p class="away-team-score">{% if see_spoilers == True %}0{% endif %}</p>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
                                     <p class="away-team-name">{{ current_team.name }}</p>
                                     {% if current_team.name == 'Boston Uprising' %}
                                         <img src="{{ current_team.icon }}" alt="team-icon" class="away-team-icon boston-filter" loading="lazy"/>
@@ -153,7 +159,6 @@
                         {% endfor %}
 
                     </a>
-
                 {% endfor %}
             </div>
         </div>

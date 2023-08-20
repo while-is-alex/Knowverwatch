@@ -51,7 +51,7 @@
   height: 300px;
   padding: 10px;
   border-radius: 5px;
-  background-color: #8f8f8f;
+  background-color: #d7d5d5;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
   text-align: center;
   text-decoration: none;
@@ -85,6 +85,7 @@
   bottom: 10px;
   right: 10px;
   top: 4px;
+  background-color: #3f3d3c;
 }
 
 .player-headshot {
@@ -107,7 +108,7 @@
 
 .player-last-name {
   margin-top: 2px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .heroes-icons {
@@ -243,17 +244,6 @@
   font-size: 2.5rem;
   font-weight: bold;
   color: #282828;
-}
-
-.match-details {
-  margin-top: 10px;
-  color: #007bff;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.match-details:hover {
-  text-decoration: underline;
 }
 
 .grow {

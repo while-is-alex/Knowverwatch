@@ -66,12 +66,23 @@ class TeamDetailsView(View):
 
                 heroes_played.append(hero_details)
 
-            top3_heroes_by_time_played = sorted(heroes_played, key=lambda x: x['time_played'], reverse=True)[:3]
+            top3_heroes_by_time_played = sorted(
+                heroes_played,
+                key=lambda x: x['time_played'],
+                reverse=True,
+            )[:3]
 
             roster.append((player, top3_heroes_by_time_played))
 
         # Fetches the most recent 5 matches for that team
-        matches = Match.objects.filter(teams__has_key=selected_team.id).order_by('date').filter(date__year=2023)[::-1]
+        current_year = datetime.today().year
+
+        matches = Match.objects.filter(
+            teams__has_key=selected_team.id
+        ).order_by('date').filter(
+            date__year=current_year
+        )[::-1]
+
         matches_list = []
         for match in matches[:5]:
             match_details = {}
@@ -164,11 +175,76 @@ class MatchDetailsView(View):
     def get(self, request, slug):
         selected_match = Match.objects.get(slug=slug)
 
+        home_team = Team.objects.get(id=list(selected_match.teams.items())[0][0])
+        away_team = Team.objects.get(id=list(selected_match.teams.items())[1][0])
+
+        try:
+            home_team_final_score = int(list(selected_match.teams.items())[0][1]['score'])
+        except KeyError:
+            home_team_final_score = 0
+
+        try:
+            away_team_final_score = int(list(selected_match.teams.items())[1][1]['score'])
+        except KeyError:
+            away_team_final_score = 0
+
+        see_spoilers = request.session.get('see_spoilers')
+
+        games = list(selected_match.games.items())
+        games_details_list = []
+        for game in games:
+            try:
+                home_team_score = list(game[1]['teams'].items())[0][1]['score']
+            except KeyError:
+                home_team_score = 0
+
+            try:
+                away_team_score = list(game[1]['teams'].items())[1][1]['score']
+            except KeyError:
+                away_team_score = 0
+
+            game_details = {
+                'order': int(game[1]['number']),
+                'map': game[1]['map'].title().replace('-', ' '),
+                'home_team': Team.objects.get(id=list(game[1]['teams'].items())[0][1]['id']),
+                'home_team_score': home_team_score,
+                'away_team': Team.objects.get(id=list(game[1]['teams'].items())[1][1]['id']),
+                'away_team_score': away_team_score,
+            }
+            games_details_list.append(game_details)
+
+        sorted_games_list = sorted(
+            games_details_list,
+            key=lambda x: x['order'],
+            reverse=False,
+        )
+
+        players_in_this_match = list(selected_match.players.items())
+        players_list = []
+        for player in players_in_this_match:
+            player_details = {}
+            player_details['player'] = Player.objects.get(id=player[1]['id'])
+            player_details['team_id'] = player[1]['teamId']
+            player_details['heroes_played'] = []
+            for hero in list(player[1]['heroes'].items()):
+                player_details['heroes_played'].append(hero[0].title())
+
+            players_list.append(player_details)
+
+            print(player_details)
+
         return render(
             request,
             'stats/match-details.html',
             {
                 'match': selected_match,
+                'home_team': home_team,
+                'home_team_score': home_team_final_score,
+                'away_team': away_team,
+                'away_team_score': away_team_final_score,
+                'games': sorted_games_list,
+                'players': players_list,
+                'see_spoilers': see_spoilers,
             }
         )
 
@@ -217,15 +293,29 @@ class SeeSpoilersView(View):
     def get(self, request, slug):
         if request.session.get('see_spoilers') is None:
             see_spoilers = False
+
         else:
             # if it's true, it turns into false, and vice-versa
             see_spoilers = not request.session.get('see_spoilers')
 
         request.session['see_spoilers'] = see_spoilers
 
-        return HttpResponseRedirect(
-            reverse(
-                'team-details-page',
-                args=[slug],
+        try:
+            Team.objects.get(slug=slug)
+
+            return HttpResponseRedirect(
+                reverse(
+                    'team-details-page',
+                    args=[slug],
+                )
             )
-        )
+
+        except Team.DoesNotExist:
+            Match.objects.get(slug=slug)
+
+            return HttpResponseRedirect(
+                reverse(
+                    'match-details-page',
+                    args=[slug],
+                )
+            )

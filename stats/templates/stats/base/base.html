@@ -24,10 +24,13 @@
 
     <header id="main-navigation">
         <a href="{% url 'home-page' %}" id="main-logo"><img src="{% static 'stats/images/owl-logo.png' %}" alt="home"></a>
+
         <nav>
             <a href="{% url 'teams-page' %}" {% if request.path == '/teams' %}class="current"{% endif %}>Teams</a>
             <a href="{% url 'players-page' %}" {% if request.path == '/players' %}class="current"{% endif %}>Players</a>
+            <a href="{% url 'compare-players' %}" {% if request.path == '/compare' %}class="current"{% endif %}>Compare</a>
             <a href="" {% if request.path == '/contact' %}class="current"{% endif %}>Contact</a>
+
             <div class="search-bar">
                 <form action="{% url 'search' %}">
                     {% csrf_token %}

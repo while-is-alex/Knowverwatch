@@ -5,16 +5,27 @@ class Stats:
     def split_camel_case(self, camel_case_string):
         words = [[camel_case_string[0]]]
 
-        for c in camel_case_string[1:]:
-            if words[-1][-1].islower() and c.isupper():
-                words.append(list(c))
+        for character in camel_case_string[1:]:
+            if words[-1][-1].islower() and character.isupper():
+                words.append(list(character))
             else:
-                words[-1].append(c)
+                words[-1].append(character)
 
         words = [''.join(word) for word in words]
         resulting_string = ' '.join(words).title()
 
         return resulting_string
+
+    def sort_by_name(self, stats_dictionary):
+
+        sorted_heroes_by_name = dict(collections.OrderedDict(
+            sorted(
+                stats_dictionary.items(),
+                reverse=False,
+            )
+        ))
+
+        return sorted_heroes_by_name
 
     def sort_by_time_played(self, stats_dictionary):
         def get_time_played(current_hero):
@@ -46,12 +57,10 @@ class Stats:
             except TypeError:
                 continue
 
-        print(hero_minutes_played)
-
-        list_per_10 = []
         if hero_minutes_played == 0:
             return stats_list
 
+        list_per_10 = []
         for stat in stats_list:
             try:
                 stat_name = stat['name']
@@ -71,6 +80,7 @@ class Stats:
     def format_details(self, hero_name, stats_dictionary):
         stats_dictionary_keys = stats_dictionary.keys()
 
+        # creates a list with None elements so new elements can be stored in the desired order
         stats_list = [None] * 12
         for key in stats_dictionary_keys:
             stat_name = self.split_camel_case(key)
@@ -78,7 +88,7 @@ class Stats:
                 stat_name = 'Damage Done'
 
             if stat_name == 'Time Played':
-                stat_value = round(int(stats_dictionary[key]) / 60)
+                stat_value = round(int(stats_dictionary[key]) / 60)  # seconds to minutes
             else:
                 stat_value = int(stats_dictionary[key])
 

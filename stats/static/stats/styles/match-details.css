@@ -103,6 +103,7 @@
   font-size: 2rem;
   margin: 0 20px;
   color: #777777;
+  pointer-events: none;
 }
 
 .spoilers-link {
@@ -315,7 +316,7 @@
 .players-title {
   font-size: 1.5rem;
   color: #262626;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -358,7 +359,7 @@
   text-decoration: none;
   color: #212020;
   position: relative;
-  overflow: hidden; /* Hide overflow to make the image and role icon fit inside the card */
+  overflow: hidden;
   border: 7px solid #262626;
   font-size: 0.8em;
   justify-content: center;

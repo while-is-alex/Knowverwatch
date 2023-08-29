@@ -1,0 +1,366 @@
+{% extends 'stats/base/base.html' %}
+{% load static %}
+
+{% block title %}
+    Overwatch League
+{% endblock %}
+
+{% block css_styles %}
+    <link rel="stylesheet" href="{% static 'stats/styles/compare-players.css' %}">
+    <style>
+        .hero-stat.active {
+          background-color: {{ player.team.secondary_color }}; /* Change background color for active stat */
+          color: {{ player.team.primary_color }};
+          border: 2px solid #262626; /* Add border for active stat */
+          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add shadow for active stat */
+          transform: scale(1.05); /* Apply slight scale for active stat */
+          transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s; /* Add transition for smooth effect */
+        }
+
+        .player-a-container .hero-stat.active {
+          background-color: {{ player_a.team.secondary_color }};
+          color: {{ player_a.team.primary_color }};
+        }
+
+        .player-b-container .hero-stat.active {
+          background-color: {{ player_b.team.secondary_color }};
+          color: {{ player_b.team.primary_color }};
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <div class="main-content">
+        <h1 class="page-title">Compare Players</h1>
+
+        <div class="compare-section">
+
+            <div class="players-container">
+                <div class="player-container player-a-container">
+
+                    <div class="player-section">
+                        <form action="{% url 'compare-players' %}" method="GET" class="select-player" id="player-a-form">
+                        <label for="players">Player:</label>
+                        <select name="player-a" id="player-a">
+                            <option></option>
+                            {% for player in all_players %}
+                                <option value="{{ player.id }}" name="{{ player.name }}">{{ player.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+
+                        <span href="{{ player_a.get_absolute_url }}" class="player-card" style="background-color: {{ player_a.team.primary_color }}; border: 7px solid {{ player_a.team.secondary_color }};">
+                        {% if player_a %}
+                            <a href="{% url 'player-details-page' player_a.slug %}" class="player-headshot-link">
+                                <img src="{{ player_a.headshot_url }}" alt="{{ player_a.name }}" class="player-headshot" loading="lazy">
+                            </a>
+
+
+                            <div class="player-name" style="color: {{ player_a.team.secondary_color }}">{{ player_a.name }}</div>
+
+                            {% if player_a.role == 'DPS' %}
+                                <img src="https://static.wikia.nocookie.net/overwatch/images/1/14/OffenseIcon.png/revision/latest?cb=20160625040759" class="player-role" alt="DPS-role" style="background-color: {{ player_a.team.secondary_color }}">
+                            {% elif player_a.role == 'SUPPORT' %}
+                                <img src="https://static.wikia.nocookie.net/overwatch/images/5/5f/SupportIcon.png/revision/latest?cb=20160625042024" class="player-role" alt="support-role" style="background-color: {{ player_a.team.secondary_color }}">
+                            {% elif player_a.role == 'TANK' %}
+                                <img src="https://static.wikia.nocookie.net/overwatch/images/6/69/TankIcon.png/revision/latest?cb=20160625041805" class="player-role" alt="tank-role" style="background-color: {{ player_a.team.secondary_color }}">
+                            {% endif %}
+
+                            <p class="player-first-name" style="color: {{ player_a.team.secondary_color }}"><strong>First name:</strong> {{ player_a.first_name }}</p>
+                            <p class="player-last-name" style="color: {{ player_a.team.secondary_color }}"><strong>Last name:</strong> {{ player_a.last_name }}</p>
+
+                            {% if player_a.team %}
+                                <a href="{% url 'team-details-page' player_a.team.slug %}">
+                                    {% if player_a.team.name == 'Boston Uprising' %}
+                                        <img src="{{ player_a.team.icon }}" alt="team-icon" class="team-icon boston-filter" loading="lazy">
+                                    {% elif player_a.team.name == 'Hangzhou Spark' %}
+                                        <img src="{{ player_a.team.icon }}" alt="team-icon" class="team-icon hangzhou-filter" loading="lazy">
+                                    {% elif player_a.team.name == 'Houston Outlaws' %}
+                                        <img src="{{ player_a.team.icon }}" alt="team-icon" class="team-icon houston-filter" loading="lazy">
+                                    {% elif player_a.team.name == 'Shanghai Dragons' %}
+                                        <img src="{{ player_a.team.icon }}" alt="team-icon" class="team-icon shanghai-filter" loading="lazy">
+                                    {% elif player_a.team.name == 'New York Excelsior' %}
+                                        <img src="{{ player_a.team.icon }}" alt="team-icon" class="team-icon new-york-filter" loading="lazy">
+                                    {% elif player_a.team.name == 'Toronto Defiant' %}
+                                        <img src="{{ player_a.team.icon }}" alt="team-icon" class="team-icon toronto-filter" loading="lazy">
+                                    {% elif player_a.team.name == 'Twisted Minds' %}
+                                        <img src="{{ player_a.team.icon }}" alt="team-icon" class="team-icon twisted-filter" loading="lazy">
+                                    {% elif player_a.team.name == 'WISP' %}
+                                        <img src="{{ player_a.team.icon }}" alt="team-icon" class="team-icon wisp-filter" loading="lazy">
+                                    {% else %}
+                                        <img src="{{ player_a.team.icon }}" alt="team-icon" class="team-icon" loading="lazy">
+                                    {% endif %}
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    </span>
+                    </div>
+
+                    <div class="hero-section">
+                        <form action="{% url 'compare-players' %}" method="GET" class="select-hero" id="hero-a-form">
+                            <label for="hero-a">Hero:</label>
+                            <select name="hero-a" id="hero-a">
+                                <option></option>
+                                {% for hero in player_a_heroes %}
+                                    <option value="{{ hero.0 }}" name="{{ hero.0 }}">{{ hero.0 }}</option>
+                                {% endfor %}
+                            </select>
+                        </form>
+
+                        <div class="hero-card" style="background-color: {{ player_a.team.primary_color }}; border: 7px solid {{ player_a.team.secondary_color }}">
+                        {% if hero_a %}
+                            {% with 'stats/images/heroes/'|add:hero_a.0|add:'.png' as path_to_hero_headshot %}
+                                <img src="{% static path_to_hero_headshot %}" alt="hero-headshot" class="hero-headshot" loading="lazy">
+                            {% endwith %}
+
+                            <p class="hero-name" style="color: {{ player_a.team.secondary_color }}">{{ hero_a.0 }}</p>
+
+                            <div class="hero-stats-container">
+
+                                <div class="hero-stats">
+                                    {% for stat in hero_a.1 %}
+                                        {% if stat %}
+                                            <div class="hero-stat {% if forloop.first %}active{% endif %}">
+                                                <p class="hero-stat-name">
+                                                    {{ stat.name }}
+                                                    {% if stat.name == 'Time Played' %}<br>(mins)
+                                                    {% else %}<br>(per 10)
+                                                    {% endif %}:
+                                                </p>
+                                                <p class="hero-stat-value">
+                                                    {% if stat.name == 'Time Spent On Fire' %}{{ stat.value }} secs
+                                                    {% else %}{{ stat.value }}
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <div class="hero-stat empty non-interactable"></div>
+                                </div>
+                            </div>
+
+                            <div class="pagination-buttons">
+                                <button class="prev-button">←</button>
+                                <button class="next-button">→</button>
+                            </div>
+                        {% endif %}
+                    </div>
+                    </div>
+
+                </div>
+
+                <div class="player-container player-b-container">
+
+                    <div class="player-section">
+                        <form action="{% url 'compare-players' %}" method="GET" class="select-player" id="player-b-form">
+                            <label for="players">Player:</label>
+                            <select name="player-b" id="player-b">
+                                <option></option>
+                                {% for player in all_players %}
+                                    <option value="{{ player.id }}" name="{{ player.name }}">{{ player.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </form>
+
+                        <span href="{{ player_b.get_absolute_url }}" class="player-card" style="background-color: {{ player_b.team.primary_color }}; border: 7px solid {{ player_b.team.secondary_color }};">
+                        {% if player_b %}
+                            <a href="{% url 'player-details-page' player_b.slug %}" class="player-headshot-link">
+                                <img src="{{ player_b.headshot_url }}" alt="{{ player_b.name }}" class="player-headshot" loading="lazy">
+                            </a>
+
+
+                            <div class="player-name" style="color: {{ player_b.team.secondary_color }}">{{ player_b.name }}</div>
+
+                            {% if player_b.role == 'DPS' %}
+                                <img src="https://static.wikia.nocookie.net/overwatch/images/1/14/OffenseIcon.png/revision/latest?cb=20160625040759" class="player-role" alt="DPS-role" style="background-color: {{ player_b.team.secondary_color }}">
+                            {% elif player_b.role == 'SUPPORT' %}
+                                <img src="https://static.wikia.nocookie.net/overwatch/images/5/5f/SupportIcon.png/revision/latest?cb=20160625042024" class="player-role" alt="support-role" style="background-color: {{ player_b.team.secondary_color }}">
+                            {% elif player_b.role == 'TANK' %}
+                                <img src="https://static.wikia.nocookie.net/overwatch/images/6/69/TankIcon.png/revision/latest?cb=20160625041805" class="player-role" alt="tank-role" style="background-color: {{ player_b.team.secondary_color }}">
+                            {% endif %}
+
+                            <p class="player-first-name" style="color: {{ player_b.team.secondary_color }}"><strong>First name:</strong> {{ player_b.first_name }}</p>
+                            <p class="player-last-name" style="color: {{ player_b.team.secondary_color }}"><strong>Last name:</strong> {{ player_b.last_name }}</p>
+
+                            {% if player_b.team %}
+                                <a href="{% url 'team-details-page' player_b.team.slug %}">
+                                    {% if player_b.team.name == 'Boston Uprising' %}
+                                        <img src="{{ player_b.team.icon }}" alt="team-icon" class="team-icon boston-filter" loading="lazy">
+                                    {% elif player_b.team.name == 'Hangzhou Spark' %}
+                                        <img src="{{ player_b.team.icon }}" alt="team-icon" class="team-icon hangzhou-filter" loading="lazy">
+                                    {% elif player_b.team.name == 'Houston Outlaws' %}
+                                        <img src="{{ player_b.team.icon }}" alt="team-icon" class="team-icon houston-filter" loading="lazy">
+                                    {% elif player_b.team.name == 'Shanghai Dragons' %}
+                                        <img src="{{ player_b.team.icon }}" alt="team-icon" class="team-icon shanghai-filter" loading="lazy">
+                                    {% elif player_b.team.name == 'New York Excelsior' %}
+                                        <img src="{{ player_b.team.icon }}" alt="team-icon" class="team-icon new-york-filter" loading="lazy">
+                                    {% elif player_b.team.name == 'Toronto Defiant' %}
+                                        <img src="{{ player_b.team.icon }}" alt="team-icon" class="team-icon toronto-filter" loading="lazy">
+                                    {% elif player_b.team.name == 'Twisted Minds' %}
+                                        <img src="{{ player_b.team.icon }}" alt="team-icon" class="team-icon twisted-filter" loading="lazy">
+                                    {% elif player_b.team.name == 'WISP' %}
+                                        <img src="{{ player_b.team.icon }}" alt="team-icon" class="team-icon wisp-filter" loading="lazy">
+                                    {% else %}
+                                        <img src="{{ player_b.team.icon }}" alt="team-icon" class="team-icon" loading="lazy">
+                                    {% endif %}
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    </span>
+                    </div>
+
+                    <div class="hero-section">
+                        <form action="{% url 'compare-players' %}" method="GET" class="select-hero" id="hero-b-form">
+                            <label for="hero-b">Hero:</label>
+                            <select name="hero-b" id="hero-b">
+                                <option></option>
+                                {% for hero in player_b_heroes %}
+                                    <option value="{{ hero.0 }}" name="{{ hero.0 }}">{{ hero.0 }}</option>
+                                {% endfor %}
+                            </select>
+                        </form>
+
+                        <div class="hero-card" style="background-color: {{ player_b.team.primary_color }}; border: 7px solid {{ player_b.team.secondary_color }}">
+                        {% if hero_b %}
+                            {% with 'stats/images/heroes/'|add:hero_b.0|add:'.png' as path_to_hero_headshot %}
+                                <img src="{% static path_to_hero_headshot %}" alt="hero-headshot" class="hero-headshot" loading="lazy">
+                            {% endwith %}
+
+                            <p class="hero-name" style="color: {{ player_b.team.secondary_color }}">{{ hero_b.0 }}</p>
+
+                            <div class="hero-stats-container">
+                                <div class="hero-stats">
+                                    {% for stat in hero_b.1 %}
+                                        {% if stat %}
+                                            <div class="hero-stat {% if forloop.first %}active{% endif %}">
+                                                <p class="hero-stat-name">
+                                                    {{ stat.name }}
+                                                    {% if stat.name == 'Time Played' %}<br>(mins)
+                                                    {% else %}<br>(per 10)
+                                                    {% endif %}:
+                                                </p>
+                                                <p class="hero-stat-value">
+                                                    {% if stat.name == 'Time Spent On Fire' %}{{ stat.value }} secs
+                                                    {% else %}{{ stat.value }}
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <div class="hero-stat empty non-interactable"></div>
+                                </div>
+                            </div>
+
+                            <div class="pagination-buttons">
+                                <button class="prev-button">←</button>
+                                <button class="next-button">→</button>
+                            </div>
+                        {% endif %}
+                    </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById('player-a').addEventListener('change', function() {
+            localStorage.setItem('selectedPlayerA', this.value);
+            localStorage.removeItem('selectedHeroA');
+            document.getElementById('player-a-form').submit();
+        });
+
+        document.getElementById('hero-a').addEventListener('change', function() {
+            localStorage.setItem('selectedHeroA', this.value);
+            document.getElementById('hero-a-form').submit();
+        });
+
+        document.getElementById('player-b').addEventListener('change', function() {
+            localStorage.setItem('selectedPlayerB', this.value);
+            localStorage.removeItem('selectedHeroB'); // Clear the selected hero for player B
+            document.getElementById('player-b-form').submit();
+        });
+
+        document.getElementById('hero-b').addEventListener('change', function() {
+            localStorage.setItem('selectedHeroB', this.value);
+            document.getElementById('hero-b-form').submit();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedPlayerA = localStorage.getItem('selectedPlayerA');
+            const selectedHeroA = localStorage.getItem('selectedHeroA');
+            const selectedPlayerB = localStorage.getItem('selectedPlayerB');
+            const selectedHeroB = localStorage.getItem('selectedHeroB');
+
+            if (selectedPlayerA) {
+                document.getElementById('player-a').value = selectedPlayerA;
+            }
+
+            if (selectedHeroA) {
+                document.getElementById('hero-a').value = selectedHeroA;
+            }
+
+            if (selectedPlayerB) {
+                document.getElementById('player-b').value = selectedPlayerB;
+            }
+
+            if (selectedHeroB) {
+                document.getElementById('hero-b').value = selectedHeroB;
+            }
+
+            // Repeat similar code for other form fields if needed
+        });
+
+        // Select all the prev and next buttons
+        const prevButtons = document.querySelectorAll('.prev-button');
+        const nextButtons = document.querySelectorAll('.next-button');
+
+        // Attach event listeners to each set of buttons
+        prevButtons.forEach((prevButton, index) => {
+            prevButton.addEventListener('click', () => {
+                scrollHeroStatsContainer(index, -1);
+            });
+        });
+
+        nextButtons.forEach((nextButton, index) => {
+            nextButton.addEventListener('click', () => {
+                scrollHeroStatsContainer(index, 1);
+            });
+        });
+
+        function scrollHeroStatsContainer(index, direction) {
+        const heroStatsContainers = document.querySelectorAll('.hero-stats-container');
+        const heroStatsContainer = heroStatsContainers[index];
+        const heroStatElements = heroStatsContainer.querySelectorAll('.hero-stat:not(.non-interactable)'); // Exclude elements with the "non-interactable" class
+
+        // Find the current active hero-stat
+        const activeIndex = Array.from(heroStatElements).findIndex(heroStat => heroStat.classList.contains('active'));
+
+        // Calculate the index of the next hero-stat
+        let nextIndex = activeIndex + direction;
+
+        // Ensure the nextIndex is within valid bounds
+        if (nextIndex < 0) {
+            nextIndex = heroStatElements.length - 1;
+        } else if (nextIndex >= heroStatElements.length) {
+            nextIndex = 0;
+        }
+
+        // Update the active state of hero-stat elements
+        heroStatElements[activeIndex].classList.remove('active');
+        heroStatElements[nextIndex].classList.add('active');
+
+        // Calculate the new scroll position and update it
+        const heroStatWidth = heroStatElements[0].offsetWidth; // Use the width of the first hero-stat
+        const margin = 10; // Adjust this value based on your margin
+        let newScrollLeft = nextIndex * (heroStatWidth + margin);
+
+        heroStatsContainer.scrollLeft = newScrollLeft;
+        }
+    </script>
+
+{% endblock %}

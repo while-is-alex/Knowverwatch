@@ -12,6 +12,8 @@
   justify-content: flex-start;
   margin: -8px 0;
   background-size: contain;
+  white-space: nowrap; /* Prevent wrapping of inline-level elements */
+  overflow-x: auto;
 }
 
 .team-name {
@@ -96,7 +98,7 @@
   display: block;
   margin: 20px auto 10px;
   object-fit: contain;
-  background-color: #fab358;
+  background-color: #232323;
   background-image: url("../images/player-headshot-background.png");
   background-size: contain;
   border: 2px solid #d5d4d4;

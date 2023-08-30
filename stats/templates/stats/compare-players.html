@@ -55,8 +55,11 @@
                             <a href="{% url 'player-details-page' player_a.slug %}" class="player-headshot-link">
                                 <img src="{{ player_a.headshot_url }}" alt="{{ player_a.name }}" class="player-headshot" loading="lazy">
                             </a>
+                        {% else %}
+                            <img src="https://images.blz-contentstack.com/v3/assets/blt321317473c90505c/bltcdcb764c3287821b/601b44aa3689c30bf149261e/Generic_Player_Icon.png" alt="No player selected" class="player-headshot" loading="lazy">
+                        {% endif %}
 
-
+                        {% if player_a %}
                             <div class="player-name" style="color: {{ player_a.team.secondary_color }}">{{ player_a.name }}</div>
 
                             {% if player_a.role == 'DPS' %}
@@ -150,6 +153,8 @@
 
                 </div>
 
+                <img src="{% static 'stats/images/vs.png' %}" alt="versus sign" class="versus-sign" loading="lazy">
+
                 <div class="player-container player-b-container">
 
                     <div class="player-section">
@@ -168,8 +173,11 @@
                             <a href="{% url 'player-details-page' player_b.slug %}" class="player-headshot-link">
                                 <img src="{{ player_b.headshot_url }}" alt="{{ player_b.name }}" class="player-headshot" loading="lazy">
                             </a>
+                        {% else %}
+                            <img src="https://images.blz-contentstack.com/v3/assets/blt321317473c90505c/bltcdcb764c3287821b/601b44aa3689c30bf149261e/Generic_Player_Icon.png" alt="No player selected" class="player-headshot" loading="lazy">
+                        {% endif %}
 
-
+                        {% if player_b %}
                             <div class="player-name" style="color: {{ player_b.team.secondary_color }}">{{ player_b.name }}</div>
 
                             {% if player_b.role == 'DPS' %}

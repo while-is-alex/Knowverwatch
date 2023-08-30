@@ -12,6 +12,8 @@
   margin: -8px 0;
   background-image: url("../images/background-pattern.png");
   background-size: contain;
+  white-space: nowrap;
+  overflow-x: auto;
 }
 
 .page-title {
@@ -22,9 +24,20 @@
 .compare-section {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   margin-top: 30px;
   margin-bottom: 30px;
+}
+
+.versus-sign {
+  width: auto;
+  max-width: 100%;
+  height: 6em;
+  display: block;
+  margin: 20px auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(150%);
 }
 
 .players-container {
@@ -32,12 +45,15 @@
   justify-content: center;
   width: 100%;
   max-width: 1200px;
-  padding: 0 20px;
+  padding: 0 10px;
+  min-width: 100%;
+  flex-shrink: 0;
+  white-space: normal;
 }
 
 .player-a-container,
 .player-b-container {
-  margin: 0 20px;
+  margin: 0 10px;
   width: calc(50% - 10px);
 }
 
@@ -53,7 +69,7 @@
   margin-bottom: 20px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
 }
 
 .select-player label {
@@ -136,9 +152,9 @@
   height: 130px;
   border-radius: 5px 5px 0 0;
   display: block;
-  margin: 20px auto 0px;
+  margin: 20px auto 0;
   object-fit: contain;
-  background-color: #fab358;
+  background-color: #262626;
   background-image: url("../images/player-headshot-background.png");
   background-size: contain;
   border: 2px solid #d5d4d4;

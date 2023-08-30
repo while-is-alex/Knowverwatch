@@ -19,7 +19,7 @@
         <div class="teams-info">
             <div class="team-info home-team-info">
                 <a href="{% url 'team-details-page' home_team.slug %}">
-                    <img class="team-logo home-team-logo" src="{{ home_team.logo }}" alt="Home Team's logo" loading="lazy">
+                    <img class="team-logo home-team-logo" src="{{ home_team.icon }}" alt="Home Team's logo" loading="lazy">
                 </a>
             </div>
 
@@ -53,7 +53,7 @@
 
             <div class="team-info away-team-info">
                 <a href="{% url 'team-details-page' away_team.slug %}">
-                    <img class="team-logo away-team-logo" src="{{ away_team.logo }}" alt="Away Team's logo" loading="lazy">
+                    <img class="team-logo away-team-logo" src="{{ away_team.icon }}" alt="Away Team's logo" loading="lazy">
                 </a>
             </div>
         </div>

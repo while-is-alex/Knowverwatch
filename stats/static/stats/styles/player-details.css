@@ -12,6 +12,7 @@
   margin: -8px 0;
   background-image: url("../images/background-pattern.png");
   background-size: contain;
+  overflow-x: auto;
 }
 
 .page-title {
@@ -79,7 +80,7 @@
   display: block;
   margin: 20px auto 10px;
   object-fit: contain;
-  background-color: #fab358;
+  background-color: #1a1a1a;
   background-image: url("../images/player-headshot-background.png");
   background-size: contain;
   border: 2px solid #d5d4d4;

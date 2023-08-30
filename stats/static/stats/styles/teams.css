@@ -40,7 +40,8 @@
 }
 
 .team-card {
-  width: calc(20% - 16px); /* 100% divided by 5 (number of cards per line) minus margins */
+  width: 16em;
+  height: 9em;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
   padding: 20px;
@@ -71,5 +72,14 @@
 }
 
 .team-card:hover {
-  background-color: #f8f8f8;
+  background-color: var(--secondary-color, #f8f8f8);
+  color: var(--secondary-font-color, black);
+}
+
+.boston-filter {
+  filter: invert(82%) sepia(82%) saturate(450%) hue-rotate(370deg) brightness(120%) contrast(98%);
+}
+
+.houston-filter {
+  filter: contrast(60%);
 }

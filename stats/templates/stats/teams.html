@@ -10,55 +10,61 @@
 {% endblock %}
 
 {% block body %}
-    <h1 class="title">Overwatch League Teams</h1>
-    <form action="{% url 'teams-page' %}" method="GET" class="select-region" id="region-form">
-        <label for="regions">Regions:</label>
-        <select name="regions" id="regions">
-            <option value="all" name="all">All</option>
-            <option value="W" name="west">West</option>
-            <option value="E" name="east">East</option>
-            <option value="C" name="contenders">Contenders</option>
-        </select>
-    </form>
     <div class="main-content">
-        {% for team in teams %}
-            <a
-                    href="{{ team.get_absolute_url }}"
-                    class="team-card"
-                    style="--secondary-font-color:
-                             {% if team.name == 'Dallas Fuel' %}white
-                             {% elif team.name == 'Florida Mayhem' %}white
-                             {% elif team.name == 'Guangzhou Charge' %}white
-                             {% elif team.name == 'Houston Outlaws' %}white
-                             {% elif team.name == 'PANTHERA' %}white
-                             {% elif team.name == 'Redbird Esports' %}white
-                             {% elif team.name == 'San Francisco Shock' %}white
-                             {% elif team.name == 'Vegas Eternal' %}white
-                             {% elif team.name == 'WISP' %}white
-                             {% else %}black{% endif %};
-                           --secondary-color:
-                             {% if team.name == 'Boston Uprising' %}{{ team.secondary_color }}
-                             {% elif team.name == 'Dreamers' %}#CD90F5FF
-                             {% elif team.name == 'Hangzhou Spark' %}{{ team.secondary_color }}
-                             {% elif team.name == 'Los Angeles Gladiators' %}{{ team.secondary_color }}
-                             {% elif team.name == 'New York Excelsior' %}{{ team.secondary_color }}
-                             {% elif team.name == 'O2 Blast' %}#CB0909FF
-                             {% elif team.name == 'PANTHERA' %}#171717
-                             {% elif team.name == 'Poker Face' %}#E1E0E0FF
-                             {% elif team.name == 'Redbird Esports' %}#171717
-                             {% elif team.name == 'Rhodes' %}#E1E0E0FF
-                             {% elif team.name == 'Sin Prisa Gaming' %}#F89459FF
-                             {% elif team.name == 'Toronto Defiant' %}{{ team.secondary_color }}
-                             {% elif team.name == 'Twisted Minds' %}{{ team.secondary_color }}
-                             {% elif team.name == 'Vancouver Titans' %}{{ team.secondary_color }}
-                             {% elif team.name == 'WISP' %}{{ team.secondary_color }}
-                             {% else %}{{ team.primary_color }}{% endif %}";
-            >
-                <img src="{{ team.logo }}" class="team-logo {% if team.name == 'Houston Outlaws' %}houston-filter{% endif %}" alt="team-logo" loading="lazy">
-                <div class="team-name">{{ team.name|upper }}</div>
-                <div class="team-code">{{ team.code }}</div>
-            </a>
-        {% endfor %}
+        <div class="page-title">
+            <h1 class="title">Teams</h1>
+        </div>
+
+        <form action="{% url 'teams-page' %}" method="GET" class="select-region" id="region-form">
+            <label for="regions">Regions:</label>
+            <select name="regions" id="regions">
+                <option value="all" name="all">All</option>
+                <option value="W" name="west">West</option>
+                <option value="E" name="east">East</option>
+                <option value="C" name="contenders">Contenders</option>
+            </select>
+        </form>
+
+        <div class="container">
+            {% for team in teams %}
+                <a
+                        href="{{ team.get_absolute_url }}"
+                        class="team-card"
+                        style="--secondary-font-color:
+                                 {% if team.name == 'Dallas Fuel' %}white
+                                 {% elif team.name == 'Florida Mayhem' %}white
+                                 {% elif team.name == 'Guangzhou Charge' %}white
+                                 {% elif team.name == 'Houston Outlaws' %}white
+                                 {% elif team.name == 'PANTHERA' %}white
+                                 {% elif team.name == 'Redbird Esports' %}white
+                                 {% elif team.name == 'San Francisco Shock' %}white
+                                 {% elif team.name == 'Vegas Eternal' %}white
+                                 {% elif team.name == 'WISP' %}white
+                                 {% else %}black{% endif %};
+                               --secondary-color:
+                                 {% if team.name == 'Boston Uprising' %}{{ team.secondary_color }}
+                                 {% elif team.name == 'Dreamers' %}#CD90F5FF
+                                 {% elif team.name == 'Hangzhou Spark' %}{{ team.secondary_color }}
+                                 {% elif team.name == 'Los Angeles Gladiators' %}{{ team.secondary_color }}
+                                 {% elif team.name == 'New York Excelsior' %}{{ team.secondary_color }}
+                                 {% elif team.name == 'O2 Blast' %}#CB0909FF
+                                 {% elif team.name == 'PANTHERA' %}#171717
+                                 {% elif team.name == 'Poker Face' %}#E1E0E0FF
+                                 {% elif team.name == 'Redbird Esports' %}#171717
+                                 {% elif team.name == 'Rhodes' %}#E1E0E0FF
+                                 {% elif team.name == 'Sin Prisa Gaming' %}#F89459FF
+                                 {% elif team.name == 'Toronto Defiant' %}{{ team.secondary_color }}
+                                 {% elif team.name == 'Twisted Minds' %}{{ team.secondary_color }}
+                                 {% elif team.name == 'Vancouver Titans' %}{{ team.secondary_color }}
+                                 {% elif team.name == 'WISP' %}{{ team.secondary_color }}
+                                 {% else %}{{ team.primary_color }}{% endif %}";
+                >
+                    <img src="{{ team.logo }}" class="team-logo {% if team.name == 'Houston Outlaws' %}houston-filter{% endif %}" alt="team-logo" loading="lazy">
+                    <div class="team-name">{{ team.name|upper }}</div>
+                    <div class="team-code">{{ team.code }}</div>
+                </a>
+            {% endfor %}
+        </div>
     </div>
 
     <script>

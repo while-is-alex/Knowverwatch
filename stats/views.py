@@ -442,9 +442,10 @@ class SearchView(View):
                 )
             )
 
-        return render(
-            request,
-            'stats/index.html',
+        return HttpResponseRedirect(
+            reverse(
+                'home-page',
+            )
         )
 
 

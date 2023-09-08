@@ -15,9 +15,44 @@ stats = Stats()
 class HomeView(View):
     def get(self, request):
 
+        regular_season = Segment.objects.get(id='owl2-2023-regular')
+        standings = regular_season.standings
+
+        standings_west = []
+        standings_east = []
+
+        for team in standings:
+            if list(team['divisions'].keys())[0] == 'west':
+                current_team = {
+                    'team_object': Team.objects.get(id=team['teamId']),
+                    'wins': int(team['gameWins']),
+                    'losses': int(team['gameLosses']),
+                    'win_rate': f"{round((int(team['gameWins']) / (int(team['gameWins']) + int(team['gameLosses']))) * 100)}%",
+                    'matches_played': int(team['gameWins']) + int(team['gameLosses']),
+                    'maps': f"{team['matchWins']}-{team['matchLosses']}-{team['gameTies']}",
+                    'differential': int(team['gameDifferential']),
+                }
+                standings_west.append(current_team)
+
+            elif list(team['divisions'].keys())[0] == 'east':
+                current_team = {
+                    'team_object': Team.objects.get(id=team['teamId']),
+                    'wins': int(team['gameWins']),
+                    'losses': int(team['gameLosses']),
+                    'win_rate': f"{round((int(team['gameWins']) / (int(team['gameWins']) + int(team['gameLosses']))) * 100)}%",
+                    'matches_played': int(team['gameWins']) + int(team['gameLosses']),
+                    'maps': f"{team['matchWins']}-{team['matchLosses']}-{team['gameTies']}",
+                    'differential': int(team['gameDifferential']),
+                }
+                standings_east.append(current_team)
+
         return render(
             request,
             'stats/index.html',
+            {
+                'teams_west': standings_west,
+                'teams_east': standings_east,
+            }
         )
 
 

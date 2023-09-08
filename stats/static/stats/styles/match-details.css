@@ -12,7 +12,7 @@
   justify-content: center;
   margin: -8px 0;
   background-size: contain;
-  white-space: nowrap; /* Prevent wrapping of inline-level elements */
+  white-space: nowrap;
   overflow-x: auto;
 }
 

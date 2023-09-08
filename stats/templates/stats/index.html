@@ -9,13 +9,82 @@
     <link rel="stylesheet" href="{% static 'stats/styles/index.css' %}">
 {% endblock %}
 
-{% block main_heading %}
-    Overwatch League
-{% endblock %}
-
-{% block header_content %}
-    <p></p>
-{% endblock %}
-
 {% block body %}
+    <div class="main-content">
+
+        <div class="west-standings">
+            <h2 class="west-title">West Playoffs</h2>
+            <p class="west-description">Playoff qualification will be based on performance in Spring and Summer Qualifiers.</p>
+
+            <div class="west-table-wrapper">
+                <table class="west-table">
+                    <thead>
+                        <tr>
+                            <th>TEAM</th>
+                            <th>RANK</th>
+                            <th>W</th>
+                            <th>L</th>
+                            <th>WIN%</th>
+                            <th>MP</th>
+                            <th>MAP W-L-T</th>
+                            <th>DIFF</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for team in teams_west %}
+                            <tr>
+                                <td><img src="{{ team.team_object.icon }}" class="team-icon"/>{{ team.team_object.name }}</td>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ team.wins }}</td>
+                                <td>{{ team.losses }}</td>
+                                <td>{{ team.win_rate }}</td>
+                                <td>{{ team.matches_played }}</td>
+                                <td>{{ team.maps }}</td>
+                                <td>{{ team.differential }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+            </table>
+            </div>
+        </div>
+
+        <div class="east-standings">
+            <h2 class="east-title">East Playoffs</h2>
+            <p class="east-description">Playoff qualification will be based on performance in Spring and Summer Qualifiers. Both Overwatch League and Contenders teams are eligible to directly qualify for Playoffs.</p>
+
+            <div class="east-table-wrapper">
+                <table class="east-table">
+                    <thead>
+                        <tr>
+                            <th>TEAM</th>
+                            <th>RANK</th>
+                            <th>W</th>
+                            <th>L</th>
+                            <th>WIN%</th>
+                            <th>MP</th>
+                            <th>MAP W-L-T</th>
+                            <th>DIFF</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for team in teams_east %}
+                            <tr>
+                                <td><img src="{{ team.team_object.icon }}" class="team-icon"/>{{ team.team_object.name }}</td>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ team.wins }}</td>
+                                <td>{{ team.losses }}</td>
+                                <td>{{ team.win_rate }}</td>
+                                <td>{{ team.matches_played }}</td>
+                                <td>{{ team.maps }}</td>
+                                <td>{{ team.differential }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+            </table>
+            </div>
+        </div>
+
+    </div>
 {% endblock %}

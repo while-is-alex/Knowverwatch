@@ -36,6 +36,13 @@
                     <label>
                         <input type="text" placeholder="Find player or team" name="search">
                     </label>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="search-message">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                     <button type="submit">Submit</button>
                 </form>
             </div>

@@ -63,9 +63,11 @@
             </div>
 
             <h2 class="schedule-title" style="margin-top: 50px;">Schedule:</h2>
+
             <div class="spoilers">
                 <a class="spoilers-link" href="{% url 'see-spoilers' team.slug %}">See Results</a>
             </div>
+
             <div class="matches">
                 {% for match in matches %}
                     <p class="match-date">{{ match.date.day }}/{{ match.date.month }}/{{ match.date.year }}</p>

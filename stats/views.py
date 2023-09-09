@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 from django.contrib import messages
 from .models import Team, Player, Segment, Match
-from datetime import datetime
+from datetime import datetime, date
 
 owl = Owl()
 stats = Stats()
@@ -15,6 +15,11 @@ stats = Stats()
 
 class HomeView(View):
     def get(self, request):
+        unformatted_today = date.today()
+        today = unformatted_today.strftime('%d/%m/%Y')
+
+        see_spoilers = request.session.get('see_spoilers')
+
         season = Segment.objects.get(id='owl2-2023-regular')
         standings = season.standings
 
@@ -42,6 +47,8 @@ class HomeView(View):
             request,
             'stats/index.html',
             {
+                'today': today,
+                'see_spoilers': see_spoilers,
                 'teams_west': standings_west,
                 'teams_east': standings_east,
             }
@@ -401,18 +408,15 @@ class SeeSpoilersView(View):
 
         request.session['see_spoilers'] = see_spoilers
 
-        try:
-            Team.objects.get(slug=slug)
+        referring_page = request.META.get('HTTP_REFERER', '/')
 
+        if slug is not None:
             return redirect(
-                'team-details-page',
+                referring_page,
                 slug=slug,
             )
 
-        except Team.DoesNotExist:
-            Match.objects.get(slug=slug)
-
+        else:
             return redirect(
-                'match-details-page',
-                slug=slug,
+                referring_page,
             )

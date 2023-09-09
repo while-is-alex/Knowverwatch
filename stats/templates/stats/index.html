@@ -11,7 +11,20 @@
 
 {% block body %}
     <div class="main-content">
-        <h1 class="page-title"><span class="highlight">Know</span>verwatch</h1>
+        <h1 class="page-title"><span class="page-title-highlight">Know</span>verwatch</h1>
+        <p class="page-info">Your source for Overwatch League information.</p>
+
+        <p class="disclaimer">DISCLAIMER</p>
+        <p class="data-info">Data in all pages is the most current to Blizzard's API. If the data displayed is not up-to-date,<br> wait a minute and refresh the page to get the most recent data.</p>
+
+        <div class="date-box">
+            <h2 class="date">{{ today }}</h2>
+            <p class="date-info">ALL DATES ARE IN DD/MM/YYYY FORMAT</p>
+        </div>
+
+        <div class="spoilers">
+            <a class="spoilers-link" href="{% url 'see-spoilers' None %}">See Spoilers</a>
+        </div>
 
         <div class="west-standings">
             <h2 class="west-title">West Playoffs</h2>
@@ -35,14 +48,25 @@
                     <tbody>
                         {% for team in teams_west %}
                             <tr>
-                                <td><img src="{{ team.team_object.icon }}" class="team-icon"/>{{ team.team_object.name }}</td>
-                                <td>{{ forloop.counter }}</td>
-                                <td>{{ team.wins }}</td>
-                                <td>{{ team.losses }}</td>
-                                <td>{{ team.win_rate }}</td>
-                                <td>{{ team.matches_played }}</td>
-                                <td>{{ team.maps }}</td>
-                                <td>{{ team.differential }}</td>
+                                {% if see_spoilers %}
+                                    <td><img src="{{ team.team_object.icon }}" class="team-icon"/>{{ team.team_object.name }}</td>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ team.wins }}</td>
+                                    <td>{{ team.losses }}</td>
+                                    <td>{{ team.win_rate }}</td>
+                                    <td>{{ team.matches_played }}</td>
+                                    <td>{{ team.maps }}</td>
+                                    <td>{{ team.differential }}</td>
+                                {% else %}
+                                    <td>< spoilers disabled ></td>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0%</td>
+                                    <td>0</td>
+                                    <td>0-0-0</td>
+                                    <td>0</td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -72,14 +96,25 @@
                     <tbody>
                         {% for team in teams_east %}
                             <tr>
-                                <td><img src="{{ team.team_object.icon }}" class="team-icon"/>{{ team.team_object.name }}</td>
-                                <td>{{ forloop.counter }}</td>
-                                <td>{{ team.wins }}</td>
-                                <td>{{ team.losses }}</td>
-                                <td>{{ team.win_rate }}</td>
-                                <td>{{ team.matches_played }}</td>
-                                <td>{{ team.maps }}</td>
-                                <td>{{ team.differential }}</td>
+                                {% if see_spoilers %}
+                                    <td><img src="{{ team.team_object.icon }}" class="team-icon"/>{{ team.team_object.name }}</td>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ team.wins }}</td>
+                                    <td>{{ team.losses }}</td>
+                                    <td>{{ team.win_rate }}</td>
+                                    <td>{{ team.matches_played }}</td>
+                                    <td>{{ team.maps }}</td>
+                                    <td>{{ team.differential }}</td>
+                                {% else %}
+                                    <td>< spoilers disabled ></td>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0%</td>
+                                    <td>0</td>
+                                    <td>0-0-0</td>
+                                    <td>0</td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                     </tbody>

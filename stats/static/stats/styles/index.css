@@ -19,10 +19,72 @@
   font-size: 4rem;
   margin-bottom: 5px;
   clear: both;
+  pointer-events: none;
 }
 
-.highlight {
+.page-title-highlight {
     color: #fe9f2b;
+}
+
+.page-info {
+  font-size: 1.1rem;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.disclaimer {
+  font-size: 0.8rem;
+  color: #777777;
+  margin-top: 0;
+  margin-bottom: 0px;
+}
+
+.data-info {
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.date-box {
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  padding: 20px;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 10px;
+}
+
+.date {
+  font-size: 2rem;
+  color: #333;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+.date-info {
+  font-size: 0.8rem;
+  color: #777777;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.spoilers-link {
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 1rem;
+  color: #ffffff;
+  background-color: #737373;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out;
+  margin-top: 20px;
+}
+
+.spoilers-link:hover {
+  background-color: #c0392b;
+}
+
+.spoilers-link:focus {
+  outline: none;
 }
 
 .west-standings,

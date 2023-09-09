@@ -1,6 +1,6 @@
 from OWLAPI import Owl
 from classes import Stats
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -14,9 +14,8 @@ stats = Stats()
 
 class HomeView(View):
     def get(self, request):
-
-        regular_season = Segment.objects.get(id='owl2-2023-regular')
-        standings = regular_season.standings
+        season = Segment.objects.get(id='owl2-2023-regular')
+        standings = season.standings
 
         standings_west = []
         standings_east = []
@@ -61,11 +60,12 @@ class TeamsView(View):
         try:
             if request.GET['regions'] == 'all':
                 all_teams = Team.objects.all().order_by('name')
+
             else:
                 selected_region = request.GET['regions']
-                print(selected_region)
                 teams_in_region = Team.objects.filter(region=selected_region).order_by('name')
                 all_teams = teams_in_region
+
         except KeyError:
             all_teams = Team.objects.all().order_by('name')
 
@@ -80,11 +80,12 @@ class TeamsView(View):
 
 class TeamDetailsView(View):
     def get(self, request, slug):
-        all_teams = Team.objects.all()
-        selected_team = Team.objects.get(slug=slug)
         see_spoilers = request.session.get('see_spoilers')
 
-        # sorts the players by role and finds their top 3 most played heroes
+        all_teams = Team.objects.all()
+        selected_team = Team.objects.get(slug=slug)
+
+        # sorts the team's players by role and finds their top 3 most played heroes
         roster = []
         for player in selected_team.players.all().order_by('role'):
 
@@ -120,13 +121,15 @@ class TeamDetailsView(View):
 
         matches_list = []
         for match in matches[:5]:
-            match_details = {}
             team_one = list(match.teams.items())[0][1]
             team_two = list(match.teams.items())[1][1]
-            match_details['home'] = team_one
-            match_details['away'] = team_two
-            match_details['date'] = match.date
-            match_details['slug'] = match.slug
+
+            match_details = {
+                'home': team_one,
+                'away': team_two,
+                'date': match.date,
+                'slug': match.slug
+            }
             matches_list.append(match_details)
 
         return render(
@@ -148,13 +151,13 @@ class PlayersView(View):
 
         paginator = Paginator(all_players, 20)
         page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
+        page_object = paginator.get_page(page_number)
 
         return render(
             request,
             'stats/players.html',
             {
-                'page_obj': page_obj,
+                'page_obj': page_object,
                 'request': request,
             }
         )
@@ -187,7 +190,7 @@ class PlayerDetailsView(View):
             hero_stats = selected_player.heroes[hero_name]
             formatted_details = stats.format_details(hero_name, hero_stats)
 
-            try:
+            try:  # checks if the current hero was played long enough
                 if formatted_details[1]:
                     heroes_details.append(formatted_details)
                 else:
@@ -211,107 +214,83 @@ class ComparePlayersView(View):
         all_players = Player.objects.all().order_by('name')
 
         # checks if there were previously selected players for comparison
-        if request.session.get('selected_player_a') is None:
-            player_a = None
-            player_a_heroes = None
-        else:
-            selected_player_a = request.session.get('selected_player_a')
-            player_a = Player.objects.get(id=selected_player_a)
-            player_a_heroes = request.session.get('selected_player_a_heroes')
+        def get_previously_selected_player_and_heroes(session_key):
+            player_id = request.session.get(session_key)
 
-        if request.session.get('selected_player_b') is None:
-            player_b = None
-            player_b_heroes = None
-        else:
-            selected_player_b = request.session.get('selected_player_b')
-            player_b = Player.objects.get(id=selected_player_b)
-            player_b_heroes = request.session.get('selected_player_b_heroes')
+            if player_id is None:
+                return None, None
+
+            player = get_object_or_404(Player, id=player_id)
+            heroes = request.session.get(f'{session_key}_heroes')
+
+            return player, heroes
+
+        player_a, player_a_heroes = get_previously_selected_player_and_heroes('selected_player_a')
+        player_b, player_b_heroes = get_previously_selected_player_and_heroes('selected_player_b')
 
         # checks if a new player is being selected for comparison
-        try:
-            player_a = Player.objects.get(id=request.GET['player-a'])
+        def get_selected_player(session_key):
+            new_selected_player = Player.objects.get(id=request.GET[session_key])
 
-            heroes_played_sorted = stats.sort_by_name(player_a.heroes)
+            heroes_played_sorted = stats.sort_by_name(new_selected_player.heroes)
             heroes_played_list = list(heroes_played_sorted)
 
-            player_a_heroes = []
+            new_selected_player_heroes = []
             for hero_name in heroes_played_list:
-                hero_stats = player_a.heroes[hero_name]
+                hero_stats = new_selected_player.heroes[hero_name]
                 formatted_details = stats.format_details(hero_name, hero_stats)
 
                 try:
                     if formatted_details[1]:
-                        player_a_heroes.append(formatted_details)
+                        new_selected_player_heroes.append(formatted_details)
                     else:
                         continue
                 except TypeError:
                     continue
 
-            request.session['selected_player_a'] = player_a.id
-            request.session['selected_player_a_heroes'] = player_a_heroes
-            request.session['selected_hero_a'] = None
+            if session_key == 'player-a':
+                request.session['selected_player_a'] = new_selected_player.id
+                request.session['selected_player_a_heroes'] = new_selected_player_heroes
+                request.session['selected_hero_a'] = None
+            elif session_key == 'player-b':
+                request.session['selected_player_b'] = new_selected_player.id
+                request.session['selected_player_b_heroes'] = new_selected_player_heroes
+                request.session['selected_hero_b'] = None
 
-        except KeyError:
-            pass
+            return new_selected_player, new_selected_player_heroes
 
-        try:
-            player_b = Player.objects.get(id=request.GET['player-b'])
-
-            heroes_played_sorted = stats.sort_by_name(player_b.heroes)
-            heroes_played_list = list(heroes_played_sorted)
-
-            player_b_heroes = []
-            for hero_name in heroes_played_list:
-                hero_stats = player_b.heroes[hero_name]
-                formatted_details = stats.format_details(hero_name, hero_stats)
-
-                try:
-                    if formatted_details[1]:
-                        player_b_heroes.append(formatted_details)
-                    else:
-                        continue
-                except TypeError:
-                    continue
-
-            request.session['selected_player_b'] = player_b.id
-            request.session['selected_player_b_heroes'] = player_b_heroes
-            request.session['selected_hero_b'] = None
-        except KeyError:
-            pass
+        if request.GET.get('player-a'):
+            player_a, player_a_heroes = get_selected_player('player-a')
+        elif request.GET.get('player-b'):
+            player_b, player_b_heroes = get_selected_player('player-b')
 
         # checks if there were previously selected heroes for comparison
-        if request.session.get('selected_hero_a') is None:
-            hero_a = None
-        else:
-            hero_a = request.session.get('selected_hero_a')
+        def get_previously_selected_hero(session_key):
+            if request.session.get(session_key) is None:
+                hero = None
+            else:
+                hero = request.session.get(session_key)
 
-        if request.session.get('selected_hero_b') is None:
-            hero_b = None
-        else:
-            hero_b = request.session.get('selected_hero_b')
+            return hero
+
+        hero_a = get_previously_selected_hero('selected_hero_a')
+        hero_b = get_previously_selected_hero('selected_hero_b')
 
         # checks if a new hero is being selected for comparison
-        try:
-            selected_hero = request.GET['hero-a']
+        def get_selected_hero(session_key):
+            selected_hero = request.GET.get(session_key)
+            if selected_hero:
+                for hero in player_a_heroes if session_key == 'hero-a' else player_b_heroes:
+                    if hero[0] == selected_hero:
+                        return hero
+            return None
 
-            for hero in player_a_heroes:
-                hero_name = hero[0]
-                if hero_name == selected_hero:
-                    hero_a = hero
-                    request.session['selected_hero_a'] = hero_a
-        except KeyError:
-            pass
-
-        try:
-            selected_hero = request.GET['hero-b']
-
-            for hero in player_b_heroes:
-                hero_name = hero[0]
-                if hero_name == selected_hero:
-                    hero_b = hero
-                    request.session['selected_hero_b'] = hero_b
-        except KeyError:
-            pass
+        if request.GET.get('hero-a'):
+            hero_a = get_selected_hero('hero-a')
+            request.session['selected_hero_a'] = hero_a
+        elif request.GET.get('hero-b'):
+            hero_b = get_selected_hero('hero-b')
+            request.session['selected_hero_b'] = hero_b
 
         return render(
             request,
@@ -330,6 +309,8 @@ class ComparePlayersView(View):
 
 class MatchDetailsView(View):
     def get(self, request, slug):
+        see_spoilers = request.session.get('see_spoilers')
+
         selected_match = Match.objects.get(slug=slug)
 
         home_team = Team.objects.get(id=list(selected_match.teams.items())[0][0])
@@ -344,8 +325,6 @@ class MatchDetailsView(View):
             away_team_final_score = int(list(selected_match.teams.items())[1][1]['score'])
         except KeyError:
             away_team_final_score = 0
-
-        see_spoilers = request.session.get('see_spoilers')
 
         games = list(selected_match.games.items())
         games_details_list = []
@@ -383,10 +362,11 @@ class MatchDetailsView(View):
         players_in_this_match = list(selected_match.players.items())
         players_list = []
         for player in players_in_this_match:
-            player_details = {}
-            player_details['player'] = Player.objects.get(id=player[1]['id'])
-            player_details['team_id'] = player[1]['teamId']
-            player_details['heroes_played'] = []
+            player_details = {
+                'player': Player.objects.get(id=player[1]['id']),
+                'team_id': player[1]['teamId'],
+                'heroes_played': []
+            }
             for hero in list(player[1]['heroes'].items()):
                 player_details['heroes_played'].append(hero[0].title())
 

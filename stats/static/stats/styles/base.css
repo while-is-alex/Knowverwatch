@@ -98,15 +98,21 @@ footer {
 }
 
 .kofi-link {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .kofi-link a {
-    text-decoration: none;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #fe9f2b;
     color: #fff;
     font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
 .kofi-link a:hover {
-    color: #fe9f2b;
+    background-color: #d38423;
 }
+

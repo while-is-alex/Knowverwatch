@@ -1,6 +1,5 @@
 .main-content {
-  background-color: #ffffff;
-  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.9);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding-top: 5px;
   padding-bottom: 40px;
@@ -14,6 +13,16 @@
   background-size: contain;
   white-space: nowrap;
   overflow-x: auto;
+}
+
+.page-title {
+  font-size: 4rem;
+  margin-bottom: 5px;
+  clear: both;
+}
+
+.highlight {
+    color: #fe9f2b;
 }
 
 .west-standings,
@@ -53,7 +62,7 @@
 
 .west-table tbody tr:hover,
 .east-table tbody tr:hover {
-  background-color: #f0f0f0; /* Change this to your desired hover background color */
+  background-color: #f0f0f0;
 }
 
 .west-table thead {
@@ -61,7 +70,7 @@
 }
 
 .east-table thead {
-  background: linear-gradient(to right, #007acc, #004e77);
+  background: linear-gradient(to right, #00cc0e, #007711);
 }
 
 .west-table th,

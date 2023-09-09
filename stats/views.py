@@ -1,10 +1,11 @@
 from OWLAPI import Owl
 from classes import Stats
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseNotFound
 from django.urls import reverse
 from django.core.paginator import Paginator
+from django.contrib import messages
 from .models import Team, Player, Segment, Match
 from datetime import datetime
 
@@ -17,33 +18,25 @@ class HomeView(View):
         season = Segment.objects.get(id='owl2-2023-regular')
         standings = season.standings
 
-        standings_west = []
-        standings_east = []
+        def get_teams_standings(region):
+            region_standings = []
+            for team in standings:
+                if list(team['divisions'].keys())[0] == region:
+                    current_team = {
+                        'team_object': Team.objects.get(id=team['teamId']),
+                        'wins': int(team['gameWins']),
+                        'losses': int(team['gameLosses']),
+                        'win_rate': f"{round((int(team['gameWins']) / (int(team['gameWins']) + int(team['gameLosses']))) * 100)}%",
+                        'matches_played': int(team['gameWins']) + int(team['gameLosses']),
+                        'maps': f"{team['matchWins']}-{team['matchLosses']}-{team['gameTies']}",
+                        'differential': int(team['gameDifferential']),
+                    }
+                    region_standings.append(current_team)
 
-        for team in standings:
-            if list(team['divisions'].keys())[0] == 'west':
-                current_team = {
-                    'team_object': Team.objects.get(id=team['teamId']),
-                    'wins': int(team['gameWins']),
-                    'losses': int(team['gameLosses']),
-                    'win_rate': f"{round((int(team['gameWins']) / (int(team['gameWins']) + int(team['gameLosses']))) * 100)}%",
-                    'matches_played': int(team['gameWins']) + int(team['gameLosses']),
-                    'maps': f"{team['matchWins']}-{team['matchLosses']}-{team['gameTies']}",
-                    'differential': int(team['gameDifferential']),
-                }
-                standings_west.append(current_team)
+            return region_standings
 
-            elif list(team['divisions'].keys())[0] == 'east':
-                current_team = {
-                    'team_object': Team.objects.get(id=team['teamId']),
-                    'wins': int(team['gameWins']),
-                    'losses': int(team['gameLosses']),
-                    'win_rate': f"{round((int(team['gameWins']) / (int(team['gameWins']) + int(team['gameLosses']))) * 100)}%",
-                    'matches_played': int(team['gameWins']) + int(team['gameLosses']),
-                    'maps': f"{team['matchWins']}-{team['matchLosses']}-{team['gameTies']}",
-                    'differential': int(team['gameDifferential']),
-                }
-                standings_east.append(current_team)
+        standings_west = get_teams_standings('west')
+        standings_east = get_teams_standings('east')
 
         return render(
             request,
@@ -82,67 +75,48 @@ class TeamDetailsView(View):
     def get(self, request, slug):
         see_spoilers = request.session.get('see_spoilers')
 
-        all_teams = Team.objects.all()
-        selected_team = Team.objects.get(slug=slug)
+        try:
+            selected_team = Team.objects.get(slug=slug)
+
+        except Team.DoesNotExist:
+            return HttpResponseNotFound('Team not found')
 
         # sorts the team's players by role and finds their top 3 most played heroes
-        roster = []
-        for player in selected_team.players.all().order_by('role'):
-
-            heroes_played = []
-            for hero in player.heroes.keys():
-                hero_details = {}
-                try:
-                    time_played = int(player.heroes[hero]['timePlayed'])
-                except KeyError:
-                    time_played = 0
-
-                hero_details['name'] = hero
-                hero_details['time_played'] = time_played
-
-                heroes_played.append(hero_details)
-
-            top3_heroes_by_time_played = sorted(
-                heroes_played,
-                key=lambda x: x['time_played'],
-                reverse=True,
-            )[:3]
-
-            roster.append((player, top3_heroes_by_time_played))
+        roster = [(player, self.get_top3_heroes(player))
+                  for player in selected_team.players.all().order_by('role')]
 
         # fetches the 5 most recent matches for the selected team
         current_year = datetime.today().year
-
         matches = Match.objects.filter(
-            teams__has_key=selected_team.id
-        ).order_by('date').filter(
-            date__year=current_year
-        )[::-1]
+            teams__has_key=selected_team.id,
+            date__year=current_year,
+        ).order_by('-date')[:5]
 
-        matches_list = []
-        for match in matches[:5]:
-            team_one = list(match.teams.items())[0][1]
-            team_two = list(match.teams.items())[1][1]
-
-            match_details = {
-                'home': team_one,
-                'away': team_two,
-                'date': match.date,
-                'slug': match.slug
-            }
-            matches_list.append(match_details)
+        matches_list = [{'home': team_values[0], 'away': team_values[1], 'date': match.date, 'slug': match.slug}
+                        for match in matches for team_values in [list(match.teams.values())]]
 
         return render(
             request,
             'stats/team-details.html',
             {
-                'all_teams': all_teams,
+                'all_teams': Team.objects.all(),
                 'team': selected_team,
                 'players': roster,
                 'matches': matches_list,
                 'see_spoilers': see_spoilers,
             }
         )
+
+    def get_top3_heroes(self, player):
+        heroes_played = []
+
+        for hero, hero_stats in player.heroes.items():
+            time_played = int(hero_stats.get('timePlayed', 0))
+
+            if time_played > 0:
+                heroes_played.append({'name': hero, 'time_played': time_played})
+
+        return sorted(heroes_played, key=lambda x: x['time_played'], reverse=True)[:3]
 
 
 class PlayersView(View):
@@ -167,7 +141,8 @@ class PlayerDetailsView(View):
     def get(self, request, slug):
         selected_player = Player.objects.get(slug=slug)
 
-        player_all_teams = selected_player.all_teams
+        player_all_teams = selected_player.all_teams  # fetch all teams associated with a player
+
         past_teams = []
         for team in player_all_teams:
             try:
@@ -313,18 +288,11 @@ class MatchDetailsView(View):
 
         selected_match = Match.objects.get(slug=slug)
 
-        home_team = Team.objects.get(id=list(selected_match.teams.items())[0][0])
-        away_team = Team.objects.get(id=list(selected_match.teams.items())[1][0])
-
-        try:
-            home_team_final_score = int(list(selected_match.teams.items())[0][1]['score'])
-        except KeyError:
-            home_team_final_score = 0
-
-        try:
-            away_team_final_score = int(list(selected_match.teams.items())[1][1]['score'])
-        except KeyError:
-            away_team_final_score = 0
+        teams_data = list(selected_match.teams.values())
+        home_team = Team.objects.get(id=teams_data[0]['id'])
+        away_team = Team.objects.get(id=teams_data[1]['id'])
+        home_team_final_score = int(teams_data[0].get('score', 0))
+        away_team_final_score = int(teams_data[1].get('score', 0))
 
         games = list(selected_match.games.items())
         games_details_list = []
@@ -389,44 +357,37 @@ class MatchDetailsView(View):
 
 
 class SearchView(View):
+    def search_players(self, search):
+        return Player.objects.filter(name__icontains=search).first()
+
+    def search_teams(self, search):
+        return Team.objects.filter(name__icontains=search).first()
+
     def get(self, request):
-        search = request.GET['search']
+        search = request.GET.get('search', '').strip().lower()
 
-        all_players = Player.objects.all()
-        player_found = None
-        for player in all_players:
-            if search.lower() in player.name.lower().split():
-                player_found = player
+        player_found = self.search_players(search)
+        team_found = self.search_teams(search)
 
-        if player_found is not None:
-
-            return HttpResponseRedirect(
-                reverse(
-                    'player-details-page',
-                    args=[player_found.slug]
-                )
+        if team_found:
+            return redirect(
+                'team-details-page',
+                slug=team_found.slug,
             )
 
-        all_teams = Team.objects.all()
-        team_found = None
-        for team in all_teams:
-            if search.lower() in team.name.lower().split():
-                team_found = team
-
-        if team_found is not None:
-
-            return HttpResponseRedirect(
-                reverse(
-                    'team-details-page',
-                    args=[team_found.slug]
-                )
+        elif player_found:
+            return redirect(
+                'player-details-page',
+                slug=player_found.slug,
             )
 
-        return HttpResponseRedirect(
-            reverse(
+        else:
+            no_results_message = "No results found for your search."
+            messages.info(request, no_results_message)
+
+            return redirect(
                 'home-page',
             )
-        )
 
 
 class SeeSpoilersView(View):
@@ -443,19 +404,15 @@ class SeeSpoilersView(View):
         try:
             Team.objects.get(slug=slug)
 
-            return HttpResponseRedirect(
-                reverse(
-                    'team-details-page',
-                    args=[slug],
-                )
+            return redirect(
+                'team-details-page',
+                slug=slug,
             )
 
         except Team.DoesNotExist:
             Match.objects.get(slug=slug)
 
-            return HttpResponseRedirect(
-                reverse(
-                    'match-details-page',
-                    args=[slug],
-                )
+            return redirect(
+                'match-details-page',
+                slug=slug,
             )

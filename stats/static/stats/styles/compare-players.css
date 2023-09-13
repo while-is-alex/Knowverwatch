@@ -157,7 +157,7 @@
   background-color: #262626;
   background-image: url("../images/player-headshot-background.png");
   background-size: contain;
-  border: 2px solid #d5d4d4;
+  border: 2px solid #262626;
   position: relative;
   pointer-events: none;
   transition: transform 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, filter 0.3s ease-in-out;
@@ -165,7 +165,7 @@
 
 .player-headshot-link:hover .player-headshot {
   transform: scale(1.02);
-  border-color: #262626;
+  border-color: #d5d4d4;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
 

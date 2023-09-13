@@ -1,9 +1,8 @@
 from OWLAPI import Owl
-from classes import Stats
+from utilities.classes import Stats
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.http import HttpResponseNotFound
-from django.urls import reverse
 from django.core.paginator import Paginator
 from django.contrib import messages
 from .models import Team, Player, Segment, Match

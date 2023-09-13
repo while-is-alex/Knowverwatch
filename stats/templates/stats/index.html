@@ -14,16 +14,16 @@
         <h1 class="page-title"><span class="page-title-highlight">Know</span>verwatch</h1>
         <p class="page-info">Your source for Overwatch League information.</p>
 
-        <p class="disclaimer">DISCLAIMER</p>
-        <p class="data-info">Data in all pages is the most current to Blizzard's API. If the data displayed is not up-to-date,<br> wait a minute and refresh the page to get the most recent data.</p>
+<!--        <p class="disclaimer">DISCLAIMER</p>-->
+<!--        <p class="data-info">Data in all pages is the most current to Blizzard's API. If the data displayed is not up-to-date,<br> wait a minute and refresh the page to get the most recent data.</p>-->
 
         <div class="date-box">
             <h2 class="date">{{ today }}</h2>
-            <p class="date-info">ALL DATES ARE IN DD/MM/YYYY FORMAT</p>
+            <p class="date-info">DD/MM/YYYY</p>
         </div>
 
         <div class="spoilers">
-            <a class="spoilers-link" href="{% url 'see-spoilers' None %}">See Spoilers</a>
+            <a class="spoilers-link" href="{% url 'see-spoilers' None %}">{% if see_spoilers %}Hide Spoilers{% else %}Show Spoilers{% endif %}</a>
         </div>
 
         <div class="west-standings">
@@ -58,7 +58,7 @@
                                     <td>{{ team.maps }}</td>
                                     <td>{{ team.differential }}</td>
                                 {% else %}
-                                    <td>< spoilers disabled ></td>
+                                    <td>< spoilers hidden ></td>
                                     <td>{{ forloop.counter }}</td>
                                     <td>0</td>
                                     <td>0</td>
@@ -106,7 +106,7 @@
                                     <td>{{ team.maps }}</td>
                                     <td>{{ team.differential }}</td>
                                 {% else %}
-                                    <td>< spoilers disabled ></td>
+                                    <td>< spoilers hidden ></td>
                                     <td>{{ forloop.counter }}</td>
                                     <td>0</td>
                                     <td>0</td>

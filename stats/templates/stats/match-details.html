@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="spoilers">
-                    <a class="spoilers-link" href="{% url 'see-spoilers' match.slug %}">See Results</a>
+                    <a class="spoilers-link" href="{% url 'see-spoilers' match.slug %}">{% if see_spoilers %}Hide Results{% else %}Show Results{% endif %}</a>
                 </div>
             </div>
 

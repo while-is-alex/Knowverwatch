@@ -65,7 +65,7 @@
             <h2 class="schedule-title" style="margin-top: 50px;">Schedule:</h2>
 
             <div class="spoilers">
-                <a class="spoilers-link" href="{% url 'see-spoilers' team.slug %}">See Results</a>
+                <a class="spoilers-link" href="{% url 'see-spoilers' team.slug %}">{% if see_spoilers %}Hide Results{% else %}Show Results{% endif %}</a>
             </div>
 
             <div class="matches">

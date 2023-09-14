@@ -98,12 +98,17 @@ class TeamDetailsView(View):
         roster = [(player, self.get_top3_heroes(player))
                   for player in selected_team.players.all().order_by('role')]
 
-        # fetches the 5 most recent matches for the selected team
+        # fetches all the matches for the selected team
         current_year = datetime.today().year
         matches = Match.objects.filter(
             teams__has_key=selected_team.id,
             date__year=current_year,
-        ).order_by('-date')[:5]
+        ).order_by('-date')
+
+        matches_ids = [match.id for match in matches]
+        for match in matches:
+            matches_ids.append(match.id)
+        update_team_database.delay(selected_team.id, matches_ids)
 
         matches_list = [{'home': team_values[0], 'away': team_values[1], 'date': match.date, 'slug': match.slug}
                         for match in matches for team_values in [list(match.teams.values())]]

@@ -1,13 +1,45 @@
 from celery import shared_task
 from .models import Team, Player, Segment, Match
 from utilities.OWLAPI import OverwatchLeague
+from datetime import date
 
 owl = OverwatchLeague()
 
 
 @shared_task
-def update_team_database(team_id):
-    pass
+def update_team_database(team_id, team_matches_ids):
+    team_response = owl.get_team(team_id)
+    try:
+        alternate_id = int(team_response['alternateIds'][0]['id'])
+    except IndexError:
+        alternate_id = None
+
+    name = team_response['name']
+    code = team_response['code']
+    logo = team_response['logo']
+    icon = team_response['icon']
+    try:
+        primary_color = f"#{team_response['primaryColor']}"
+    except KeyError:
+        primary_color = None
+
+    try:
+        secondary_color = f"#{team_response['secondaryColor']}"
+    except KeyError:
+        secondary_color = None
+
+    Team.objects.filter(id=team_id).update(
+        alternate_id=alternate_id,
+        name=name,
+        code=code,
+        logo=logo,
+        icon=icon,
+        primary_color=primary_color,
+        secondary_color=secondary_color,
+    )
+
+    for match_id in team_matches_ids:
+        update_match_database(match_id)
 
 
 @shared_task
@@ -80,7 +112,53 @@ def update_segment_database(segment_id):
 
 @shared_task
 def update_match_database(match_id):
-    pass
+    match_response = owl.get_match(match_id)
+
+    season = int(match_response['seasonId'])
+    segment = Segment.objects.get(id=match_response['segmentId'])
+
+    date_unformatted = match_response['localScheduledDate']
+    split_date = date_unformatted.split('-')
+    date_object = date(int(split_date[0]), int(split_date[1]), int(split_date[2]))
+
+    state = match_response['state']
+    teams = match_response['teams']
+    games = match_response['games']
+    players = match_response['players']
+
+    try:
+        if match_response['winner'] is not None:
+            winner_id = int(match_response['winner'])
+        else:
+            winner_id = None
+    except KeyError:
+        winner_id = None
+
+    match_url = None
+    for region in match_response['hyperlinks']:
+        if region['contentLanguage'] == 'en':
+            match_url = region['value']
+
+    print(f'Season: {season}\n'
+          f'Segment: {segment}\n'
+          f'Date: {date_object}\n'
+          f'State: {state}\n'
+          f'Games: {games}\n'
+          f'Players: {players}\n'
+          f'Winner: {winner_id}\n'
+          f'URL: {match_url}')
+
+    Match.objects.filter(id=match_id).update(
+        season=season,
+        segment=segment,
+        date=date,
+        state=state,
+        teams=teams,
+        games=games,
+        players=players,
+        winner_id=winner_id,
+        match_url=match_url,
+    )
 
 
 @shared_task

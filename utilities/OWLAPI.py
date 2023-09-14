@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import os
 
 
-class Owl:
+class OverwatchLeague:
     def __init__(self):
         """Generates an authorization token for the current session and
         initializes the endpoint and params for the http request."""

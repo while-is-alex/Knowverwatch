@@ -1,4 +1,3 @@
-from OWLAPI import Owl
 from utilities.classes import Stats
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
@@ -6,18 +5,26 @@ from django.http import HttpResponseNotFound
 from django.core.paginator import Paginator
 from django.contrib import messages
 from .models import Team, Player, Segment, Match
-from datetime import datetime, date
+from datetime import datetime
+from django.utils import timezone
+from .tasks import update_team_database, update_player_database, update_segment_database, update_team_database
 
-owl = Owl()
 stats = Stats()
 
 
 class HomeView(View):
     def get(self, request):
-        unformatted_today = date.today()
-        today = unformatted_today.strftime('%d/%m/%Y')
-
         see_spoilers = request.session.get('see_spoilers')
+
+        current_datetime = timezone.now()
+        current_date = current_datetime.date()
+        today = current_date.strftime('%d/%m/%Y')
+
+        current_segment = Segment.objects.filter(
+            first_match__lte=current_datetime,
+            last_match__gte=current_datetime,
+        ).first()
+        print(current_segment)
 
         season = Segment.objects.get(id='owl2-2023-regular')
         standings = season.standings
@@ -146,6 +153,7 @@ class PlayersView(View):
 class PlayerDetailsView(View):
     def get(self, request, slug):
         selected_player = Player.objects.get(slug=slug)
+        update_player_database.delay(selected_player.id)
 
         player_all_teams = selected_player.all_teams  # fetch all teams associated with a player
 

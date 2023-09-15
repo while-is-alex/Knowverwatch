@@ -21,7 +21,7 @@
 
 {% block body %}
     <div class="main-content">
-        <h1 class="page-title">{{ player.first_name }} "{{ player.name }}" {{ player.last_name }}</h1>
+        <h1 class="page-title">{% if player.first_name %}{{ player.first_name }}{% endif %} "{{ player.name }}" {% if player.last_name %}{{ player.last_name }}{% endif %}</h1>
 
         <div class="container">
             <span href="{{ player.get_absolute_url }}" class="player-card" style="background-color: {{ player.team.primary_color }}; border: 7px solid {{ player.team.secondary_color }};">

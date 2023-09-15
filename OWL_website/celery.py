@@ -16,21 +16,10 @@ app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 # Celery Beat settings
 app.conf.beat_schedule = {
-    'update-teams': {
-        'task': 'stats.tasks.update_all_teams_database',
-        'schedule': crontab(hour=2, minute=0),
-    },
-    'update-players': {
-        'task': 'stats.tasks.update_all_players_database',
-        'schedule': crontab(hour=3, minute=0),
-    },
-    'update-segments': {
-        'task': 'stats.tasks.update_all_segments_database',
+
+    'update-database': {
+        'task': 'stats.tasks.update_the_whole_database',
         'schedule': crontab(hour=4, minute=0),
-    },
-    'update-matches': {
-        'task': 'stats.tasks.update_all_matches_database',
-        'schedule': crontab(hour=5, minute=0),
     },
 }
 

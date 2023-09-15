@@ -7,7 +7,7 @@ from django.contrib import messages
 from .models import Team, Player, Segment, Match
 from datetime import datetime
 from django.utils import timezone
-from .tasks import update_team_database, update_player_database, update_segment_database, update_team_database
+from .tasks import update_team_database, update_player_database, update_segment_database, update_match_database, update_the_whole_database
 
 stats = Stats()
 
@@ -20,14 +20,13 @@ class HomeView(View):
         current_date = current_datetime.date()
         today = current_date.strftime('%d/%m/%Y')
 
-        current_segment = Segment.objects.filter(
-            first_match__lte=current_datetime,
-            last_match__gte=current_datetime,
-        ).first()
-        print(current_segment)
-
-        season = Segment.objects.get(id='owl2-2023-regular')
-        standings = season.standings
+        # current_segment = Segment.objects.filter(
+        #     first_match__lte=current_datetime,
+        #     last_match__gte=current_datetime,
+        # ).first()
+        current_segment = Segment.objects.get(id='owl2-2023-regular')
+        update_segment_database.delay(current_segment.id)
+        standings = current_segment.standings
 
         def get_teams_standings(region):
             region_standings = []
@@ -105,9 +104,7 @@ class TeamDetailsView(View):
             date__year=current_year,
         ).order_by('-date')
 
-        matches_ids = [match.id for match in matches]
-        for match in matches:
-            matches_ids.append(match.id)
+        matches_ids = [match.id for match in matches if match.winner_id is None]
         update_team_database.delay(selected_team.id, matches_ids)
 
         matches_list = [{'home': team_values[0], 'away': team_values[1], 'date': match.date, 'slug': match.slug}
@@ -306,6 +303,7 @@ class MatchDetailsView(View):
         see_spoilers = request.session.get('see_spoilers')
 
         selected_match = Match.objects.get(slug=slug)
+        update_match_database.delay(selected_match.id)
 
         teams_data = list(selected_match.teams.values())
         home_team = Team.objects.get(id=teams_data[0]['id'])

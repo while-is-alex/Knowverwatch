@@ -260,10 +260,10 @@ def create_player_in_database(player_id, player_data):
 
 @shared_task
 def create_segment_in_database(segment_id, segment_data):
-    name = segment_data['name']
-    season = segment_data['seasonId']
-    teams = segment_data['teams']
-    players = segment_data['players']
+    name = segment_data.get('name')
+    season = segment_data.get('seasonId')
+    teams = segment_data.get('teams')
+    players = segment_data.get('players')
     standings = segment_data.get('standings')
     first_match = parse_timestamp(segment_data.get('firstMatchStart'))
     last_match = parse_timestamp(segment_data.get('lastMatchStart'))
@@ -284,7 +284,11 @@ def create_segment_in_database(segment_id, segment_data):
 @shared_task
 def create_match_in_database(match_id, match_data):
     season = int(match_data['seasonId'])
-    segment = Segment.objects.get(id=match_data['segmentId'])
+    segment_id = match_data.get('segmentId')
+    if segment_id is not None:
+        segment = Segment.objects.get(id=segment_id)
+    else:
+        segment = None
 
     date_unformatted = match_data['localScheduledDate']
     split_date = date_unformatted.split('-')
@@ -323,6 +327,7 @@ def create_match_in_database(match_id, match_data):
     new_match.save()
 
 
+@shared_task
 def update_database(model_class, data_items, create_in_database_function):
     for item_id, item_data in data_items.items():
         try:

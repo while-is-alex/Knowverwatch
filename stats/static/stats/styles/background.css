@@ -16,7 +16,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center bottom;
-    z-index: -1; /* Set z-index to push the background behind the content */
+    z-index: -1;
 }
 
 .content-container {

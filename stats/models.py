@@ -78,9 +78,9 @@ class Player(models.Model):
     )
     number = models.IntegerField(null=True)
     all_teams = models.JSONField()
-    heroes = models.JSONField()
-    stats = models.JSONField()
-    segment_stats = models.JSONField()
+    heroes = models.JSONField(null=True)
+    stats = models.JSONField(null=True)
+    segment_stats = models.JSONField(null=True)
     slug = models.SlugField(
         default='',
         blank=True,
@@ -139,10 +139,12 @@ class Match(models.Model):
         related_name='matches',
     )
     date = models.DateField()
+    start_timestamp = models.DateTimeField(null=True)
+    end_timestamp = models.DateTimeField(null=True)
     state = models.CharField(max_length=100)
-    teams = models.JSONField()
-    games = models.JSONField()
-    players = models.JSONField()
+    teams = models.JSONField(null=True)
+    games = models.JSONField(null=True)
+    players = models.JSONField(null=True)
     winner_id = models.IntegerField(null=True)
     match_url = models.URLField(null=True)
     slug = models.SlugField(
@@ -164,3 +166,32 @@ class Match(models.Model):
 
     class Meta:
         verbose_name_plural = 'Matches'
+
+
+class Award(models.Model):
+    name = models.CharField(max_length=300)
+    year = models.IntegerField(null=True)
+    player = models.ForeignKey(
+        Player,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='awards',
+    )
+    nominee = models.BooleanField(null=True)
+    winner = models.BooleanField(null=True)
+    slug = models.SlugField(
+        default='',
+        blank=True,
+        null=False,
+        db_index=True,
+    )
+
+    def __str__(self):
+        return f'{self.name} ({self.year})'
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.id)
+        super().save(*args, **kwargs)
+
+    # def get_absolute_url(self):
+    #     return reverse('awards-page', args=[self.slug])

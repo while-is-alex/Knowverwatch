@@ -89,7 +89,7 @@ class TeamDetailsView(View):
 
         try:
             selected_team = Team.objects.get(slug=slug)
-
+            update_team_database.delay(selected_team.id)
         except Team.DoesNotExist:
             return HttpResponseNotFound('Team not found')
 
@@ -103,9 +103,6 @@ class TeamDetailsView(View):
             teams__has_key=selected_team.id,
             date__year=current_year,
         ).order_by('-date')
-
-        matches_ids = [match.id for match in matches if match.winner_id is None]
-        update_team_database.delay(selected_team.id, matches_ids)
 
         matches_list = [{'home': team_values[0], 'away': team_values[1], 'date': match.date, 'slug': match.slug}
                         for match in matches for team_values in [list(match.teams.values())]]
@@ -157,7 +154,7 @@ class PlayerDetailsView(View):
         selected_player = Player.objects.get(slug=slug)
         update_player_database.delay(selected_player.id)
 
-        player_all_teams = selected_player.all_teams  # fetch all teams associated with a player
+        player_all_teams = selected_player.all_teams
 
         past_teams = []
         for team in player_all_teams:
@@ -173,7 +170,7 @@ class PlayerDetailsView(View):
             except Team.DoesNotExist:
                 continue
 
-        heroes_played_sorted = stats.sort_by_time_played(selected_player.heroes)
+        heroes_played_sorted = stats.sort_by_time_played(selected_player.heroes) if selected_player.heroes else []
         heroes_played_list = list(heroes_played_sorted)
 
         heroes_details = []

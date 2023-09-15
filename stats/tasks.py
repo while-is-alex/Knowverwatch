@@ -7,7 +7,7 @@ owl = OverwatchLeague()
 
 
 @shared_task
-def update_team_database(team_id, team_matches_ids):
+def update_team_database(team_id):
     team_response = owl.get_team(team_id)
 
     alternate_ids = team_response.get('alternateIds', [])
@@ -22,7 +22,7 @@ def update_team_database(team_id, team_matches_ids):
     primary_color = f'#{unformatted_primary_color}' if unformatted_primary_color else None
 
     unformatted_secondary_color = team_response.get('secondaryColor')
-    secondary_color = f'#{unformatted_primary_color}' if unformatted_secondary_color else None
+    secondary_color = f'#{unformatted_secondary_color}' if unformatted_secondary_color else None
 
     Team.objects.filter(id=team_id).update(
         alternate_id=alternate_id,
@@ -34,6 +34,13 @@ def update_team_database(team_id, team_matches_ids):
         secondary_color=secondary_color,
     )
 
+    current_year = datetime.today().year
+    matches = Match.objects.filter(
+        teams__has_key=team_id,
+        date__year=current_year,
+    ).order_by('-date')
+
+    team_matches_ids = [match.id for match in matches if match.winner_id is None]
     for match_id in team_matches_ids:
         update_match_database(match_id)
 
@@ -183,7 +190,7 @@ def create_team_in_database(team_id, team_data):
     primary_color = f'#{unformatted_primary_color}' if unformatted_primary_color else None
 
     unformatted_secondary_color = team_data.get('secondaryColor')
-    secondary_color = f'#{unformatted_primary_color}' if unformatted_secondary_color else None
+    secondary_color = f'#{unformatted_secondary_color}' if unformatted_secondary_color else None
 
     new_team = Team(
         id=team_id,
@@ -328,10 +335,11 @@ def create_match_in_database(match_id, match_data):
 
 
 @shared_task
-def update_database(model_class, data_items, create_in_database_function):
+def update_database(model_class, data_items, create_in_database_function, update_database_function):
     for item_id, item_data in data_items.items():
         try:
             model_class.objects.get(id=item_id)
+            update_database_function(item_id)
         except model_class.DoesNotExist:
             create_in_database_function(item_id, item_data)
 
@@ -340,7 +348,7 @@ def update_database(model_class, data_items, create_in_database_function):
 def update_the_whole_database():
     response = owl.summary()
 
-    update_database(Team, response['teams'], create_team_in_database)
-    update_database(Player, response['players'], create_player_in_database)
-    update_database(Segment, response['segments'], create_segment_in_database)
-    update_database(Match, response['matches'], create_match_in_database)
+    update_database(Team, response['teams'], create_team_in_database, update_team_database)
+    update_database(Player, response['players'], create_player_in_database, update_player_database)
+    update_database(Segment, response['segments'], create_segment_in_database, update_segment_database)
+    update_database(Match, response['matches'], create_match_in_database, update_match_database)

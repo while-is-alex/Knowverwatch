@@ -9,24 +9,20 @@ owl = OverwatchLeague()
 @shared_task
 def update_team_database(team_id, team_matches_ids):
     team_response = owl.get_team(team_id)
-    try:
-        alternate_id = int(team_response['alternateIds'][0]['id'])
-    except IndexError:
-        alternate_id = None
+
+    alternate_ids = team_response.get('alternateIds', [])
+    alternate_id = alternate_ids[0]['id'] if alternate_ids else None
 
     name = team_response['name']
     code = team_response['code']
     logo = team_response['logo']
     icon = team_response['icon']
-    try:
-        primary_color = f"#{team_response['primaryColor']}"
-    except KeyError:
-        primary_color = None
 
-    try:
-        secondary_color = f"#{team_response['secondaryColor']}"
-    except KeyError:
-        secondary_color = None
+    unformatted_primary_color = team_response.get('primaryColor')
+    primary_color = f'#{unformatted_primary_color}' if unformatted_primary_color else None
+
+    unformatted_secondary_color = team_response.get('secondaryColor')
+    secondary_color = f'#{unformatted_primary_color}' if unformatted_secondary_color else None
 
     Team.objects.filter(id=team_id).update(
         alternate_id=alternate_id,
@@ -46,53 +42,45 @@ def update_team_database(team_id, team_matches_ids):
 def update_player_database(player_id):
     player_response = owl.get_player(player_id)
 
-    try:
-        alternate_id = int(player_response['alternateIds'][0]['id'])
-    except IndexError:
-        alternate_id = None
+    alternate_id = None
+    if 'alternateIds' in player_response:
+        alternate_id_list = player_response['alternateIds']
+        if alternate_id_list:
+            alternate_id = int(alternate_id_list[0]['id'])
 
-    headshot_url = player_response.get('headshotUrl', 'https://images.blz-contentstack.com/v3/assets/blt321317473c90505c/bltcdcb764c3287821b/601b44aa3689c30bf149261e/Generic_Player_Icon.png')
+    headshot_url = player_response.get(
+        'headshotUrl',
+        'https://images.blz-contentstack.com/v3/assets/blt321317473c90505c/bltcdcb764c3287821b/601b44aa3689c30bf149261e/Generic_Player_Icon.png'
+    )
     if headshot_url == 'https://images.blz-contentstack.com':
         headshot_url = 'https://images.blz-contentstack.com/v3/assets/blt321317473c90505c/bltcdcb764c3287821b/601b44aa3689c30bf149261e/Generic_Player_Icon.png'
 
     name = player_response['name']
-    first_name = player_response.get('givenName', None)
-    last_name = player_response.get('familyName', None)
+    first_name = player_response.get('givenName')
+    last_name = player_response.get('familyName')
 
-    try:
-        role = player_response['role']
-    except KeyError:
-        role = None
+    role_mapping = {
+        'offense': 'DPS',
+        'tank': 'TANK',
+        'support': 'SUPPORT'
+    }
+    role = role_mapping.get(player_response.get('role'))
 
-    if role == 'offense':
-        role = 'DPS'
-    else:
-        if role:
-            role = role.upper()
-
-    current_teams_list = player_response['currentTeams']
     team = None
-    if current_teams_list:
-        current_team = current_teams_list[0]
+    current_teams_list = player_response.get('currentTeams', [])
+    for current_team in current_teams_list:
         try:
             team = Team.objects.get(id=current_team)
-            print(team)
+            break
         except Team.DoesNotExist:
-            try:
-                current_team = current_teams_list[1]
-                team = Team.objects.get(id=current_team)
-                print(team)
-            except Team.DoesNotExist:
-                team = None
-    try:
-        number = int(player_response['number'])
-    except KeyError:
-        number = None
+            continue
 
-    all_teams = player_response['teams']
-    heroes = player_response['heroes']
-    stats = player_response['stats']
-    segment_stats = player_response['segmentStats']
+    number = player_response.get('number')
+
+    all_teams = player_response.get('teams', [])
+    heroes = player_response.get('heroes', [])
+    stats = player_response.get('stats', {})
+    segment_stats = player_response.get('segmentStats', {})
 
     Player.objects.filter(id=player_id).update(
         alternate_id=alternate_id,
@@ -110,6 +98,12 @@ def update_player_database(player_id):
     )
 
 
+def parse_timestamp(timestamp):
+    if timestamp is not None:
+        return datetime.fromtimestamp(timestamp / 1000, tz=timezone.utc)
+    return None
+
+
 @shared_task
 def update_segment_database(segment_id):
     segment_response = owl.get_segment(segment_id)
@@ -118,22 +112,9 @@ def update_segment_database(segment_id):
     season = segment_response['seasonId']
     teams = segment_response['teams']
     players = segment_response['players']
-    try:
-        standings = segment_response['standings']
-    except KeyError:
-        standings = None
-
-    try:
-        first_match_seconds = segment_response['firstMatchStart'] / 1000
-        first_match = datetime.fromtimestamp(first_match_seconds, tz=timezone.utc)
-    except KeyError:
-        first_match = None
-
-    try:
-        last_match_seconds = segment_response['lastMatchStart'] / 1000
-        last_match = datetime.fromtimestamp(last_match_seconds, tz=timezone.utc)
-    except KeyError:
-        last_match = None
+    standings = segment_response.get('standings')
+    first_match = parse_timestamp(segment_response.get('firstMatchStart'))
+    last_match = parse_timestamp(segment_response.get('lastMatchStart'))
 
     Segment.objects.filter(id=segment_id).update(
         name=name,
@@ -157,35 +138,21 @@ def update_match_database(match_id):
     split_date = date_unformatted.split('-')
     date_object = date(int(split_date[0]), int(split_date[1]), int(split_date[2]))
 
-    try:
-        start_seconds = match_response['startTimestamp'] / 1000
-        start_timestamp = datetime.fromtimestamp(start_seconds, tz=timezone.utc)
-    except KeyError:
-        start_timestamp = None
+    start_timestamp = parse_timestamp(match_response.get('startTimestamp'))
+    end_timestamp = parse_timestamp(match_response.get('endTimestamp'))
+    state = match_response.get('state')
+    teams = match_response.get('teams')
+    games = match_response.get('games')
+    players = match_response.get('players')
 
-    try:
-        end_seconds = match_response['endTimestamp'] / 1000
-        end_timestamp = datetime.fromtimestamp(end_seconds, tz=timezone.utc)
-    except KeyError:
-        end_timestamp = None
-
-    state = match_response['state']
-    teams = match_response['teams']
-    games = match_response['games']
-    players = match_response['players']
-
-    try:
-        if match_response['winner'] is not None:
-            winner_id = int(match_response['winner'])
-        else:
-            winner_id = None
-    except KeyError:
-        winner_id = None
+    winner_id = match_response.get('winner')
+    if winner_id is not None:
+        winner_id = int(winner_id)
 
     match_url = None
-    for region in match_response['hyperlinks']:
-        if region['contentLanguage'] == 'en':
-            match_url = region['value']
+    for region in match_response.get('hyperlinks', []):
+        if region.get('contentLanguage') == 'en':
+            match_url = region.get('value')
 
     Match.objects.filter(id=match_id).update(
         season=season,
@@ -203,28 +170,20 @@ def update_match_database(match_id):
 
 
 @shared_task
-def create_team_in_database(team_items):
-    team_id = team_items[0]
+def create_team_in_database(team_id, team_data):
+    alternate_ids = team_data.get('alternateIds', [])
+    alternate_id = alternate_ids[0]['id'] if alternate_ids else None
 
-    try:
-        alternate_id = int(team_items[1]['alternateIds'][0]['id'])
-    except IndexError:
-        alternate_id = None
+    name = team_data['name']
+    code = team_data['code']
+    logo = team_data['logo']
+    icon = team_data['icon']
 
-    name = team_items[1]['name']
-    code = team_items[1]['code']
-    logo = team_items[1]['logo']
-    icon = team_items[1]['icon']
+    unformatted_primary_color = team_data.get('primaryColor')
+    primary_color = f'#{unformatted_primary_color}' if unformatted_primary_color else None
 
-    try:
-        primary_color = f"#{team_items[1]['primaryColor']}"
-    except KeyError:
-        primary_color = None
-
-    try:
-        secondary_color = f"#{team_items[1]['secondaryColor']}"
-    except KeyError:
-        secondary_color = None
+    unformatted_secondary_color = team_data.get('secondaryColor')
+    secondary_color = f'#{unformatted_primary_color}' if unformatted_secondary_color else None
 
     new_team = Team(
         id=team_id,
@@ -241,73 +200,45 @@ def create_team_in_database(team_items):
 
 
 @shared_task
-def create_player_in_database(player_items):
-    player_id = int(player_items[0])
+def create_player_in_database(player_id, player_data):
+    alternate_id = None
+    if 'alternateIds' in player_data:
+        alternate_id_list = player_data['alternateIds']
+        if alternate_id_list:
+            alternate_id = int(alternate_id_list[0]['id'])
 
-    try:
-        alternate_id = int(player_items[1]['alternateIds'][0]['id'])
-    except IndexError:
-        alternate_id = None
-
-    headshot_url = player_items[1].get('headshotUrl', 'https://images.blz-contentstack.com/v3/assets/blt321317473c90505c/bltcdcb764c3287821b/601b44aa3689c30bf149261e/Generic_Player_Icon.png')
+    headshot_url = player_data.get(
+        'headshotUrl',
+        'https://images.blz-contentstack.com/v3/assets/blt321317473c90505c/bltcdcb764c3287821b/601b44aa3689c30bf149261e/Generic_Player_Icon.png'
+    )
     if headshot_url == 'https://images.blz-contentstack.com':
         headshot_url = 'https://images.blz-contentstack.com/v3/assets/blt321317473c90505c/bltcdcb764c3287821b/601b44aa3689c30bf149261e/Generic_Player_Icon.png'
 
-    name = player_items[1]['name']
-    first_name = player_items[1].get('givenName', None)
-    last_name = player_items[1].get('familyName', None)
+    name = player_data['name']
+    first_name = player_data.get('givenName')
+    last_name = player_data.get('familyName')
 
-    try:
-        role = player_items[1]['role']
-    except KeyError:
-        role = None
-
-    if role == 'offense':
-        role = 'DPS'
-    else:
-        if role:
-            role = role.upper()
-
-    try:
-        current_teams_list = player_items[1]['currentTeams']
-    except KeyError:
-        current_teams_list = None
+    role_mapping = {
+        'offense': 'DPS',
+        'tank': 'TANK',
+        'support': 'SUPPORT'
+    }
+    role = role_mapping.get(player_data.get('role'))
 
     team = None
-    if current_teams_list:
+    current_teams_list = player_data.get('currentTeams', [])
+    for current_team in current_teams_list:
         try:
-            current_team = current_teams_list[0]
             team = Team.objects.get(id=current_team)
-            print(team)
+            break
         except Team.DoesNotExist:
-            try:
-                current_team = current_teams_list[1]
-                team = Team.objects.get(id=current_team)
-                print(team)
-            except Team.DoesNotExist:
-                team = None
+            continue
 
-    try:
-        number = int(player_items[1]['number'])
-    except KeyError:
-        number = None
-
-    all_teams = player_items[1]['teams']
-
-    try:
-        heroes = player_items[1]['heroes']
-    except KeyError:
-        heroes = None
-
-    try:
-        stats = player_items[1]['stats']
-    except KeyError:
-        stats = None
-
-    try:
-        segment_stats = player_items[1]['segmentStats']
-    except KeyError:
-        segment_stats = None
+    number = player_data.get('number')
+    all_teams = player_data.get('teams', [])
+    heroes = player_data.get('heroes', [])
+    stats = player_data.get('stats', {})
+    segment_stats = player_data.get('segmentStats', {})
 
     new_player = Player(
         id=player_id,
@@ -328,30 +259,14 @@ def create_player_in_database(player_items):
 
 
 @shared_task
-def create_segment_in_database(segment_items):
-    segment_id = segment_items[0]
-
-    name = segment_items[1]['name']
-    season = segment_items[1]['seasonId']
-    teams = segment_items[1]['teams']
-    players = segment_items[1]['players']
-
-    try:
-        standings = segment_items[1]['standings']
-    except KeyError:
-        standings = None
-
-    try:
-        first_match_seconds = segment_items[1]['firstMatchStart'] / 1000
-        first_match = datetime.fromtimestamp(first_match_seconds, tz=timezone.utc)
-    except KeyError:
-        first_match = None
-
-    try:
-        last_match_seconds = segment_items[1]['lastMatchStart'] / 1000
-        last_match = datetime.fromtimestamp(last_match_seconds, tz=timezone.utc)
-    except KeyError:
-        last_match = None
+def create_segment_in_database(segment_id, segment_data):
+    name = segment_data['name']
+    season = segment_data['seasonId']
+    teams = segment_data['teams']
+    players = segment_data['players']
+    standings = segment_data.get('standings')
+    first_match = parse_timestamp(segment_data.get('firstMatchStart'))
+    last_match = parse_timestamp(segment_data.get('lastMatchStart'))
 
     new_segment = Segment(
         id=segment_id,
@@ -367,57 +282,29 @@ def create_segment_in_database(segment_items):
 
 
 @shared_task
-def create_match_in_database(match_items):
-    match_id = match_items[0]
+def create_match_in_database(match_id, match_data):
+    season = int(match_data['seasonId'])
+    segment = Segment.objects.get(id=match_data['segmentId'])
 
-    season = int(match_items[1]['seasonId'])
-    segment = Segment.objects.get(id=match_items[1]['segmentId'])
-
-    date_unformatted = match_items[1]['localScheduledDate']
+    date_unformatted = match_data['localScheduledDate']
     split_date = date_unformatted.split('-')
     date_object = date(int(split_date[0]), int(split_date[1]), int(split_date[2]))
 
-    try:
-        start_seconds = match_items[1]['startTimestamp'] / 1000
-        start_timestamp = datetime.fromtimestamp(start_seconds, tz=timezone.utc)
-    except KeyError:
-        start_timestamp = None
+    start_timestamp = parse_timestamp(match_data.get('startTimestamp'))
+    end_timestamp = parse_timestamp(match_data.get('endTimestamp'))
+    state = match_data['state']
+    teams = match_data.get('teams')
+    games = match_data.get('games')
+    players = match_data.get('players')
 
-    try:
-        end_seconds = match_items[1]['endTimestamp'] / 1000
-        end_timestamp = datetime.fromtimestamp(end_seconds, tz=timezone.utc)
-    except KeyError:
-        end_timestamp = None
-
-    state = match_items[1]['state']
-
-    try:
-        teams = match_items[1]['teams']
-    except KeyError:
-        teams = None
-
-    try:
-        games = match_items[1]['games']
-    except KeyError:
-        games = None
-
-    try:
-        players = match_items[1]['players']
-    except KeyError:
-        players = None
-
-    try:
-        if match_items[1]['winner'] is not None:
-            winner_id = int(match_items[1]['winner'])
-        else:
-            winner_id = None
-    except KeyError:
-        winner_id = None
+    winner_id = match_data.get('winner')
+    if winner_id is not None:
+        winner_id = int(winner_id)
 
     match_url = None
-    for region in match_items[1]['hyperlinks']:
-        if region['contentLanguage'] == 'en':
-            match_url = region['value']
+    for region in match_data.get('hyperlinks', []):
+        if region.get('contentLanguage') == 'en':
+            match_url = region.get('value')
 
     new_match = Match(
         id=match_id,
@@ -436,34 +323,19 @@ def create_match_in_database(match_items):
     new_match.save()
 
 
+def update_database(model_class, data_items, create_in_database_function):
+    for item_id, item_data in data_items.items():
+        try:
+            model_class.objects.get(id=item_id)
+        except model_class.DoesNotExist:
+            create_in_database_function(item_id, item_data)
+
+
 @shared_task
 def update_the_whole_database():
     response = owl.summary()
 
-    teams = response['teams']
-    for team in teams.items():
-        try:
-            Team.objects.get(id=team[0])
-        except Team.DoesNotExist:
-            create_team_in_database(team)
-
-    players = response['players']
-    for player in players.items():
-        try:
-            Player.objects.get(id=player[0])
-        except Player.DoesNotExist:
-            create_player_in_database(player)
-
-    segments = response['segments']
-    for segment in segments.items():
-        try:
-            Segment.objects.get(id=segment[0])
-        except Segment.DoesNotExist:
-            create_segment_in_database(segment)
-
-    matches = response['matches']
-    for match in matches.items():
-        try:
-            Match.objects.get(id=match[0])
-        except Match.DoesNotExist:
-            create_match_in_database(match)
+    update_database(Team, response['teams'], create_team_in_database)
+    update_database(Player, response['players'], create_player_in_database)
+    update_database(Segment, response['segments'], create_segment_in_database)
+    update_database(Match, response['matches'], create_match_in_database)

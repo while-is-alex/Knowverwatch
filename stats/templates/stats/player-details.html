@@ -8,13 +8,26 @@
 {% block css_styles %}
     <link rel="stylesheet" href="{% static 'stats/styles/player-details.css' %}">
     <style>
+        .main-content {
+            background-image: url({% static 'stats/images/other/heroes-background-pattern.png' %});
+        }
+
+        .player-headshot {
+            background-image: url({% static 'stats/images/other/player-headshot-background.png' %});
+        }
+
+        .hero-headshot {
+            background-image: url({% static 'stats/images/other/player-headshot-background.png' %});
+        }
+
         .hero-stat.active {
-          background-color: {{ player.team.secondary_color }}; /* Change background color for active stat */
+          background-color: {{ player.team.secondary_color }};
           color: {{ player.team.primary_color }};
-          border: 2px solid #262626; /* Add border for active stat */
-          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add shadow for active stat */
-          transform: scale(1.05); /* Apply slight scale for active stat */
-          transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s; /* Add transition for smooth effect */
+          border: 2px solid #262626;
+          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+          transform: scale(1.05);
+          transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+          font-weight: bold;
         }
     </style>
 {% endblock %}
@@ -23,7 +36,7 @@
     <div class="main-content">
         <h1 class="page-title">{% if player.first_name %}{{ player.first_name }}{% endif %} "{{ player.name }}" {% if player.last_name %}{{ player.last_name }}{% endif %}</h1>
 
-        <div class="container">
+        <div class="player-container">
             <span href="{{ player.get_absolute_url }}" class="player-card" style="background-color: {{ player.team.primary_color }}; border: 7px solid {{ player.team.secondary_color }};">
                 <img src="{{ player.headshot_url }}" alt="" class="player-headshot" loading="lazy">
                 <div class="player-name" style="color: {{ player.team.secondary_color }}">{{ player.name }}</div>
@@ -66,17 +79,46 @@
 
         </div>
 
+        {% if awards %}
+            <div class="awards">
+                <div class="award-list">
+                    {% for award in awards %}
+                        <div class="award-item">
+                            {% if award.name == 'MVP' %}
+                                <img src="{% static 'stats/images/awards/MVP.png' %}" class="award" alt="awards" loading="lazy">
+                                <p class="award-year">{{ award.year }}</p>
+                            {% elif award.name == 'Grand Finals MVP' %}
+                                <img src="{% static 'stats/images/awards/grand_finals_MVP.png' %}" class="award" alt="awards" loading="lazy">
+                                <p class="award-year">{{ award.year }}</p>
+                            {% elif award.name == 'Dennis Hawelka Award' %}
+                                <img src="{% static 'stats/images/awards/dennis_hawelka.png' %}" class="award" alt="awards" loading="lazy">
+                                <p class="award-year">{{ award.year }}</p>
+                            {% elif award.name == 'Alarm Rookie of the Year' %}
+                                <img src="{% static 'stats/images/awards/ROTY.png' %}" class="award" alt="awards" loading="lazy">
+                                <p class="award-year">{{ award.year }}</p>
+                            {% elif award.name == 'Role Star' %}
+                                <img src="{% static 'stats/images/awards/role_star.png' %}" class="award" alt="awards" loading="lazy">
+                                <p class="award-year">{{ award.year }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
         {% if past_teams %}
             <div class="past-teams">
                 <h2>Past teams:</h2>
+
                 {% for team in past_teams %}
                     <a href="{% url 'team-details-page' team.slug %}" class="past-team">
-                        <img src="{{ team.logo }}" loading="lazy">
+                        <img src="{{ team.icon }}" loading="lazy">
                     </a>
                 {% endfor %}
             </div>
         {% endif %}
 
+        {% if heroes %}
         <h2 class="heroes-title">Heroes:</h2>
 
         <div class="heroes">
@@ -124,15 +166,14 @@
             {% endfor %}
 
         </div>
+        {% endif %}
 
     </div>
 
     <script>
-        // Select all the prev and next buttons
         const prevButtons = document.querySelectorAll('.prev-button');
         const nextButtons = document.querySelectorAll('.next-button');
 
-        // Attach event listeners to each set of buttons
         prevButtons.forEach((prevButton, index) => {
             prevButton.addEventListener('click', () => {
                 scrollHeroStatsContainer(index, -1);
@@ -150,24 +191,19 @@
         const heroStatsContainer = heroStatsContainers[index];
         const heroStatElements = heroStatsContainer.querySelectorAll('.hero-stat:not(.non-interactable)'); // Exclude elements with the "non-interactable" class
 
-        // Find the current active hero-stat
         const activeIndex = Array.from(heroStatElements).findIndex(heroStat => heroStat.classList.contains('active'));
 
-        // Calculate the index of the next hero-stat
         let nextIndex = activeIndex + direction;
 
-        // Ensure the nextIndex is within valid bounds
         if (nextIndex < 0) {
             nextIndex = heroStatElements.length - 1;
         } else if (nextIndex >= heroStatElements.length) {
             nextIndex = 0;
         }
 
-        // Update the active state of hero-stat elements
         heroStatElements[activeIndex].classList.remove('active');
         heroStatElements[nextIndex].classList.add('active');
 
-        // Calculate the new scroll position and update it
         const heroStatWidth = heroStatElements[0].offsetWidth; // Use the width of the first hero-stat
         const margin = 10; // Adjust this value based on your margin
         let newScrollLeft = nextIndex * (heroStatWidth + margin);

@@ -1,19 +1,19 @@
 .main-content {
+  align-items: center;
   background-color: #ffffff;
+  background-size: contain;
   border-radius: 8px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  padding-top: 5px;
-  padding-bottom: 20px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  align-items: center;
-  text-align: center;
   justify-content: flex-start;
   margin: -8px 0;
-  background-size: contain;
-  white-space: nowrap;
   overflow-x: auto;
+  padding-bottom: 20px;
+  padding-top: 5px;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .team-name {
@@ -21,56 +21,84 @@
 }
 
 .team-code {
-  font-size: 2rem;
   color: #777777;
+  font-size: 2rem;
   margin-top: -30px;
 }
 
 .team-logo {
-    max-width: 200px;
+    filter: drop-shadow(0 2px 1px rgba(0,0,0,0.25));
     margin: 10px;
+    max-width: 200px;
+}
+
+.championship-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 70px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.championship-trophy {
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.6));
+  height: auto;
+  width: 20px;
+}
+
+.championship-year {
+  color: #777777;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
 }
 
 .roster-title {
-  font-size: 1.5rem;
   color: #262626;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
   margin-bottom: 30px;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 2px;
 }
 
 .roster {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 50px;
+  justify-content: center;
   margin: -8px 0;
   padding: 20px 200px;
 }
 
 .player-card {
-  width: 200px;
-  height: 300px;
-  padding: 10px;
-  border-radius: 5px;
   background-color: #d7d5d5;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  border: 7px solid #262626;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+  color: #212020;
+  height: 300px;
+  overflow: hidden;
+  padding: 10px;
+  position: relative;
   text-align: center;
   text-decoration: none;
-  color: #212020;
-  position: relative;
-  overflow: hidden; /* Hide overflow to make the image and role icon fit inside the card */
-  border: 7px solid #262626;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  width: 200px;
+}
+
+.player-card:hover {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1);
 }
 
 .player-name {
   font-size: 1.2rem;
   font-weight: bold;
+  left: 12px;
   margin-bottom: 2px;
   position: absolute;
   top: 3px;
-  left: 12px;
 }
 
 .player-name a {
@@ -79,30 +107,30 @@
 }
 
 .player-role {
-  width: 15px;
-  height: 15px;
-  padding: 3px;
+  background-color: #3f3d3c;
   border-radius: 50%;
   border: 1px solid #000;
-  position: absolute;
   bottom: 10px;
+  height: 15px;
+  padding: 3px;
+  position: absolute;
   right: 10px;
   top: 4px;
-  background-color: #3f3d3c;
+  width: 15px;
 }
 
 .player-headshot {
-  width: 100%;
-  height: 130px;
+  background-color: #232323;
+  background-size: contain;
   border-radius: 5px 5px 0 0;
+  border: 2px solid #262626;
   display: block;
+  height: 130px;
   margin: 20px auto 10px;
   object-fit: contain;
-  background-color: #232323;
-  background-image: url("../images/player-headshot-background.png");
-  background-size: contain;
-  border: 2px solid #d5d4d4;
   position: relative;
+  transform: translateX(-1.5px);
+  width: 100%;
 }
 
 .player-first-name {
@@ -110,43 +138,43 @@
 }
 
 .player-last-name {
-  margin-top: 2px;
   margin-bottom: 15px;
+  margin-top: 2px;
 }
 
 .heroes-icons {
-  width: 45px;
-  height: 45px;
-  bottom: 20px;
-  object-fit: contain;
-  margin: 0 5px;
   background-color: black;
+  bottom: 20px;
+  height: 45px;
+  margin: 0 5px;
+  object-fit: contain;
+  width: 45px;
 }
 
 .schedule-title {
-  font-size: 1.5rem;
   color: #262626;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
   margin-bottom: 30px;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 2px;
 }
 
 .matches {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 10px;
   margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .spoilers-link {
-  display: inline-block;
-  padding: 5px 10px;
-  font-size: 1rem;
-  color: #ffffff;
   background-color: #737373;
   border-radius: 5px;
+  color: #ffffff;
+  display: inline-block;
+  font-size: 1rem;
+  padding: 5px 10px;
   text-decoration: none;
   transition: background-color 0.3s ease-in-out;
 }
@@ -160,31 +188,38 @@
 }
 
 .match-date {
+  color: #777777;
   font-size: 1.1rem;
   font-weight: bold;
-  color: #777777;
 }
 
 .match-card {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 140%;
-  max-width: 1400px;
-  height: 100px;
-  margin: 0px 0 40px;
+  background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  height: 100px;
+  justify-content: space-between;
+  margin: 0px 0 40px;
+  max-width: 1200px;
+  min-width: 1000px;
   overflow: hidden;
-  background-color: #ffffff;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  width: 140%;
+}
+
+.match-card:hover {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1);
 }
 
 .match-card-inner {
-  display: flex;
   align-items: center;
-  width: 100%;
-  padding: 10px;
   background-color: #ffffff;
+  display: flex;
+  padding: 10px;
+  width: 100%;
 }
 
 .match-card a {
@@ -193,28 +228,28 @@
 
 .home-team,
 .away-team {
-  display: flex;
   align-items: center;
-  flex: 1;
-  padding: 20px;
   background-color: inherit;
+  display: flex;
+  flex: 1;
   justify-content: space-between;
+  padding: 20px;
 }
 
 .home-team-icon,
 .away-team-icon {
-  width: 70px;
+  flex: 0 0 auto;
   height: 70px;
   margin: 5px;
-  flex: 0 0 auto;
   position: relative;
+  width: 70px;
 }
 
 .home-team-name,
 .away-team-name {
+  flex: 1 1 auto;
   font-size: 1.7rem;
   font-weight: bold;
-  flex: 1 1 auto;
   margin: 0 10px;
 }
 
@@ -228,34 +263,27 @@
 
 .home-team-score-container,
 .away-team-score-container {
-  width: 50px;
-  height: 50px;
-  display: flex;
   align-items: center;
-  justify-content: center;
   background-color: #f2f2f2;
-  /*border: 2px dashed #2a2a2a;*/
-  color: #a0a0a0;
-  font-weight: bold;
-  font-size: 1.2rem;
   border-radius: 5px;
+  border: 1px solid #2a2a2a;
+  color: #a0a0a0;
+  display: flex;
+  font-size: 1.2rem;
+  font-weight: bold;
+  height: 50px;
+  justify-content: center;
   margin: 0 10px;
+  width: 50px;
 }
 
 .home-team-score,
 .away-team-score {
+  color: #282828;
   font-size: 2.5rem;
   font-weight: bold;
-  color: #282828;
 }
 
-.grow {
-  transition: all .2s ease-in-out;
-}
-
-.grow:hover {
-  transform: scale(1.1);
-}
 
 .boston-filter {
   filter: invert(82%) sepia(82%) saturate(450%) hue-rotate(370deg) brightness(120%) contrast(98%);

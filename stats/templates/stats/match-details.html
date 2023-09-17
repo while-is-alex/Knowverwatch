@@ -7,11 +7,16 @@
 
 {% block css_styles %}
     <link rel="stylesheet" href="{% static 'stats/styles/match-details.css' %}">
+    <style>
+        .player-headshot {
+            background-image: url({% static 'stats/images/other/player-headshot-background.png' %});
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
 
-    <div class="main-content" style="background-image: url({% static 'stats/images/teams-background-pattern.png' %});">
+    <div class="main-content" style="background-image: url({% static 'stats/images/other/teams-background-pattern.png' %});">
 
         <h1 class="segment-name">{{ match.segment.name }}</h1>
         <p class="match-date">{{ match.date }}</p>
@@ -19,7 +24,7 @@
         <div class="teams-info">
             <div class="team-info home-team-info">
                 <a href="{% url 'team-details-page' home_team.slug %}">
-                    <img class="team-logo home-team-logo" src="{{ home_team.icon }}" alt="Home Team's logo" loading="lazy">
+                    <img class="team-logo home-team-logo" src="{% if home_team.name == 'PANTHERA' or home_team.name == 'O2 Blast' or home_team.name == 'Poker Face' or home_team.name == 'Rhodes' or home_team.name == 'Sin Prisa Gaming' %}{{ home_team.logo }}{% else %}{{ home_team.icon }}{% endif %}" alt="Home Team's logo" loading="lazy">
                 </a>
             </div>
 
@@ -53,7 +58,7 @@
 
             <div class="team-info away-team-info">
                 <a href="{% url 'team-details-page' away_team.slug %}">
-                    <img class="team-logo away-team-logo" src="{{ away_team.icon }}" alt="Away Team's logo" loading="lazy">
+                    <img class="team-logo away-team-logo" src="{% if away_team.name == 'PANTHERA' or away_team.name == 'O2 Blast' or away_team.name == 'Poker Face' or away_team.name == 'Rhodes' or away_team.name == 'Sin Prisa Gaming' %}{{ away_team.logo }}{% else %}{{ away_team.icon }}{% endif %}" alt="Away Team's logo" loading="lazy">
                 </a>
             </div>
         </div>
@@ -70,7 +75,11 @@
         <div class="games">
             {% for game in games %}
                 <div class="game-card">
-                    <div class="game-home-team" style="background-color: {{ game.home_team.primary_color }}; color: {% if game.home_team.secondary_color %}{{ game.home_team.secondary_color }}{% else %}black{% endif %};">
+                    {% if game.home_team.primary_color %}
+                        <div class="game-home-team" style="background-color: {{ game.home_team.primary_color }}; color: {% if game.home_team.secondary_color %}{{ game.home_team.secondary_color }}{% else %}black{% endif %};">
+                    {% else %}
+                        <div class="game-home-team" style="background-color: {% if game.home_team.name == 'Dreamers' %}#CD90F5FF{% else %}#d7d5d5{% endif %}; color: black;">
+                    {% endif %}
 
                         {% if game.home_team.name == 'Boston Uprising' %}
                             <img src="{{ game.home_team.icon }}" alt="game-team-icon" class="game-home-team-icon boston-filter" loading="lazy"/>
@@ -82,6 +91,16 @@
                             <img src="{{ game.home_team.icon }}" alt="game-team-icon" class="game-home-team-icon shanghai-filter" loading="lazy"/>
                         {% elif game.home_team.name == 'New York Excelsior' %}
                             <img src="{{ game.home_team.icon }}" alt="game-team-icon" class="game-home-team-icon new-york-filter" loading="lazy"/>
+                        {% elif game.home_team.name == 'O2 Blast' %}
+                            <img src="{{ game.home_team.logo }}" alt="game-team-icon" class="game-home-team-icon" loading="lazy"/>
+                        {% elif game.home_team.name == 'PANTHERA' %}
+                            <img src="{{ game.home_team.logo }}" alt="game-team-icon" class="game-home-team-icon" loading="lazy"/>
+                        {% elif game.home_team.name == 'Poker Face' %}
+                            <img src="{{ game.home_team.logo }}" alt="game-team-icon" class="game-home-team-icon" loading="lazy"/>
+                        {% elif game.home_team.name == 'Rhodes' %}
+                            <img src="{{ game.home_team.logo }}" alt="game-team-icon" class="game-home-team-icon" loading="lazy"/>
+                        {% elif game.home_team.name == 'Sin Prisa Gaming' %}
+                            <img src="{{ game.home_team.logo }}" alt="game-team-icon" class="game-home-team-icon" loading="lazy"/>
                         {% elif game.home_team.name == 'Toronto Defiant' %}
                             <img src="{{ game.home_team.icon }}" alt="game-team-icon" class="game-home-team-icon toronto-filter" loading="lazy"/>
                         {% elif game.home_team.name == 'Twisted Minds' %}
@@ -117,7 +136,11 @@
                         </div>
                     {% endwith %}
 
-                    <div class="game-away-team" style="background-color: {{ game.away_team.primary_color }}; color: {% if game.away_team.secondary_color %}{{ game.away_team.secondary_color }}{% else %}black{% endif %};">
+                    {% if game.away_team.primary_color %}
+                        <div class="game-away-team" style="background-color: {{ game.away_team.primary_color }}; color: {% if game.away_team.secondary_color %}{{ game.away_team.secondary_color }}{% else %}black{% endif %};">
+                    {% else %}
+                        <div class="game-away-team" style="background-color: {% if game.away_team.name == 'Dreamers' %}#CD90F5FF{% else %}#d7d5d5{% endif %}; color: black;">
+                    {% endif %}
 
                         <div class="game-away-team-score-container">
                             {% if game.home_team_score == 0 and game.away_team_score == 0 %}
@@ -139,6 +162,16 @@
                             <img src="{{ game.away_team.icon }}" alt="team-icon" class="game-away-team-icon shanghai-filter" loading="lazy"/>
                         {% elif game.away_team.name == 'New York Excelsior' %}
                             <img src="{{ game.away_team.icon }}" alt="team-icon" class="game-away-team-icon new-york-filter" loading="lazy"/>
+                        {% elif game.away_team.name == 'O2 Blast' %}
+                            <img src="{{ game.away_team.logo }}" alt="game-team-icon" class="game-away-team-icon" loading="lazy"/>
+                        {% elif game.away_team.name == 'PANTHERA' %}
+                            <img src="{{ game.away_team.logo }}" alt="game-team-icon" class="game-away-team-icon" loading="lazy"/>
+                        {% elif game.away_team.name == 'Poker Face' %}
+                            <img src="{{ game.away_team.logo }}" alt="game-team-icon" class="game-away-team-icon" loading="lazy"/>
+                        {% elif game.away_team.name == 'Rhodes' %}
+                            <img src="{{ game.away_team.logo }}" alt="game-team-icon" class="game-away-team-icon" loading="lazy"/>
+                        {% elif game.away_team.name == 'Sin Prisa Gaming' %}
+                            <img src="{{ game.away_team.logo }}" alt="game-team-icon" class="game-away-team-icon" loading="lazy"/>
                         {% elif game.away_team.name == 'Toronto Defiant' %}
                             <img src="{{ game.away_team.icon }}" alt="team-icon" class="game-away-team-icon toronto-filter" loading="lazy"/>
                         {% elif game.away_team.name == 'Twisted Minds' %}

@@ -7,6 +7,15 @@
 
 {% block css_styles %}
     <link rel="stylesheet" href="{% static 'stats/styles/players.css' %}">
+    <style>
+        .main-content {
+            background-image: url({% static 'stats/images/other/heroes-background-pattern.png' %});
+        }
+
+        .player-headshot {
+            background-image: url({% static 'stats/images/other/player-headshot-background.png' %});
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
@@ -17,8 +26,7 @@
 
         <div class="container">
             {% for player in page_obj %}
-                <a href="{{ player.get_absolute_url }}" class="player-card grow" style="background-color: {{ player.team.primary_color }}; border: 7px solid {{ player.team.secondary_color }};">
-                    <img src="{{ player.headshot_url }}" alt="player-headshot" class="player-headshot" loading="lazy">
+                <a href="{{ player.get_absolute_url }}" class="player-card" style="background-color: {{ player.team.primary_color }}; border: 7px solid {{ player.team.secondary_color }};">
                     <div class="player-name" style="color: {{ player.team.secondary_color }}">{{ player.name }}</div>
 
                     {% if player.role == 'DPS' %}
@@ -29,8 +37,10 @@
                         <img src="https://static.wikia.nocookie.net/overwatch/images/6/69/TankIcon.png/revision/latest?cb=20160625041805" class="player-role" alt="tank-role" style="background-color: {{ player.team.secondary_color }}" loading="lazy">
                     {% endif %}
 
-                    <p style="color: {{ player.team.secondary_color }}"><strong>First name:</strong> {{ player.first_name }}</p>
-                    <p style="color: {{ player.team.secondary_color }}"><strong>Last name:</strong> {{ player.last_name }}</p>
+                    <img src="{{ player.headshot_url }}" alt="player-headshot" class="player-headshot" loading="lazy">
+
+                    <p style="color: {{ player.team.secondary_color }}" class="player-first-name"><span>First name:</span> {{ player.first_name }}</p>
+                    <p style="color: {{ player.team.secondary_color }}" class="player-last-name"><span>Last name:</span> {{ player.last_name }}</p>
 
                     {% if player.team %}
                         {% if player.team.name == 'Boston Uprising' %}
@@ -43,6 +53,16 @@
                             <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon shanghai-filter" loading="lazy">
                         {% elif player.team.name == 'New York Excelsior' %}
                             <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon new-york-filter" loading="lazy">
+                        {% elif player.team.name == 'O2 Blast' %}
+                            <img src="{{ player.team.logo }}" alt="team-icon" class="team-icon" loading="lazy">
+                        {% elif player.team.name == 'PANTHERA' %}
+                            <img src="{{ player.team.logo }}" alt="team-icon" class="team-icon" loading="lazy">
+                        {% elif player.team.name == 'Poker Face' %}
+                            <img src="{{ player.team.logo }}" alt="team-icon" class="team-icon" loading="lazy">
+                        {% elif player.team.name == 'Rhodes' %}
+                            <img src="{{ player.team.logo }}" alt="team-icon" class="team-icon" loading="lazy">
+                        {% elif player.team.name == 'Sin Prisa Gaming' %}
+                            <img src="{{ player.team.logo }}" alt="team-icon" class="team-icon" loading="lazy">
                         {% elif player.team.name == 'Toronto Defiant' %}
                             <img src="{{ player.team.icon }}" alt="team-icon" class="team-icon toronto-filter" loading="lazy">
                         {% elif player.team.name == 'Twisted Minds' %}

@@ -8,13 +8,26 @@
 {% block css_styles %}
     <link rel="stylesheet" href="{% static 'stats/styles/compare-players.css' %}">
     <style>
+        .main-content {
+            background-image: url({% static 'stats/images/other/heroes-background-pattern.png' %});
+        }
+
+        .player-headshot {
+            background-image: url({% static 'stats/images/other/player-headshot-background.png' %});
+        }
+
+        .hero-headshot {
+            background-image: url({% static 'stats/images/other/player-headshot-background.png' %});
+        }
+
         .hero-stat.active {
-          background-color: {{ player.team.secondary_color }}; /* Change background color for active stat */
+          background-color: {{ player.team.secondary_color }};
           color: {{ player.team.primary_color }};
-          border: 2px solid #262626; /* Add border for active stat */
-          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add shadow for active stat */
-          transform: scale(1.05); /* Apply slight scale for active stat */
-          transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s; /* Add transition for smooth effect */
+          border: 2px solid #262626;
+          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+          transform: scale(1.05);
+          transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+          font-weight: bold;
         }
 
         .player-a-container .hero-stat.active {

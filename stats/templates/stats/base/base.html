@@ -16,14 +16,14 @@
 
 <body>
 
-    <div class="background-container">
+    <div class="background-container" style="background-image: url({% static 'stats/images/other/background.png' %});">
         <div class="background-center">
         </div>
     </div>
 
 
     <header id="main-navigation">
-        <a href="{% url 'home-page' %}" id="main-logo"><img src="{% static 'stats/images/owl-logo.png' %}" alt="Home Page"></a>
+        <a href="{% url 'home-page' %}" id="main-logo"><img src="{% static 'stats/images/other/owl-logo.png' %}" alt="Home Page"></a>
 
         <nav>
             <a href="{% url 'teams-page' %}" {% if request.path == '/teams' %}class="current"{% endif %}>Teams</a>
@@ -43,7 +43,7 @@
                             </div>
                         {% endfor %}
                     {% endif %}
-                    <button type="submit">Submit</button>
+                    <button type="submit">Search</button>
                 </form>
             </div>
         </nav>

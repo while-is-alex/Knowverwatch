@@ -7,15 +7,21 @@
 
 {% block css_styles %}
     <link rel="stylesheet" href="{% static 'stats/styles/index.css' %}">
+    <style>
+        .main-content {
+            {% if dark_mode == True %}
+                background-color: rgba(0, 0, 0, 0.8);
+            {% else %}
+                background-color: rgba(255, 255, 255, 0.9);
+            {% endif %}
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
     <div class="main-content">
         <h1 class="page-title"><span class="page-title-highlight">Know</span>verwatch</h1>
-        <p class="page-info">Your source for Overwatch League information.</p>
-
-<!--        <p class="disclaimer">DISCLAIMER</p>-->
-<!--        <p class="data-info">Data in all pages is the most current to Blizzard's API. If the data displayed is not up-to-date,<br> wait a minute and refresh the page to get the most recent data.</p>-->
+        <p class="page-info">Your source for Overwatch League data.</p>
 
         <div class="date-box">
             <h2 class="date">{{ today }}</h2>
@@ -58,7 +64,7 @@
                                     <td>{{ team.maps }}</td>
                                     <td>{{ team.differential }}</td>
                                 {% else %}
-                                    <td>< spoilers hidden ></td>
+                                    <td>Spoilers</td>
                                     <td>{{ forloop.counter }}</td>
                                     <td>0</td>
                                     <td>0</td>
@@ -106,7 +112,7 @@
                                     <td>{{ team.maps }}</td>
                                     <td>{{ team.differential }}</td>
                                 {% else %}
-                                    <td>< spoilers hidden ></td>
+                                    <td>Spoilers</td>
                                     <td>{{ forloop.counter }}</td>
                                     <td>0</td>
                                     <td>0</td>
@@ -120,6 +126,34 @@
                     </tbody>
             </table>
             </div>
+        </div>
+
+        <div class="legend">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>LEGEND</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><span>W - </span>Matches won</td>
+                        <td><span>L - </span>Matches lost</td>
+                        <td><span>WIN% - </span>Win Percentage</td>
+                    </tr>
+                    <tr>
+                        <td><span>MP - </span>Matches played</td>
+                        <td><span>MAP W-L-T - </span>Map record<br>(win-loss-tie)</td>
+                        <td><span>DIFF - </span>Map differential<br>(wins minus losses)</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
     </div>

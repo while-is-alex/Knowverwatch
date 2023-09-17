@@ -3,11 +3,10 @@ from .models import Team, Player, Segment, Match
 from utilities.OWLAPI import OverwatchLeague
 from datetime import date, datetime, timezone
 
-owl = OverwatchLeague()
-
 
 @shared_task
 def update_team_database(team_id):
+    owl = OverwatchLeague()
     team_response = owl.get_team(team_id)
 
     alternate_ids = team_response.get('alternateIds', [])
@@ -47,6 +46,7 @@ def update_team_database(team_id):
 
 @shared_task
 def update_player_database(player_id):
+    owl = OverwatchLeague()
     player_response = owl.get_player(player_id)
 
     alternate_id = None
@@ -113,6 +113,7 @@ def parse_timestamp(timestamp):
 
 @shared_task
 def update_segment_database(segment_id):
+    owl = OverwatchLeague()
     segment_response = owl.get_segment(segment_id)
 
     name = segment_response['name']
@@ -136,6 +137,7 @@ def update_segment_database(segment_id):
 
 @shared_task
 def update_match_database(match_id):
+    owl = OverwatchLeague()
     match_response = owl.get_match(match_id)
 
     season = int(match_response['seasonId'])
@@ -346,6 +348,7 @@ def update_database(model_class, data_items, create_in_database_function, update
 
 @shared_task
 def update_the_whole_database():
+    owl = OverwatchLeague()
     response = owl.summary()
 
     update_database(Team, response['teams'], create_team_in_database, update_team_database)

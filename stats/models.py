@@ -169,16 +169,32 @@ class Match(models.Model):
 
 
 class Award(models.Model):
-    name = models.CharField(max_length=300)
+    name = models.CharField(
+        max_length=300,
+        choices=[
+            ('League Champion', 'League Champion'),
+            ('MVP', 'MVP'),
+            ('Grand Finals MVP', 'Grand Finals MVP'),
+            ('Dennis Hawelka Award', 'Dennis Hawelka Award'),
+            ('Alarm Rookie of the Year', 'Alarm Rookie of the Year'),
+            ('Role Star', 'Role Star'),
+        ]
+    )
     year = models.IntegerField(null=True)
+    team = models.ForeignKey(
+        Team,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='awards',
+    )
     player = models.ForeignKey(
         Player,
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
         related_name='awards',
     )
-    nominee = models.BooleanField(null=True)
-    winner = models.BooleanField(null=True)
     slug = models.SlugField(
         default='',
         blank=True,

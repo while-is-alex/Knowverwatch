@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Team, Player, Segment, Match
+from .models import Team, Player, Segment, Match, Award
 
 
 class TeamAdmin(admin.ModelAdmin):
@@ -67,7 +67,26 @@ class MatchAdmin(admin.ModelAdmin):
     }
 
 
+class AwardAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'year',
+        'team',
+        'player',
+    )
+    list_filter = (
+        'name',
+        'year',
+    )
+    prepopulated_fields = {
+        'slug': (
+            'name',
+        )
+    }
+
+
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Player, PlayerAdmin)
 admin.site.register(Segment, SegmentAdmin)
 admin.site.register(Match, MatchAdmin)
+admin.site.register(Award, AwardAdmin)

@@ -15,6 +15,7 @@ stats = Stats()
 class HomeView(View):
     def get(self, request):
         see_spoilers = request.session.get('see_spoilers')
+        dark_mode = request.session.get('dark_mode')
 
         current_datetime = timezone.now()
         current_date = current_datetime.date()
@@ -34,11 +35,11 @@ class HomeView(View):
                 if list(team['divisions'].keys())[0] == region:
                     current_team = {
                         'team_object': Team.objects.get(id=team['teamId']),
-                        'wins': int(team['gameWins']),
-                        'losses': int(team['gameLosses']),
-                        'win_rate': f"{round((int(team['gameWins']) / (int(team['gameWins']) + int(team['gameLosses']))) * 100)}%",
-                        'matches_played': int(team['gameWins']) + int(team['gameLosses']),
-                        'maps': f"{team['matchWins']}-{team['matchLosses']}-{team['gameTies']}",
+                        'wins': int(team['matchWins']),
+                        'losses': int(team['matchLosses']),
+                        'win_rate': f"{round((int(team['matchWins']) / (int(team['matchWins']) + int(team['matchLosses']))) * 100)}%",
+                        'matches_played': int(team['matchWins']) + int(team['matchLosses']),
+                        'maps': f"{team['gameWins']}-{team['gameLosses']}-{team['gameTies']}",
                         'differential': int(team['gameDifferential']),
                     }
                     region_standings.append(current_team)
@@ -54,6 +55,7 @@ class HomeView(View):
             {
                 'today': today,
                 'see_spoilers': see_spoilers,
+                'dark_mode': dark_mode,
                 'teams_west': standings_west,
                 'teams_east': standings_east,
             }
@@ -93,6 +95,8 @@ class TeamDetailsView(View):
         except Team.DoesNotExist:
             return HttpResponseNotFound('Team not found')
 
+        awards = selected_team.awards.all().order_by('year')
+
         # sorts the team's players by role and finds their top 3 most played heroes
         roster = [(player, self.get_top3_heroes(player))
                   for player in selected_team.players.all().order_by('role')]
@@ -113,6 +117,7 @@ class TeamDetailsView(View):
             {
                 'all_teams': Team.objects.all(),
                 'team': selected_team,
+                'awards': awards,
                 'players': roster,
                 'matches': matches_list,
                 'see_spoilers': see_spoilers,
@@ -154,6 +159,8 @@ class PlayerDetailsView(View):
         selected_player = Player.objects.get(slug=slug)
         update_player_database.delay(selected_player.id)
 
+        awards = selected_player.awards.all().order_by('year')
+
         player_all_teams = selected_player.all_teams
 
         past_teams = []
@@ -191,6 +198,7 @@ class PlayerDetailsView(View):
             'stats/player-details.html',
             {
                 'player': selected_player,
+                'awards': awards,
                 'past_teams': past_teams,
                 'heroes': heroes_details,
             }
@@ -370,6 +378,18 @@ class MatchDetailsView(View):
         )
 
 
+class GameView(View):
+    def get(self, request, slug):
+
+        return render(
+            request,
+            'stats/match-details.html',
+            {
+
+            }
+        )
+
+
 class SearchView(View):
     def search_players(self, search):
         return Player.objects.filter(name__icontains=search).first()
@@ -414,6 +434,30 @@ class SeeSpoilersView(View):
             see_spoilers = not request.session.get('see_spoilers')
 
         request.session['see_spoilers'] = see_spoilers
+
+        referring_page = request.META.get('HTTP_REFERER', '/')
+
+        if slug is not None:
+            return redirect(
+                referring_page,
+                slug=slug,
+            )
+
+        else:
+            return redirect(
+                referring_page,
+            )
+
+
+class SwitchModeView(View):
+    def get(self, request, slug):
+        if request.session.get('dark_mode') is None:
+            dark_mode = False
+
+        else:
+            dark_mode = not request.session.get('dark_mode')
+
+        request.session['dark_mode'] = dark_mode
 
         referring_page = request.META.get('HTTP_REFERER', '/')
 

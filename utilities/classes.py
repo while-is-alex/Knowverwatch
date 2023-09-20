@@ -1,5 +1,7 @@
 class Stats:
     def split_camel_case(self, camel_case_string):
+        """Splits a camelCase string into words and returns a title-cased string."""
+
         words = []
 
         current_word = camel_case_string[0]
@@ -16,11 +18,15 @@ class Stats:
         return resulting_string
 
     def sort_by_name(self, stats_dictionary):
+        """Sorts a dictionary of hero statistics by hero names alphabetically."""
+
         heroes_sorted_by_name = dict(sorted(stats_dictionary.items()))
 
         return heroes_sorted_by_name
 
     def sort_by_time_played(self, stats_dictionary):
+        """Sorts a dictionary of hero statistics by the time played, in descending order."""
+
         def get_time_played(current_hero):
             return current_hero[1].get('timePlayed', 0)
 
@@ -35,6 +41,8 @@ class Stats:
         return heroes_sorted_by_time_played
 
     def get_stats_per_10(self, stats_list):
+        """Calculates and returns statistics per 10 minutes of playtime."""
+
         hero_minutes_played = 0
 
         for stat in stats_list:
@@ -68,6 +76,8 @@ class Stats:
         return list_of_stats_per_10
 
     def format_details(self, hero_name, stats_dictionary):
+        """Formats hero statistics and returns them as a dictionary."""
+
         stats_dictionary_keys = stats_dictionary.keys()
 
         stat_order = [

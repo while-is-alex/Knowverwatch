@@ -16,14 +16,26 @@
   white-space: nowrap;
 }
 
+.dark-mode .main-content {
+  background-color: #333;
+}
+
 .team-name {
   font-size: 4rem;
+}
+
+.dark-mode .team-name {
+  color: #e8e6e3;
 }
 
 .team-code {
   color: #777777;
   font-size: 2rem;
   margin-top: -30px;
+}
+
+.dark-mode .team-code {
+  color: #dddbd8;
 }
 
 .team-logo {
@@ -53,6 +65,10 @@
   text-align: center;
 }
 
+.dark-mode .championship-year {
+  color: #dddbd8;
+}
+
 .roster-title {
   color: #262626;
   font-size: 1.5rem;
@@ -60,6 +76,10 @@
   margin-bottom: 30px;
   text-align: center;
   text-transform: uppercase;
+}
+
+.dark-mode .roster-title {
+  color: #e8e6e3;
 }
 
 .roster {
@@ -160,6 +180,10 @@
   text-transform: uppercase;
 }
 
+.dark-mode .schedule-title {
+  color: #e8e6e3;
+}
+
 .matches {
   align-items: center;
   display: flex;
@@ -191,6 +215,10 @@
   color: #777777;
   font-size: 1.1rem;
   font-weight: bold;
+}
+
+.dark-mode .match-date {
+  color: #dddbd8;
 }
 
 .match-card {

@@ -15,9 +15,17 @@
   text-align: center;
 }
 
+.dark-mode .main-content {
+  background-color: #333;
+}
+
 .page-title {
   font-size: 4rem;
   margin-bottom: 30px;
+}
+
+.dark-mode .page-title {
+  color: #e8e6e3;
 }
 
 .player-container {
@@ -160,6 +168,10 @@
   margin-top: 5px;
 }
 
+.dark-mode .award-year {
+  color: #dddbd8;
+}
+
 .past-teams h2 {
   color: #262626;
   font-size: 1.5rem;
@@ -168,6 +180,10 @@
   margin-top: 20px;
   text-align: center;
   text-transform: uppercase;
+}
+
+.dark-mode .past-teams h2 {
+  color: #e8e6e3;
 }
 
 .past-teams a {
@@ -223,6 +239,10 @@
   margin-top: 40px;
   text-align: center;
   text-transform: uppercase;
+}
+
+.dark-mode .heroes-title {
+  color: #e8e6e3;
 }
 
 .heroes {
@@ -301,6 +321,10 @@
   padding: 10px;
   text-align: center;
   width: calc(40% - 10px);
+}
+
+.dark-mode .hero-stat {
+  background-color: #e0e0e0;
 }
 
 .hero-stat.empty {

@@ -7,6 +7,7 @@
 }
 
 .background-container {
+    background-color: white;
     background-position: center bottom;
     background-repeat: no-repeat;
     background-size: cover;
@@ -16,6 +17,10 @@
     top: 0;
     width: 100%;
     z-index: -1;
+}
+
+.dark-mode .background-container {
+    background-color: black;
 }
 
 .content-container {

@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@100;400;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     {% block css_styles %}
     {% endblock %}
 </head>
@@ -53,12 +54,19 @@
         <main>
             {% block body %}
             {% endblock %}
+
+            <div class="toggle-container">
+                <label class="toggle">
+                    <input type="checkbox" id="modeToggle" {% if is_dark_mode %}checked{% endif %}>
+                    <span class="slider round"></span>
+                </label>
+            </div>
         </main>
     </div>
 
     <footer>
         <ul class="footer-links">
-            <li><a href="https://www.linkedin.com/in/alexandre-rodrigues-557185119" target="_blank">LinkedIn</a></li>
+            <li><a href="https://www.ltinkedin.com/in/alexandre-rodrigues-557185119" target="_blank">LinkedIn</a></li>
             <li><a href="mailto:alexandre.dev.work@gmail.com">Contact Me</a></li>
             <li><a href="https://github.com/while-is-alex" target="_blank">GitHub</a></li>
         </ul>
@@ -66,6 +74,47 @@
             <a href="https://ko-fi.com/whileisalex" target="_blank">Buy me a coffee</a>
         </div>
     </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var modeToggle = document.getElementById("modeToggle");
+
+        function setInitialDarkMode() {
+          var darkMode = {{ request.session.is_dark_mode|default_if_none:"false"|lower }};
+          modeToggle.checked = darkMode;
+
+          if (darkMode) {
+            document.body.classList.add("dark-mode");
+          }
+        }
+
+        modeToggle.addEventListener("change", function () {
+          var darkMode = modeToggle.checked;
+
+          fetch("{% url 'toggle-mode' %}", {
+            method: 'POST',
+            headers: {
+              'X-CSRFToken': '{{ csrf_token }}',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ dark_mode: darkMode }),
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (darkMode) {
+                document.body.classList.add("dark-mode");
+              } else {
+                document.body.classList.remove("dark-mode");
+              }
+              console.log(data);
+            })
+            .catch(error => console.error(error));
+        });
+
+        setInitialDarkMode();
+
+      });
+    </script>
 
 </body>
 </html>

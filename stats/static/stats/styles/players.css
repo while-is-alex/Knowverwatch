@@ -14,10 +14,18 @@
   text-align: center;
 }
 
+.dark-mode .main-content {
+  background-color: #333;
+}
+
 .page-title {
   clear: both;
   font-size: 2rem;
   margin-bottom: 5px;
+}
+
+.dark-mode .page-title {
+  color: #e8e6e3;
 }
 
 .container {
@@ -136,6 +144,10 @@
   margin: 0 5px;
   padding: 8px 12px;
   text-decoration: none;
+}
+
+.dark-mode .pagination a {
+  background-color: #c2c2c2;
 }
 
 .pagination .current {

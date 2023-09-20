@@ -11,4 +11,5 @@ urlpatterns = [
     path('compare', views.ComparePlayersView.as_view(), name='compare-players'),
     path('find/', views.SearchView.as_view(), name='search'),
     path('spoilers/<slug:slug>', views.SeeSpoilersView.as_view(), name='see-spoilers'),
+    path('toggle-mode/', views.ToggleModeView.as_view(), name='toggle-mode'),
 ]

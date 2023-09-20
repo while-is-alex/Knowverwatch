@@ -1,21 +1,21 @@
 from utilities.classes import Stats
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, JsonResponse
 from django.core.paginator import Paginator
 from django.contrib import messages
 from .models import Team, Player, Segment, Match
 from datetime import datetime
 from django.utils import timezone
-from .tasks import update_team_database, update_player_database, update_segment_database, update_match_database, update_the_whole_database
+from .tasks import update_team_database, update_player_database, update_segment_database, update_match_database
 
 stats = Stats()
 
 
 class HomeView(View):
     def get(self, request):
+        is_dark_mode = request.session.get('is_dark_mode', False)
         see_spoilers = request.session.get('see_spoilers')
-        dark_mode = request.session.get('dark_mode')
 
         current_datetime = timezone.now()
         current_date = current_datetime.date()
@@ -53,9 +53,9 @@ class HomeView(View):
             request,
             'stats/index.html',
             {
+                'is_dark_mode': is_dark_mode,
                 'today': today,
                 'see_spoilers': see_spoilers,
-                'dark_mode': dark_mode,
                 'teams_west': standings_west,
                 'teams_east': standings_east,
             }
@@ -64,6 +64,8 @@ class HomeView(View):
 
 class TeamsView(View):
     def get(self, request):
+        is_dark_mode = request.session.get('is_dark_mode', False)
+
         try:
             if request.GET['regions'] == 'all':
                 all_teams = Team.objects.all().order_by('name')
@@ -80,6 +82,7 @@ class TeamsView(View):
             request,
             'stats/teams.html',
             {
+                'is_dark_mode': is_dark_mode,
                 'teams': all_teams,
             }
         )
@@ -87,6 +90,7 @@ class TeamsView(View):
 
 class TeamDetailsView(View):
     def get(self, request, slug):
+        is_dark_mode = request.session.get('is_dark_mode', False)
         see_spoilers = request.session.get('see_spoilers')
 
         try:
@@ -115,6 +119,7 @@ class TeamDetailsView(View):
             request,
             'stats/team-details.html',
             {
+                'is_dark_mode': is_dark_mode,
                 'all_teams': Team.objects.all(),
                 'team': selected_team,
                 'awards': awards,
@@ -138,6 +143,7 @@ class TeamDetailsView(View):
 
 class PlayersView(View):
     def get(self, request):
+        is_dark_mode = request.session.get('is_dark_mode')
         all_players = Player.objects.all().order_by('name')
 
         paginator = Paginator(all_players, 20)
@@ -148,6 +154,7 @@ class PlayersView(View):
             request,
             'stats/players.html',
             {
+                'is_dark_mode': is_dark_mode,
                 'page_obj': page_object,
                 'request': request,
             }
@@ -156,6 +163,7 @@ class PlayersView(View):
 
 class PlayerDetailsView(View):
     def get(self, request, slug):
+        is_dark_mode = request.session.get('is_dark_mode')
         selected_player = Player.objects.get(slug=slug)
         update_player_database.delay(selected_player.id)
 
@@ -197,6 +205,7 @@ class PlayerDetailsView(View):
             request,
             'stats/player-details.html',
             {
+                'is_dark_mode': is_dark_mode,
                 'player': selected_player,
                 'awards': awards,
                 'past_teams': past_teams,
@@ -207,6 +216,7 @@ class PlayerDetailsView(View):
 
 class ComparePlayersView(View):
     def get(self, request):
+        is_dark_mode = request.session.get('is_dark_mode')
         all_players = Player.objects.all().order_by('name')
 
         # checks if there were previously selected players for comparison
@@ -292,6 +302,7 @@ class ComparePlayersView(View):
             request,
             'stats/compare-players.html',
             {
+                'is_dark_mode': is_dark_mode,
                 'all_players': all_players,
                 'player_a': player_a,
                 'player_a_heroes': player_a_heroes,
@@ -305,6 +316,7 @@ class ComparePlayersView(View):
 
 class MatchDetailsView(View):
     def get(self, request, slug):
+        is_dark_mode = request.session.get('is_dark_mode')
         see_spoilers = request.session.get('see_spoilers')
 
         selected_match = Match.objects.get(slug=slug)
@@ -366,6 +378,7 @@ class MatchDetailsView(View):
             request,
             'stats/match-details.html',
             {
+                'is_dark_mode': is_dark_mode,
                 'match': selected_match,
                 'home_team': home_team,
                 'home_team_score': home_team_final_score,
@@ -380,12 +393,13 @@ class MatchDetailsView(View):
 
 class GameView(View):
     def get(self, request, slug):
+        is_dark_mode = request.session.get('is_dark_mode')
 
         return render(
             request,
             'stats/match-details.html',
             {
-
+                'is_dark_mode': is_dark_mode,
             }
         )
 
@@ -449,25 +463,9 @@ class SeeSpoilersView(View):
             )
 
 
-class SwitchModeView(View):
-    def get(self, request, slug):
-        if request.session.get('dark_mode') is None:
-            dark_mode = False
+class ToggleModeView(View):
+    def post(self, request):
+        dark_mode = not request.session.get('is_dark_mode', False)
+        request.session['is_dark_mode'] = dark_mode
 
-        else:
-            dark_mode = not request.session.get('dark_mode')
-
-        request.session['dark_mode'] = dark_mode
-
-        referring_page = request.META.get('HTTP_REFERER', '/')
-
-        if slug is not None:
-            return redirect(
-                referring_page,
-                slug=slug,
-            )
-
-        else:
-            return redirect(
-                referring_page,
-            )
+        return JsonResponse({'dark_mode': dark_mode})

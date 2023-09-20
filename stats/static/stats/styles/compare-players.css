@@ -15,9 +15,17 @@
   white-space: nowrap;
 }
 
+.dark-mode .main-content {
+  background-color: #333;
+}
+
 .page-title {
   font-size: 4rem;
   margin-bottom: 30px;
+}
+
+.dark-mode .page-title {
+  color: #e8e6e3;
 }
 
 .compare-section {
@@ -87,6 +95,10 @@
   padding: 8px;
   transition: border-color 0.2s ease-in-out;
   width: 150px;
+}
+
+.dark-mode .select-player select {
+  background-color: #e0e0e0;
 }
 
 .select-player select:hover {
@@ -233,6 +245,10 @@
   width: 150px;
 }
 
+.dark-mode .select-hero select {
+  background-color: #e0e0e0;
+}
+
 .select-hero select:hover {
   border-color: #8f8f8f;
 }
@@ -310,6 +326,10 @@
   padding: 10px;
   text-align: center;
   width: calc(40% - 10px);
+}
+
+.dark-mode .hero-stat {
+  background-color: #e0e0e0;
 }
 
 .hero-stat.empty {

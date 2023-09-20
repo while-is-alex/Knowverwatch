@@ -15,12 +15,19 @@
   text-align: center;
 }
 
+.dark-mode .main-content {
+  background-color: #333;
+}
+
 .page-title {
   clear: both;
   font-size: 2rem;
   margin-bottom: 5px;
 }
 
+.dark-mode .page-title {
+  color: #e8e6e3;
+}
 
 .container {
   display: flex;
@@ -44,6 +51,10 @@
   top: 90px;
 }
 
+.dark-mode .select-region {
+  background-color: #c2c2c2;
+}
+
 .select-region label {
   font-weight: bold;
   margin-right: 8px;
@@ -53,6 +64,10 @@
   border-radius: 3px;
   border: 1px solid #ccc;
   padding: 6px;
+}
+
+.dark-mode .select-region select {
+  background-color: #e0e0e0;
 }
 
 .team-card {
@@ -66,6 +81,10 @@
   text-align: center;
   text-decoration: none;
   width: 16em;
+}
+
+.dark-mode .team-card {
+  background-color: #c2c2c2;
 }
 
 .team-logo {

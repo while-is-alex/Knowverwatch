@@ -1,5 +1,6 @@
 .main-content {
   align-items: center;
+  background-color: rgba(255, 255, 255, 0.9);
   background-size: contain;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -14,11 +15,20 @@
   white-space: nowrap;
 }
 
+.dark-mode .main-content {
+  background-color: rgba(31, 34, 35, 0.8);
+}
+
 .page-title {
   clear: both;
   font-size: 4rem;
   margin-bottom: 5px;
+  margin-top: 100px;
   pointer-events: none;
+}
+
+.dark-mode .page-title {
+    color: #e8e6e3;
 }
 
 .page-title-highlight {
@@ -31,6 +41,10 @@
   margin-top: 10px;
 }
 
+.dark-mode .page-info {
+    color: #e8e6e3;
+}
+
 .data-info {
   font-size: 0.9rem;
   margin-top: 5px;
@@ -40,9 +54,14 @@
   background-color: #f7f7f7;
   border: 1px solid #ddd;
   margin-bottom: 20px;
-  margin-top: 20px;
+  margin-top: 60px;
   padding: 10px 20px;
   text-align: center;
+}
+
+.dark-mode .date-box {
+  background-color: #404040;
+  border: 1px solid #808080;
 }
 
 .date {
@@ -52,11 +71,19 @@
   margin-top: 5px;
 }
 
+.dark-mode .date {
+    color: #e8e6e3;
+}
+
 .date-info {
   color: #777777;
   font-size: 0.8rem;
   margin-bottom: 10px;
   margin-top: 10px;
+}
+
+.dark-mode .date-info {
+    color: #dddddd;
 }
 
 .spoilers-link {
@@ -65,8 +92,9 @@
   color: #ffffff;
   display: inline-block;
   font-size: 1rem;
-  margin-top: 20px;
-  padding: 5px 10px;
+  margin-bottom: 10px;
+  margin-top: 80px;
+  padding: 10px 20px;
   text-decoration: none;
   transition: background-color 0.3s ease-in-out;
 }
@@ -101,11 +129,21 @@
   margin-bottom: 10px;
 }
 
+.dark-mode .west-title,
+.dark-mode .east-title {
+  color: #dddddd;
+}
+
 .west-description,
 .east-description {
   color: #666;
   font-size: 16px;
   margin-bottom: 20px;
+}
+
+.dark-mode .west-description,
+.dark-mode .east-description {
+  color: #e8e6e3;
 }
 
 .west-table,
@@ -122,9 +160,20 @@
   background: linear-gradient(to right, #00cc0e, #007711);
 }
 
+.dark-mode .west-table tbody,
+.dark-mode .east-table tbody {
+  background-color: #181a1b;
+  color: #e8e6e3;
+}
+
 .west-table tbody tr:hover,
 .east-table tbody tr:hover {
   background-color: #f0f0f0;
+}
+
+.dark-mode .west-table tbody tr:hover,
+.dark-mode .east-table tbody tr:hover {
+  background-color: #404040;
 }
 
 .west-table th,
@@ -146,6 +195,11 @@
   padding: 10px;
   text-align: center;
   vertical-align: middle;
+}
+
+.dark-mode .west-table td,
+.dark-mode .east-table td {
+  border-bottom: 1px solid #404040;
 }
 
 .west-table td:first-child,
@@ -174,6 +228,11 @@
   width: 50em;
 }
 
+.dark-mode .legend {
+  background-color: #404040;
+  border: 1px solid #808080;
+}
+
 .legend table {
   border-collapse: collapse;
   table-layout: fixed;
@@ -193,11 +252,18 @@
   word-wrap: break-word;
 }
 
+.dark-mode .legend table td {
+  color: #e8e6e3;
+}
+
 .legend table td span {
   color: #333;
   font-weight: bold;
 }
 
+.dark-mode .legend table td span {
+  color: #dddddd;
+}
 
 @media (max-width: 768px) {
     .main-content {

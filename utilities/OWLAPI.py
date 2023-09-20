@@ -28,7 +28,7 @@ class OverwatchLeague:
         }
 
     def summary(self):
-        """Returns a summary from all the data in the Overwatch League API's database."""
+        """Returns a summary of all the data in the Overwatch League API's database."""
         summary_api_endpoint = '/owl/v1/owl2'
 
         summary_response = requests.get(
@@ -41,7 +41,7 @@ class OverwatchLeague:
         return summary_data
 
     def get_all_players(self):
-        """Returns data about all the players in the Overwatch League."""
+        """Returns data about of the players in the Overwatch League."""
         summary_data = self.summary()
         all_players = list(summary_data['players'].items())
 
@@ -61,7 +61,7 @@ class OverwatchLeague:
         return None
 
     def get_player(self, player_id):
-        """Receives a player id and returns all data about that player."""
+        """Receives a player id and returns all data of that player."""
         players_api_endpoint = '/owl/v1/players/'
 
         player_response = requests.get(
@@ -80,7 +80,7 @@ class OverwatchLeague:
             return None
 
     def get_all_teams(self):
-        """Returns data about all the teams in the Overwatch League."""
+        """Returns data of all the teams in the Overwatch League."""
         summary_data = self.summary()
         all_teams = list(summary_data['teams'].items())
 
@@ -99,7 +99,7 @@ class OverwatchLeague:
         return None
 
     def get_team(self, team_id):
-        """Receives a team id and returns all data about that team."""
+        """Receives a team id and returns all data of that team."""
         teams_api_endpoint = '/owl/v1/teams/'
 
         team_response = requests.get(
@@ -132,7 +132,7 @@ class OverwatchLeague:
         return None
 
     def get_segment(self, segment_id):
-        """Receives a tournament id and returns all data about that tournament."""
+        """Receives a tournament id and returns all data of that tournament."""
         segments_api_endpoint = '/owl/v1/segments/'
 
         segment_response = requests.get(
@@ -152,7 +152,7 @@ class OverwatchLeague:
 
     def get_match_id(self, team_1_name, team_2_name=None):
         """Receives at least 1 team name (up to 2)
-        and returns the ids for all matches in between those teams."""
+        and returns the ids for all matches where those teams played."""
         t1 = str(self.get_team_id(team_1_name))
         searched_teams = {t1}
 
@@ -173,7 +173,7 @@ class OverwatchLeague:
         return matches_list
 
     def get_match(self, match_id):
-        """Receives a match id and returns all data about that match."""
+        """Receives a match id and returns all data of that match."""
         matches_api_endpoint = '/owl/v1/matches/'
 
         match_response = requests.get(

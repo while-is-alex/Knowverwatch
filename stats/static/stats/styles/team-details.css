@@ -1,346 +1,346 @@
 .main-content {
-  align-items: center;
-  background-color: #ffffff;
-  background-size: contain;
-  border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  margin: -8px 0;
-  overflow-x: auto;
-  padding-bottom: 20px;
-  padding-top: 5px;
-  text-align: center;
-  white-space: nowrap;
+	align-items: center;
+	background-color: #FFFFFF;
+	background-size: contain;
+	border-radius: 8px;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	margin: -8px 0;
+	overflow-x: auto;
+	padding-bottom: 20px;
+	padding-top: 5px;
+	text-align: center;
+	white-space: nowrap;
 }
 
 .dark-mode .main-content {
-  background-color: #333;
+	background-color: #333;
 }
 
 .team-name {
-  font-size: 4rem;
+	font-size: 4rem;
 }
 
 .dark-mode .team-name {
-  color: #e8e6e3;
+	color: #E8E6E3;
 }
 
 .team-code {
-  color: #777777;
-  font-size: 2rem;
-  margin-top: -30px;
+	color: #777777;
+	font-size: 2rem;
+	margin-top: -30px;
 }
 
 .dark-mode .team-code {
-  color: #dddbd8;
+	color: #DDDBD8;
 }
 
 .team-logo {
-    filter: drop-shadow(0 2px 1px rgba(0,0,0,0.25));
-    margin: 10px;
-    max-width: 200px;
+	filter: drop-shadow(0 2px 1px rgba(0, 0, 0, 0.25));
+	margin: 10px;
+	max-width: 200px;
 }
 
 .championship-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 70px;
-  justify-content: center;
-  margin-top: 20px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 70px;
+	justify-content: center;
+	margin-top: 20px;
 }
 
 .championship-trophy {
-  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.6));
-  height: auto;
-  width: 20px;
+	filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.6));
+	height: auto;
+	width: 20px;
 }
 
 .championship-year {
-  color: #777777;
-  font-size: 1rem;
-  font-weight: bold;
-  text-align: center;
+	color: #777777;
+	font-size: 1rem;
+	font-weight: bold;
+	text-align: center;
 }
 
 .dark-mode .championship-year {
-  color: #dddbd8;
+	color: #DDDBD8;
 }
 
 .roster-title {
-  color: #262626;
-  font-size: 1.5rem;
-  letter-spacing: 2px;
-  margin-bottom: 30px;
-  text-align: center;
-  text-transform: uppercase;
+	color: #262626;
+	font-size: 1.5rem;
+	letter-spacing: 2px;
+	margin-bottom: 30px;
+	text-align: center;
+	text-transform: uppercase;
 }
 
 .dark-mode .roster-title {
-  color: #e8e6e3;
+	color: #E8E6E3;
 }
 
 .roster {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 50px;
-  justify-content: center;
-  margin: -8px 0;
-  padding: 20px 200px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 50px;
+	justify-content: center;
+	margin: -8px 0;
+	padding: 20px 200px;
 }
 
 .player-card {
-  background-color: #d7d5d5;
-  border-radius: 5px;
-  border: 7px solid #262626;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
-  color: #212020;
-  height: 300px;
-  overflow: hidden;
-  padding: 10px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  width: 200px;
+	background-color: #D7D5D5;
+	border-radius: 5px;
+	border: 7px solid #262626;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+	color: #212020;
+	height: 300px;
+	overflow: hidden;
+	padding: 10px;
+	position: relative;
+	text-align: center;
+	text-decoration: none;
+	transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+	width: 200px;
 }
 
 .player-card:hover {
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
-  transform: scale(1.1);
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+	transform: scale(1.1);
 }
 
 .player-name {
-  font-size: 1.2rem;
-  font-weight: bold;
-  left: 12px;
-  margin-bottom: 2px;
-  position: absolute;
-  top: 3px;
+	font-size: 1.2rem;
+	font-weight: bold;
+	left: 12px;
+	margin-bottom: 2px;
+	position: absolute;
+	top: 3px;
 }
 
 .player-name a {
-  color: #212020;
-  text-decoration: none;
+	color: #212020;
+	text-decoration: none;
 }
 
 .player-role {
-  background-color: #3f3d3c;
-  border-radius: 50%;
-  border: 1px solid #000;
-  bottom: 10px;
-  height: 15px;
-  padding: 3px;
-  position: absolute;
-  right: 10px;
-  top: 4px;
-  width: 15px;
+	background-color: #3F3D3C;
+	border-radius: 50%;
+	border: 1px solid #000;
+	bottom: 10px;
+	height: 15px;
+	padding: 3px;
+	position: absolute;
+	right: 10px;
+	top: 4px;
+	width: 15px;
 }
 
 .player-headshot {
-  background-color: #232323;
-  background-size: contain;
-  border-radius: 5px 5px 0 0;
-  border: 2px solid #262626;
-  display: block;
-  height: 130px;
-  margin: 20px auto 10px;
-  object-fit: contain;
-  position: relative;
-  transform: translateX(-1.5px);
-  width: 100%;
+	background-color: #232323;
+	background-size: contain;
+	border-radius: 5px 5px 0 0;
+	border: 2px solid #262626;
+	display: block;
+	height: 130px;
+	margin: 20px auto 10px;
+	object-fit: contain;
+	position: relative;
+	transform: translateX(-1.5px);
+	width: 100%;
 }
 
 .player-first-name {
-  margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 .player-last-name {
-  margin-bottom: 15px;
-  margin-top: 2px;
+	margin-bottom: 15px;
+	margin-top: 2px;
 }
 
 .heroes-icons {
-  background-color: black;
-  bottom: 20px;
-  height: 45px;
-  margin: 0 5px;
-  object-fit: contain;
-  width: 45px;
+	background-color: black;
+	bottom: 20px;
+	height: 45px;
+	margin: 0 5px;
+	object-fit: contain;
+	width: 45px;
 }
 
 .schedule-title {
-  color: #262626;
-  font-size: 1.5rem;
-  letter-spacing: 2px;
-  margin-bottom: 30px;
-  text-align: center;
-  text-transform: uppercase;
+	color: #262626;
+	font-size: 1.5rem;
+	letter-spacing: 2px;
+	margin-bottom: 30px;
+	text-align: center;
+	text-transform: uppercase;
 }
 
 .dark-mode .schedule-title {
-  color: #e8e6e3;
+	color: #E8E6E3;
 }
 
 .matches {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
-  margin-top: 10px;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 10px;
+	margin-top: 10px;
 }
 
 .spoilers-link {
-  background-color: #737373;
-  border-radius: 5px;
-  color: #ffffff;
-  display: inline-block;
-  font-size: 1rem;
-  padding: 5px 10px;
-  text-decoration: none;
-  transition: background-color 0.3s ease-in-out;
+	background-color: #737373;
+	border-radius: 5px;
+	color: #FFFFFF;
+	display: inline-block;
+	font-size: 1rem;
+	padding: 5px 10px;
+	text-decoration: none;
+	transition: background-color 0.3s ease-in-out;
 }
 
 .spoilers-link:hover {
-  background-color: #c0392b;
+	background-color: #C0392B;
 }
 
 .spoilers-link:focus {
-  outline: none;
+	outline: none;
 }
 
 .match-date {
-  color: #777777;
-  font-size: 1.1rem;
-  font-weight: bold;
+	color: #777777;
+	font-size: 1.1rem;
+	font-weight: bold;
 }
 
 .dark-mode .match-date {
-  color: #dddbd8;
+	color: #DDDBD8;
 }
 
 .match-card {
-  align-items: center;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  height: 100px;
-  justify-content: space-between;
-  margin: 0px 0 40px;
-  max-width: 1200px;
-  min-width: 1000px;
-  overflow: hidden;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  width: 140%;
+	align-items: center;
+	background-color: #FFFFFF;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	display: flex;
+	height: 100px;
+	justify-content: space-between;
+	margin: 0px 0 40px;
+	max-width: 1200px;
+	min-width: 1000px;
+	overflow: hidden;
+	transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+	width: 140%;
 }
 
 .match-card:hover {
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  transform: scale(1.1);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+	transform: scale(1.1);
 }
 
 .match-card-inner {
-  align-items: center;
-  background-color: #ffffff;
-  display: flex;
-  padding: 10px;
-  width: 100%;
+	align-items: center;
+	background-color: #FFFFFF;
+	display: flex;
+	padding: 10px;
+	width: 100%;
 }
 
 .match-card a {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 .home-team,
 .away-team {
-  align-items: center;
-  background-color: inherit;
-  display: flex;
-  flex: 1;
-  justify-content: space-between;
-  padding: 20px;
+	align-items: center;
+	background-color: inherit;
+	display: flex;
+	flex: 1;
+	justify-content: space-between;
+	padding: 20px;
 }
 
 .home-team-icon,
 .away-team-icon {
-  flex: 0 0 auto;
-  height: 70px;
-  margin: 5px;
-  position: relative;
-  width: 70px;
+	flex: 0 0 auto;
+	height: 70px;
+	margin: 5px;
+	position: relative;
+	width: 70px;
 }
 
 .home-team-name,
 .away-team-name {
-  flex: 1 1 auto;
-  font-size: 1.7rem;
-  font-weight: bold;
-  margin: 0 10px;
+	flex: 1 1 auto;
+	font-size: 1.7rem;
+	font-weight: bold;
+	margin: 0 10px;
 }
 
 .home-team-name {
-  text-align: left;
+	text-align: left;
 }
 
 .away-team-name {
-  text-align: right;
+	text-align: right;
 }
 
 .home-team-score-container,
 .away-team-score-container {
-  align-items: center;
-  background-color: #f2f2f2;
-  border-radius: 5px;
-  border: 1px solid #2a2a2a;
-  color: #a0a0a0;
-  display: flex;
-  font-size: 1.2rem;
-  font-weight: bold;
-  height: 50px;
-  justify-content: center;
-  margin: 0 10px;
-  width: 50px;
+	align-items: center;
+	background-color: #F2F2F2;
+	border-radius: 5px;
+	border: 1px solid #2A2A2A;
+	color: #A0A0A0;
+	display: flex;
+	font-size: 1.2rem;
+	font-weight: bold;
+	height: 50px;
+	justify-content: center;
+	margin: 0 10px;
+	width: 50px;
 }
 
 .home-team-score,
 .away-team-score {
-  color: #282828;
-  font-size: 2.5rem;
-  font-weight: bold;
+	color: #282828;
+	font-size: 2.5rem;
+	font-weight: bold;
 }
 
 
 .boston-filter {
-  filter: invert(82%) sepia(82%) saturate(450%) hue-rotate(370deg) brightness(120%) contrast(98%);
+	filter: invert(82%) sepia(82%) saturate(450%) hue-rotate(370deg) brightness(120%) contrast(98%);
 }
 
 .hangzhou-filter {
-  filter: invert(51%) sepia(10%) saturate(2889%) hue-rotate(175deg) brightness(102%) contrast(70%);
+	filter: invert(51%) sepia(10%) saturate(2889%) hue-rotate(175deg) brightness(102%) contrast(70%);
 }
 
 .houston-filter {
-  filter: contrast(60%);
+	filter: contrast(60%);
 }
 
 .new-york-filter {
-  filter: invert(72%) sepia(6%) saturate(128%) hue-rotate(169deg) brightness(104%) contrast(96%);
+	filter: invert(72%) sepia(6%) saturate(128%) hue-rotate(169deg) brightness(104%) contrast(96%);
 }
 
 .shanghai-filter {
-  filter: contrast(140%);
+	filter: contrast(140%);
 }
 
 .toronto-filter {
-  filter: invert(24%) sepia(99%) saturate(3644%) hue-rotate(337deg) brightness(72%) contrast(115%);
+	filter: invert(24%) sepia(99%) saturate(3644%) hue-rotate(337deg) brightness(72%) contrast(115%);
 }
 
 .twisted-filter {
-  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(79deg) brightness(202%) contrast(102%);
+	filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(79deg) brightness(202%) contrast(102%);
 }
 
 .wisp-filter {
-  filter: invert(9%) sepia(6%) saturate(0%) hue-rotate(22deg) brightness(15%) contrast(84%);
+	filter: invert(9%) sepia(6%) saturate(0%) hue-rotate(22deg) brightness(15%) contrast(84%);
 }

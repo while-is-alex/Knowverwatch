@@ -1,429 +1,429 @@
 .main-content {
-  align-items: center;
-  background-color: #ffffff;
-  background-size: contain;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: -8px 0;
-  overflow-x: auto;
-  padding: 20px 0 10px;
-  text-align: center;
-  white-space: nowrap;
+	align-items: center;
+	background-color: #FFFFFF;
+	background-size: contain;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin: -8px 0;
+	overflow-x: auto;
+	padding: 20px 0 10px;
+	text-align: center;
+	white-space: nowrap;
 }
 
 .dark-mode .main-content {
-  background-color: #333;
+	background-color: #333;
 }
 
 .page-title {
-  font-size: 4rem;
-  margin-bottom: 30px;
+	font-size: 4rem;
+	margin-bottom: 30px;
 }
 
 .dark-mode .page-title {
-  color: #e8e6e3;
+	color: #E8E6E3;
 }
 
 .compare-section {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
-  margin-top: 30px;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	margin-bottom: 30px;
+	margin-top: 30px;
 }
 
 .versus-sign {
-  display: block;
-  height: 6em;
-  margin: 20px auto;
-  max-width: 100%;
-  position: relative;
-  top: 50%;
-  transform: translateY(150%);
-  width: auto;
+	display: block;
+	height: 6em;
+	margin: 20px auto;
+	max-width: 100%;
+	position: relative;
+	top: 50%;
+	transform: translateY(150%);
+	width: auto;
 }
 
 .players-container {
-  display: flex;
-  flex-shrink: 0;
-  justify-content: center;
-  max-width: 1200px;
-  min-width: 100%;
-  padding: 0 10px;
-  white-space: normal;
-  width: 100%;
+	display: flex;
+	flex-shrink: 0;
+	justify-content: center;
+	max-width: 1200px;
+	min-width: 100%;
+	padding: 0 10px;
+	white-space: normal;
+	width: 100%;
 }
 
 .player-a-container,
 .player-b-container {
-  margin: 0 10px;
-  width: calc(50% - 10px);
+	margin: 0 10px;
+	width: calc(50% - 10px);
 }
 
 .player-section {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  margin: -8px 0;
-  padding: 20px 20px;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	margin: -8px 0;
+	padding: 20px 20px;
 }
 
 .select-player {
-  align-items: center;
-  display: flex;
-  gap: 5px;
-  margin-bottom: 20px;
+	align-items: center;
+	display: flex;
+	gap: 5px;
+	margin-bottom: 20px;
 }
 
 .select-player label {
-  color: #212020;
-  font-size: 1rem;
-  font-weight: bold;
+	color: #212020;
+	font-size: 1rem;
+	font-weight: bold;
 }
 
 .select-player select {
-  background-color: #fff;
-  border-radius: 5px;
-  border: 2px solid #262626;
-  color: #212020;
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 8px;
-  transition: border-color 0.2s ease-in-out;
-  width: 150px;
+	background-color: #FFF;
+	border-radius: 5px;
+	border: 2px solid #262626;
+	color: #212020;
+	cursor: pointer;
+	font-size: 1rem;
+	padding: 8px;
+	transition: border-color 0.2s ease-in-out;
+	width: 150px;
 }
 
 .dark-mode .select-player select {
-  background-color: #e0e0e0;
+	background-color: #E0E0E0;
 }
 
 .select-player select:hover {
-  border-color: #8f8f8f;
+	border-color: #8F8F8F;
 }
 
 .select-player select:focus {
-  border-color: #427ace;
-  box-shadow: 0 0 0 2px rgba(66, 122, 206, 0.3);
-  outline: none;
+	border-color: #427ACE;
+	box-shadow: 0 0 0 2px rgba(66, 122, 206, 0.3);
+	outline: none;
 }
 
 .player-card {
-  align-items: center;
-  background-color: #d7d5d5;
-  border-radius: 5px;
-  border: 7px solid #262626;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-  color: #212020;
-  display: flex;
-  flex-direction: column;
-  height: 300px;
-  overflow: hidden;
-  padding: 10px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  width: 200px;
+	align-items: center;
+	background-color: #D7D5D5;
+	border-radius: 5px;
+	border: 7px solid #262626;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+	color: #212020;
+	display: flex;
+	flex-direction: column;
+	height: 300px;
+	overflow: hidden;
+	padding: 10px;
+	position: relative;
+	text-align: center;
+	text-decoration: none;
+	width: 200px;
 }
 
 .player-name {
-  font-size: 1.2rem;
-  font-weight: bold;
-  left: 12px;
-  margin-bottom: 2px;
-  pointer-events: none;
-  position: absolute;
-  top: 3px;
+	font-size: 1.2rem;
+	font-weight: bold;
+	left: 12px;
+	margin-bottom: 2px;
+	pointer-events: none;
+	position: absolute;
+	top: 3px;
 }
 
 .player-name a {
-  color: #212020;
-  text-decoration: none;
+	color: #212020;
+	text-decoration: none;
 }
 
 .player-role {
-  background-color: #3f3d3c;
-  border-radius: 50%;
-  border: 1px solid #000;
-  bottom: 10px;
-  height: 15px;
-  padding: 3px;
-  pointer-events: none;
-  position: absolute;
-  right: 10px;
-  top: 4px;
-  width: 15px;
+	background-color: #3F3D3C;
+	border-radius: 50%;
+	border: 1px solid #000;
+	bottom: 10px;
+	height: 15px;
+	padding: 3px;
+	pointer-events: none;
+	position: absolute;
+	right: 10px;
+	top: 4px;
+	width: 15px;
 }
 
 .player-headshot {
-  background-color: #262626;
-  background-size: contain;
-  border-radius: 5px 5px 0 0;
-  border: 2px solid #262626;
-  display: block;
-  height: 130px;
-  margin: 20px auto 0;
-  object-fit: contain;
-  pointer-events: none;
-  position: relative;
-  transition: transform 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, filter 0.3s ease-in-out;
-  width: 200px;
+	background-color: #262626;
+	background-size: contain;
+	border-radius: 5px 5px 0 0;
+	border: 2px solid #262626;
+	display: block;
+	height: 130px;
+	margin: 20px auto 0;
+	object-fit: contain;
+	pointer-events: none;
+	position: relative;
+	transition: transform 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, filter 0.3s ease-in-out;
+	width: 200px;
 }
 
 .player-headshot-link:hover .player-headshot {
-  border-color: #d5d4d4;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-  transform: scale(1.02);
+	border-color: #D5D4D4;
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+	transform: scale(1.02);
 }
 
 .player-first-name {
-  margin-bottom: 10px;
-  pointer-events: none;
+	margin-bottom: 10px;
+	pointer-events: none;
 }
 
 .player-last-name {
-  margin-bottom: 20px;
-  margin-top: 2px;
-  pointer-events: none;
+	margin-bottom: 20px;
+	margin-top: 2px;
+	pointer-events: none;
 }
 
 .team-icon {
-  background-clip: padding-box;
-  border-radius: 5px;
-  border: 2px solid transparent;
-  bottom: 20px;
-  box-sizing: border-box;
-  cursor: pointer;
-  height: 60px;
-  margin-top: 5px;
-  object-fit: contain;
-  padding: 0;
-  position: absolute;
-  transform: translateX(-50%);
-  transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
-  width: 60px;
+	background-clip: padding-box;
+	border-radius: 5px;
+	border: 2px solid transparent;
+	bottom: 20px;
+	box-sizing: border-box;
+	cursor: pointer;
+	height: 60px;
+	margin-top: 5px;
+	object-fit: contain;
+	padding: 0;
+	position: absolute;
+	transform: translateX(-50%);
+	transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
+	width: 60px;
 }
 
 .team-icon:hover {
-  border-color: #262626;
-  transform: translateX(-50%) scale(1.05);
+	border-color: #262626;
+	transform: translateX(-50%) scale(1.05);
 }
 
 .hero-section {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  margin: -8px 0;
-  padding: 20px 20px;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	margin: -8px 0;
+	padding: 20px 20px;
 }
 
 .select-hero {
-  align-items: center;
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
+	align-items: center;
+	display: flex;
+	gap: 10px;
+	margin-bottom: 10px;
 }
 
 .select-hero label {
-  color: #212020;
-  font-size: 1rem;
-  font-weight: bold;
+	color: #212020;
+	font-size: 1rem;
+	font-weight: bold;
 }
 
 .select-hero select {
-  background-color: #fff;
-  border-radius: 5px;
-  border: 2px solid #262626;
-  color: #212020;
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 8px;
-  transition: border-color 0.2s ease-in-out;
-  width: 150px;
+	background-color: #FFF;
+	border-radius: 5px;
+	border: 2px solid #262626;
+	color: #212020;
+	cursor: pointer;
+	font-size: 1rem;
+	padding: 8px;
+	transition: border-color 0.2s ease-in-out;
+	width: 150px;
 }
 
 .dark-mode .select-hero select {
-  background-color: #e0e0e0;
+	background-color: #E0E0E0;
 }
 
 .select-hero select:hover {
-  border-color: #8f8f8f;
+	border-color: #8F8F8F;
 }
 
 .select-hero select:focus {
-  border-color: #427ace;
-  box-shadow: 0 0 0 2px rgba(66, 122, 206, 0.3);
-  outline: none;
+	border-color: #427ACE;
+	box-shadow: 0 0 0 2px rgba(66, 122, 206, 0.3);
+	outline: none;
 }
 
 .hero-card {
-  align-items: center;
-  background-color: #d7d5d5;
-  border-radius: 8px;
-  border: 7px solid black;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  height: 330px;
-  margin: 10px 20px;
-  padding: 20px 10px;
-  width: 480px;
+	align-items: center;
+	background-color: #D7D5D5;
+	border-radius: 8px;
+	border: 7px solid black;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-direction: column;
+	height: 330px;
+	margin: 10px 20px;
+	padding: 20px 10px;
+	width: 480px;
 }
 
 .hero-headshot {
-  background-color: #427ace;
-  background-size: contain;
-  border-radius: 10%;
-  border: 2px solid #262626;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  height: 100px;
-  margin-bottom: 0;
-  margin-top: 10px;
-  object-fit: cover;
-  width: 100px;
+	background-color: #427ACE;
+	background-size: contain;
+	border-radius: 10%;
+	border: 2px solid #262626;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+	height: 100px;
+	margin-bottom: 0;
+	margin-top: 10px;
+	object-fit: cover;
+	width: 100px;
 }
 
 .hero-name {
-  color: #212020;
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 0;
-  margin-top: 15px;
+	color: #212020;
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin-bottom: 0;
+	margin-top: 15px;
 }
 
 .hero-stats-container {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  margin-bottom: 5px;
-  margin-top: 15px;
-  overflow: hidden;
-  width: 100%;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	margin-bottom: 5px;
+	margin-top: 15px;
+	overflow: hidden;
+	width: 100%;
 }
 
 .hero-stats {
-  align-items: flex-start;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  margin: 5px;
-  transform: translateX(125px);
-  transition: transform 0.5s ease-in-out;
-  width: calc(100% - 20px);
+	align-items: flex-start;
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	margin: 5px;
+	transform: translateX(125px);
+	transition: transform 0.5s ease-in-out;
+	width: calc(100% - 20px);
 }
 
 .hero-stat {
-  background-color: #ffffff;
-  border-radius: 5px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  flex-shrink: 0;
-  margin: 5px;
-  padding: 10px;
-  text-align: center;
-  width: calc(40% - 10px);
+	background-color: #FFFFFF;
+	border-radius: 5px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+	flex-shrink: 0;
+	margin: 5px;
+	padding: 10px;
+	text-align: center;
+	width: calc(40% - 10px);
 }
 
 .dark-mode .hero-stat {
-  background-color: #e0e0e0;
+	background-color: #E0E0E0;
 }
 
 .hero-stat.empty {
-  background-color: transparent;
-  border: none;
-  box-shadow: none;
-  flex-shrink: 0;
-  margin: 5px;
-  padding: 10px;
-  width: calc(40% - 10px);
+	background-color: transparent;
+	border: none;
+	box-shadow: none;
+	flex-shrink: 0;
+	margin: 5px;
+	padding: 10px;
+	width: calc(40% - 10px);
 }
 
 .hero-stat-name {
-  font-size: 0.9rem;
-  margin: 5px 0;
+	font-size: 0.9rem;
+	margin: 5px 0;
 }
 
 .hero-stat-value {
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin: 5px 0;
+	font-size: 1.1rem;
+	font-weight: bold;
+	margin: 5px 0;
 }
 
 .pagination-buttons {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
 }
 
 .pagination-buttons button {
-  background-color: #8f8f8f;
-  border-radius: 5px;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 5px 10px;
-  transition: background-color 0.2s ease-in-out;
+	background-color: #8F8F8F;
+	border-radius: 5px;
+	border: none;
+	color: #FFF;
+	cursor: pointer;
+	font-size: 1rem;
+	padding: 5px 10px;
+	transition: background-color 0.2s ease-in-out;
 }
 
 .pagination-buttons button.active {
-  background-color: #262626;
-  color: #fff;
+	background-color: #262626;
+	color: #FFF;
 }
 
 .pagination-buttons button:hover {
-  background-color: #262626;
+	background-color: #262626;
 }
 
 .prev-button {
-  margin-right: 5px;
+	margin-right: 5px;
 }
 
 .next-button {
-  margin-left: 5px;
+	margin-left: 5px;
 }
 
 .grow {
-  transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
 }
 
 .grow:hover {
-transform: scale(1.1);
+	transform: scale(1.1);
 }
 
 .boston-filter {
-  filter: invert(82%) sepia(82%) saturate(450%) hue-rotate(370deg) brightness(120%) contrast(98%);
+	filter: invert(82%) sepia(82%) saturate(450%) hue-rotate(370deg) brightness(120%) contrast(98%);
 }
 
 .hangzhou-filter {
-  filter: invert(51%) sepia(10%) saturate(2889%) hue-rotate(175deg) brightness(102%) contrast(70%);
+	filter: invert(51%) sepia(10%) saturate(2889%) hue-rotate(175deg) brightness(102%) contrast(70%);
 }
 
 .houston-filter {
-  filter: contrast(60%);
+	filter: contrast(60%);
 }
 
 .new-york-filter {
-  filter: invert(72%) sepia(6%) saturate(128%) hue-rotate(169deg) brightness(104%) contrast(96%);
+	filter: invert(72%) sepia(6%) saturate(128%) hue-rotate(169deg) brightness(104%) contrast(96%);
 }
 
 .shanghai-filter {
-  filter: contrast(140%);
+	filter: contrast(140%);
 }
 
 .toronto-filter {
-  filter: invert(24%) sepia(99%) saturate(3644%) hue-rotate(337deg) brightness(72%) contrast(115%);
+	filter: invert(24%) sepia(99%) saturate(3644%) hue-rotate(337deg) brightness(72%) contrast(115%);
 }
 
 .twisted-filter {
-  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(79deg) brightness(202%) contrast(102%);
+	filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(79deg) brightness(202%) contrast(102%);
 }
 
 .wisp-filter {
-  filter: invert(9%) sepia(6%) saturate(0%) hue-rotate(22deg) brightness(15%) contrast(84%);
+	filter: invert(9%) sepia(6%) saturate(0%) hue-rotate(22deg) brightness(15%) contrast(84%);
 }

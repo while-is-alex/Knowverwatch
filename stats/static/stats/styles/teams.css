@@ -1,120 +1,120 @@
 .main-content {
-  align-items: center;
-  background-color: #ffffff;
-  background-size: contain;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  margin: -8px 0;
-  overflow-x: auto;
-  padding: 20px;
-  padding-bottom: 30px;
-  text-align: center;
+	align-items: center;
+	background-color: #FFFFFF;
+	background-size: contain;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	justify-content: center;
+	margin: -8px 0;
+	overflow-x: auto;
+	padding: 20px;
+	padding-bottom: 30px;
+	text-align: center;
 }
 
 .dark-mode .main-content {
-  background-color: #333;
+	background-color: #333;
 }
 
 .page-title {
-  clear: both;
-  font-size: 2rem;
-  margin-bottom: 5px;
+	clear: both;
+	font-size: 2rem;
+	margin-bottom: 5px;
 }
 
 .dark-mode .page-title {
-  color: #e8e6e3;
+	color: #E8E6E3;
 }
 
 .container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  margin: -8px 0;
-  padding: 10px 20px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: center;
+	margin: -8px 0;
+	padding: 10px 20px;
 }
 
 .select-region {
-  align-items: center;
-  background-color: #fff;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  display: flex;
-  padding: 8px;
-  position: absolute;
-  right: 40px;
-  top: 90px;
+	align-items: center;
+	background-color: #FFF;
+	border: 1px solid #CCC;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	display: flex;
+	padding: 8px;
+	position: absolute;
+	right: 40px;
+	top: 90px;
 }
 
 .dark-mode .select-region {
-  background-color: #c2c2c2;
+	background-color: #C2C2C2;
 }
 
 .select-region label {
-  font-weight: bold;
-  margin-right: 8px;
+	font-weight: bold;
+	margin-right: 8px;
 }
 
 .select-region select {
-  border-radius: 3px;
-  border: 1px solid #ccc;
-  padding: 6px;
+	border: 1px solid #CCC;
+	border-radius: 3px;
+	padding: 6px;
 }
 
 .dark-mode .select-region select {
-  background-color: #e0e0e0;
+	background-color: #E0E0E0;
 }
 
 .team-card {
-  background-color: #f0f0f0;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  color: #212020;
-  height: 9em;
-  padding: 20px;
-  text-align: center;
-  text-decoration: none;
-  width: 16em;
+	background-color: #F0F0F0;
+	border: 1px solid #CCC;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	color: #212020;
+	height: 9em;
+	padding: 20px;
+	text-align: center;
+	text-decoration: none;
+	width: 16em;
 }
 
 .dark-mode .team-card {
-  background-color: #c2c2c2;
+	background-color: #C2C2C2;
 }
 
 .team-logo {
-  border-radius: 5px;
-  display: block;
-  height: 5rem;
-  margin: 0 auto 10px;
-  object-fit: scale-down;
-  width: 5rem;
+	border-radius: 5px;
+	display: block;
+	height: 5rem;
+	margin: 0 auto 10px;
+	object-fit: scale-down;
+	width: 5rem;
 }
 
 .team-name {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-bottom: 5px;
+	font-size: 1.3rem;
+	font-weight: bold;
+	margin-bottom: 5px;
 }
 
 .team-code {
-  font-size: 14px;
+	font-size: 14px;
 }
 
 .team-card:hover {
-  background-color: var(--secondary-color, #f8f8f8);
-  color: var(--secondary-font-color, black);
+	background-color: var(--secondary-color, #F8F8F8);
+	color: var(--secondary-font-color, black);
 }
 
 .boston-filter {
-  filter: invert(82%) sepia(82%) saturate(450%) hue-rotate(370deg) brightness(120%) contrast(98%);
+	filter: invert(82%) sepia(82%) saturate(450%) hue-rotate(370deg) brightness(120%) contrast(98%);
 }
 
 .houston-filter {
-  filter: contrast(60%);
+	filter: contrast(60%);
 }

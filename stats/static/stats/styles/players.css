@@ -1,192 +1,192 @@
 .main-content {
-  align-items: center;
-  background-color: #ffffff;
-  background-size: contain;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-  margin: -8px 0;
-  overflow-x: auto;
-  padding: 20px 0 30px;
-  text-align: center;
+	align-items: center;
+	background-color: #FFFFFF;
+	background-size: contain;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	justify-content: center;
+	margin: -8px 0;
+	overflow-x: auto;
+	padding: 20px 0 30px;
+	text-align: center;
 }
 
 .dark-mode .main-content {
-  background-color: #333;
+	background-color: #333;
 }
 
 .page-title {
-  clear: both;
-  font-size: 2rem;
-  margin-bottom: 5px;
+	clear: both;
+	font-size: 2rem;
+	margin-bottom: 5px;
 }
 
 .dark-mode .page-title {
-  color: #e8e6e3;
+	color: #E8E6E3;
 }
 
 .container {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  justify-content: center;
-  margin: -8px 0;
-  padding: 10px 20px;
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 30px;
+	justify-content: center;
+	margin: -8px 0;
+	padding: 10px 20px;
 }
 
 .player-card {
-  align-items: center;
-  background-color: #d7d5d5;
-  border-radius: 5px;
-  border: 7px solid #151515;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
-  color: #212020;
-  display: flex;
-  flex-direction: column;
-  height: 300px;
-  overflow: hidden;
-  padding: 10px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  width: 200px;
+	align-items: center;
+	background-color: #D7D5D5;
+	border-radius: 5px;
+	border: 7px solid #151515;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+	color: #212020;
+	display: flex;
+	flex-direction: column;
+	height: 300px;
+	overflow: hidden;
+	padding: 10px;
+	position: relative;
+	text-align: center;
+	text-decoration: none;
+	transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+	width: 200px;
 }
 
 .player-card:hover {
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
-  transform: scale(1.1);
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+	transform: scale(1.1);
 }
 
 .player-name {
-  font-size: 1.2rem;
-  font-weight: bold;
-  left: 12px;
-  margin-bottom: 2px;
-  position: absolute;
-  top: 3px;
+	font-size: 1.2rem;
+	font-weight: bold;
+	left: 12px;
+	margin-bottom: 2px;
+	position: absolute;
+	top: 3px;
 }
 
 .player-role {
-  background-color: #3f3d3c;
-  border-radius: 50%;
-  border: 1px solid #000;
-  bottom: 10px;
-  height: 15px;
-  padding: 3px;
-  position: absolute;
-  right: 10px;
-  top: 4px;
-  width: 15px;
+	background-color: #3F3D3C;
+	border-radius: 50%;
+	border: 1px solid #000;
+	bottom: 10px;
+	height: 15px;
+	padding: 3px;
+	position: absolute;
+	right: 10px;
+	top: 4px;
+	width: 15px;
 }
 
 .player-headshot {
-  background-color: #1f1f1f;
-  background-size: contain;
-  border-radius: 5px 5px 0 0;
-  border: 2px solid #262626;
-  display: block;
-  height: 130px;
-  margin: 20px auto 0;
-  object-fit: contain;
-  position: relative;
-  transform: translateX(-1.6px);
-  width: 100%;
+	background-color: #1F1F1F;
+	background-size: contain;
+	border-radius: 5px 5px 0 0;
+	border: 2px solid #262626;
+	display: block;
+	height: 130px;
+	margin: 20px auto 0;
+	object-fit: contain;
+	position: relative;
+	transform: translateX(-1.6px);
+	width: 100%;
 }
 
 .player-name a {
-  color: #212020;
-  text-decoration: none;
+	color: #212020;
+	text-decoration: none;
 }
 
 .player-name a:hover {
-  color: #625f5f;
+	color: #625F5F;
 }
 
 .player-first-name {
-  margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 .player-last-name {
-  margin-bottom: 0px;
-  margin-top: 2px;
+	margin-bottom: 0px;
+	margin-top: 2px;
 }
 
 .player-first-name span,
 .player-last-name span {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 .team-icon {
-  bottom: 30px;
-  height: 45px;
-  object-fit: contain;
-  position: absolute;
-  width: 45px;
+	bottom: 30px;
+	height: 45px;
+	object-fit: contain;
+	position: absolute;
+	width: 45px;
 }
 
 .pagination {
-  clear: both;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  text-align: center;
+	clear: both;
+	margin-bottom: 20px;
+	margin-top: 20px;
+	text-align: center;
 }
 
 .pagination a {
-  background-color: #f0f0f0;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  color: #212020;
-  margin: 0 5px;
-  padding: 8px 12px;
-  text-decoration: none;
+	background-color: #F0F0F0;
+	border-radius: 5px;
+	border: 1px solid #CCC;
+	color: #212020;
+	margin: 0 5px;
+	padding: 8px 12px;
+	text-decoration: none;
 }
 
 .dark-mode .pagination a {
-  background-color: #c2c2c2;
+	background-color: #C2C2C2;
 }
 
 .pagination .current {
-  background-color: #fab358;
-  border-radius: 5px;
-  border: 1px solid #fab358;
-  color: #fff;
-  margin: 0 5px;
-  padding: 8px 12px;
+	background-color: #FAB358;
+	border-radius: 5px;
+	border: 1px solid #FAB358;
+	color: #FFF;
+	margin: 0 5px;
+	padding: 8px 12px;
 }
 
 .boston-filter {
-  filter: invert(82%) sepia(82%) saturate(450%) hue-rotate(370deg) brightness(120%) contrast(98%);
+	filter: invert(82%) sepia(82%) saturate(450%) hue-rotate(370deg) brightness(120%) contrast(98%);
 }
 
 .hangzhou-filter {
-  filter: invert(51%) sepia(10%) saturate(2889%) hue-rotate(175deg) brightness(102%) contrast(70%);
+	filter: invert(51%) sepia(10%) saturate(2889%) hue-rotate(175deg) brightness(102%) contrast(70%);
 }
 
 .houston-filter {
-  filter: contrast(60%);
+	filter: contrast(60%);
 }
 
 .new-york-filter {
-  filter: invert(72%) sepia(6%) saturate(128%) hue-rotate(169deg) brightness(104%) contrast(96%);
+	filter: invert(72%) sepia(6%) saturate(128%) hue-rotate(169deg) brightness(104%) contrast(96%);
 }
 
 .shanghai-filter {
-  filter: contrast(140%);
+	filter: contrast(140%);
 }
 
 .toronto-filter {
-  filter: invert(24%) sepia(99%) saturate(3644%) hue-rotate(337deg) brightness(72%) contrast(115%);
+	filter: invert(24%) sepia(99%) saturate(3644%) hue-rotate(337deg) brightness(72%) contrast(115%);
 }
 
 .twisted-filter {
-  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(79deg) brightness(202%) contrast(102%);
+	filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(79deg) brightness(202%) contrast(102%);
 }
 
 .wisp-filter {
-  filter: invert(9%) sepia(6%) saturate(0%) hue-rotate(22deg) brightness(15%) contrast(84%);
+	filter: invert(9%) sepia(6%) saturate(0%) hue-rotate(22deg) brightness(15%) contrast(84%);
 }

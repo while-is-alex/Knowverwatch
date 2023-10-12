@@ -52,7 +52,7 @@ class SegmentAdmin(admin.ModelAdmin):
 
 class MatchAdmin(admin.ModelAdmin):
     list_display = (
-        'teams',
+        'id',
         'segment',
         'season',
     )

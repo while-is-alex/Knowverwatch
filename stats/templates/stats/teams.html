@@ -73,19 +73,5 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById('regions').addEventListener('change', function() {
-            localStorage.setItem('selectedRegion', this.value);
-            document.getElementById('region-form').submit();
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const selectedRegion = localStorage.getItem('selectedRegion');
-
-            if (selectedRegion) {
-                document.getElementById('regions').value = selectedRegion;
-            }
-
-        });
-    </script>
+    <script src="{% static 'stats/js/region_selector.js' %}"></script>
 {% endblock %}

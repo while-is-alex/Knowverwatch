@@ -1,5 +1,5 @@
 """
-ASGI config for OWL_website project.
+ASGI config for knowverwatch project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'OWL_website.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'knowverwatch.settings')
 
 application = get_asgi_application()

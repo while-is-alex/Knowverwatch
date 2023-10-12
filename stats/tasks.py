@@ -5,7 +5,7 @@ from datetime import date, datetime, timezone
 
 
 @shared_task
-def update_team_database(team_id):
+def update_team_in_database(team_id):
     owl = OverwatchLeague()
     team_response = owl.get_team(team_id)
 
@@ -35,7 +35,7 @@ def update_team_database(team_id):
 
 
 @shared_task
-def update_player_database(player_id):
+def update_player_in_database(player_id):
     owl = OverwatchLeague()
     player_response = owl.get_player(player_id)
 
@@ -102,7 +102,7 @@ def parse_timestamp(timestamp):
 
 
 @shared_task
-def update_segment_database(segment_id):
+def update_segment_in_database(segment_id):
     owl = OverwatchLeague()
     segment_response = owl.get_segment(segment_id)
 
@@ -126,7 +126,7 @@ def update_segment_database(segment_id):
 
 
 @shared_task
-def update_match_database(match_id):
+def update_match_in_database(match_id):
     owl = OverwatchLeague()
     match_response = owl.get_match(match_id)
 
@@ -341,12 +341,12 @@ def update_the_whole_database():
     owl = OverwatchLeague()
     response = owl.summary()
 
-    update_database(Team, response['teams'], create_team_in_database, update_team_database)
-    update_database(Player, response['players'], create_player_in_database, update_player_database)
-    update_database(Segment, response['segments'], create_segment_in_database, update_segment_database)
+    update_database(Team, response['teams'], create_team_in_database, update_team_in_database)
+    update_database(Player, response['players'], create_player_in_database, update_player_in_database)
+    update_database(Segment, response['segments'], create_segment_in_database, update_segment_in_database)
 
     all_segments = Segment.objects.all()
     for segment in all_segments:
         response = owl.get_segment(segment.id)
 
-        update_database(Match, response['matches'], create_match_in_database, update_match_database)
+        update_database(Match, response['matches'], create_match_in_database, update_match_in_database)

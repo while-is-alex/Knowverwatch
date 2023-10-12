@@ -155,7 +155,7 @@ class Match(models.Model):
     )
 
     def __str__(self):
-        return f'{self.teams} ({self.date})'
+        return f'Match ID: {self.id} ({self.date})'
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.id)

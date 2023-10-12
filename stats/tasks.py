@@ -33,16 +33,6 @@ def update_team_database(team_id):
         secondary_color=secondary_color,
     )
 
-    current_year = datetime.today().year
-    matches = Match.objects.filter(
-        teams__has_key=team_id,
-        date__year=current_year,
-    ).order_by('-date')
-
-    team_matches_ids = [match.id for match in matches if match.winner_id is None]
-    for match_id in team_matches_ids:
-        update_match_database(match_id)
-
 
 @shared_task
 def update_player_database(player_id):
@@ -354,4 +344,9 @@ def update_the_whole_database():
     update_database(Team, response['teams'], create_team_in_database, update_team_database)
     update_database(Player, response['players'], create_player_in_database, update_player_database)
     update_database(Segment, response['segments'], create_segment_in_database, update_segment_database)
-    update_database(Match, response['matches'], create_match_in_database, update_match_database)
+
+    all_segments = Segment.objects.all()
+    for segment in all_segments:
+        response = owl.get_segment(segment.id)
+
+        update_database(Match, response['matches'], create_match_in_database, update_match_database)

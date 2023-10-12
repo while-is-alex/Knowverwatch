@@ -166,7 +166,7 @@
 
                 </div>
 
-                <img src="{% static 'stats/images/vs.png' %}" alt="versus sign" class="versus-sign" loading="lazy">
+                <img src="{% static 'stats/images/other/vs.png' %}" alt="versus sign" class="versus-sign" loading="lazy">
 
                 <div class="player-container player-b-container">
 
@@ -288,100 +288,6 @@
 
     </div>
 
-    <script>
-        document.getElementById('player-a').addEventListener('change', function() {
-            localStorage.setItem('selectedPlayerA', this.value);
-            localStorage.removeItem('selectedHeroA');
-            document.getElementById('player-a-form').submit();
-        });
-
-        document.getElementById('hero-a').addEventListener('change', function() {
-            localStorage.setItem('selectedHeroA', this.value);
-            document.getElementById('hero-a-form').submit();
-        });
-
-        document.getElementById('player-b').addEventListener('change', function() {
-            localStorage.setItem('selectedPlayerB', this.value);
-            localStorage.removeItem('selectedHeroB'); // Clear the selected hero for player B
-            document.getElementById('player-b-form').submit();
-        });
-
-        document.getElementById('hero-b').addEventListener('change', function() {
-            localStorage.setItem('selectedHeroB', this.value);
-            document.getElementById('hero-b-form').submit();
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const selectedPlayerA = localStorage.getItem('selectedPlayerA');
-            const selectedHeroA = localStorage.getItem('selectedHeroA');
-            const selectedPlayerB = localStorage.getItem('selectedPlayerB');
-            const selectedHeroB = localStorage.getItem('selectedHeroB');
-
-            if (selectedPlayerA) {
-                document.getElementById('player-a').value = selectedPlayerA;
-            }
-
-            if (selectedHeroA) {
-                document.getElementById('hero-a').value = selectedHeroA;
-            }
-
-            if (selectedPlayerB) {
-                document.getElementById('player-b').value = selectedPlayerB;
-            }
-
-            if (selectedHeroB) {
-                document.getElementById('hero-b').value = selectedHeroB;
-            }
-
-            // Repeat similar code for other form fields if needed
-        });
-
-        // Select all the prev and next buttons
-        const prevButtons = document.querySelectorAll('.prev-button');
-        const nextButtons = document.querySelectorAll('.next-button');
-
-        // Attach event listeners to each set of buttons
-        prevButtons.forEach((prevButton, index) => {
-            prevButton.addEventListener('click', () => {
-                scrollHeroStatsContainer(index, -1);
-            });
-        });
-
-        nextButtons.forEach((nextButton, index) => {
-            nextButton.addEventListener('click', () => {
-                scrollHeroStatsContainer(index, 1);
-            });
-        });
-
-        function scrollHeroStatsContainer(index, direction) {
-        const heroStatsContainers = document.querySelectorAll('.hero-stats-container');
-        const heroStatsContainer = heroStatsContainers[index];
-        const heroStatElements = heroStatsContainer.querySelectorAll('.hero-stat:not(.non-interactable)'); // Exclude elements with the "non-interactable" class
-
-        // Find the current active hero-stat
-        const activeIndex = Array.from(heroStatElements).findIndex(heroStat => heroStat.classList.contains('active'));
-
-        // Calculate the index of the next hero-stat
-        let nextIndex = activeIndex + direction;
-
-        // Ensure the nextIndex is within valid bounds
-        if (nextIndex < 0) {
-            nextIndex = heroStatElements.length - 1;
-        } else if (nextIndex >= heroStatElements.length) {
-            nextIndex = 0;
-        }
-
-        // Update the active state of hero-stat elements
-        heroStatElements[activeIndex].classList.remove('active');
-        heroStatElements[nextIndex].classList.add('active');
-
-        // Calculate the new scroll position and update it
-        const heroStatWidth = heroStatElements[0].offsetWidth; // Use the width of the first hero-stat
-        const margin = 10; // Adjust this value based on your margin
-        let newScrollLeft = nextIndex * (heroStatWidth + margin);
-
-        heroStatsContainer.scrollLeft = newScrollLeft;
-        }
-    </script>
+    <script src="{% static 'stats/js/compare_players.js' %}"></script>
 
 {% endblock %}

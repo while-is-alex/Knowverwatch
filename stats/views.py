@@ -1,4 +1,4 @@
-from utilities.classes import Stats
+from utilities.classes import Stats, UpdateDatabase
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.http import HttpResponseNotFound, JsonResponse
@@ -7,27 +7,39 @@ from django.contrib import messages
 from .models import Team, Player, Segment, Match
 from datetime import datetime
 from django.utils import timezone
-from .tasks import update_team_database, update_player_database, update_segment_database, update_match_database
+from .tasks import update_team_in_database, update_player_in_database, update_segment_in_database, update_match_in_database
 
 stats = Stats()
+update = UpdateDatabase()
 
 
 class HomeView(View):
     def get(self, request):
         is_dark_mode = request.session.get('is_dark_mode', False)
-        see_spoilers = request.session.get('see_spoilers')
+        if request.session.get('see_spoilers') is None:
+            see_spoilers = False
+            request.session['see_spoilers'] = see_spoilers
+        else:
+            see_spoilers = request.session.get('see_spoilers')
 
         current_datetime = timezone.now()
         current_date = current_datetime.date()
         today = current_date.strftime('%d/%m/%Y')
 
+        # uncomment to get the data for the current segment that's being played
         # current_segment = Segment.objects.filter(
         #     first_match__lte=current_datetime,
         #     last_match__gte=current_datetime,
         # ).first()
+
+        # comment this out if current segment is being fetched dynamically
         current_segment = Segment.objects.get(id='owl2-2023-regular')
-        update_segment_database.delay(current_segment.id)
+        # update_segment_database.delay(current_segment.id)
         standings = current_segment.standings
+
+        # all_teams = Team.objects.all()
+        # for team in all_teams:
+        #     update.update_team_database(team.id)
 
         def get_teams_standings(region):
             region_standings = []
@@ -46,6 +58,7 @@ class HomeView(View):
 
             return region_standings
 
+        current_segment_name = current_segment.name
         standings_west = get_teams_standings('west')
         standings_east = get_teams_standings('east')
 
@@ -56,6 +69,7 @@ class HomeView(View):
                 'is_dark_mode': is_dark_mode,
                 'today': today,
                 'see_spoilers': see_spoilers,
+                'current_segment_name': current_segment_name,
                 'teams_west': standings_west,
                 'teams_east': standings_east,
             }
@@ -91,11 +105,20 @@ class TeamsView(View):
 class TeamDetailsView(View):
     def get(self, request, slug):
         is_dark_mode = request.session.get('is_dark_mode', False)
-        see_spoilers = request.session.get('see_spoilers')
+        see_spoilers = request.session.get('see_spoilers', False)
 
         try:
             selected_team = Team.objects.get(slug=slug)
-            update_team_database.delay(selected_team.id)
+            # update_team_database.delay(selected_team.id)
+            # current_year = datetime.today().year
+            # matches = Match.objects.filter(
+            #     teams__has_key=str(selected_team.id),
+            #     date__year=current_year,
+            # ).order_by('-date')
+            #
+            # team_matches_ids = [match.id for match in matches if match.winner_id is None]
+            # for match_id in team_matches_ids:
+            #     update_match_database.delay(match_id)
         except Team.DoesNotExist:
             return HttpResponseNotFound('Team not found')
 
@@ -108,7 +131,7 @@ class TeamDetailsView(View):
         # fetches all the matches for the selected team
         current_year = datetime.today().year
         matches = Match.objects.filter(
-            teams__has_key=selected_team.id,
+            teams__has_key=str(selected_team.id),
             date__year=current_year,
         ).order_by('-date')
 
@@ -136,14 +159,14 @@ class TeamDetailsView(View):
             time_played = int(hero_stats.get('timePlayed', 0))
 
             if time_played > 0:
-                heroes_played.append({'name': hero, 'time_played': time_played})
+                heroes_played.append({'name': hero.title(), 'time_played': time_played})
 
         return sorted(heroes_played, key=lambda x: x['time_played'], reverse=True)[:3]
 
 
 class PlayersView(View):
     def get(self, request):
-        is_dark_mode = request.session.get('is_dark_mode')
+        is_dark_mode = request.session.get('is_dark_mode', False)
         all_players = Player.objects.all().order_by('name')
 
         paginator = Paginator(all_players, 20)
@@ -163,9 +186,9 @@ class PlayersView(View):
 
 class PlayerDetailsView(View):
     def get(self, request, slug):
-        is_dark_mode = request.session.get('is_dark_mode')
+        is_dark_mode = request.session.get('is_dark_mode', False)
         selected_player = Player.objects.get(slug=slug)
-        update_player_database.delay(selected_player.id)
+        # update_player_database.delay(selected_player.id)
 
         awards = selected_player.awards.all().order_by('year')
 
@@ -216,7 +239,7 @@ class PlayerDetailsView(View):
 
 class ComparePlayersView(View):
     def get(self, request):
-        is_dark_mode = request.session.get('is_dark_mode')
+        is_dark_mode = request.session.get('is_dark_mode', False)
         all_players = Player.objects.all().order_by('name')
 
         # checks if there were previously selected players for comparison
@@ -316,11 +339,11 @@ class ComparePlayersView(View):
 
 class MatchDetailsView(View):
     def get(self, request, slug):
-        is_dark_mode = request.session.get('is_dark_mode')
-        see_spoilers = request.session.get('see_spoilers')
+        is_dark_mode = request.session.get('is_dark_mode', False)
+        see_spoilers = request.session.get('see_spoilers', False)
 
         selected_match = Match.objects.get(slug=slug)
-        update_match_database.delay(selected_match.id)
+        # update_match_database.delay(selected_match.id)
 
         teams_data = list(selected_match.teams.values())
         home_team = Team.objects.get(id=teams_data[0]['id'])
@@ -393,7 +416,7 @@ class MatchDetailsView(View):
 
 class GameView(View):
     def get(self, request, slug):
-        is_dark_mode = request.session.get('is_dark_mode')
+        is_dark_mode = request.session.get('is_dark_mode', False)
 
         return render(
             request,

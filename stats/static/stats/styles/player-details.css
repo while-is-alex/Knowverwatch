@@ -15,13 +15,42 @@
 	text-align: center;
 }
 
+@media (max-width: 768px) {
+	.main-content {
+		align-items: center;
+		background-color: rgba(255, 255, 255, 0.9);
+		background-size: contain;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		display: block;
+		flex-direction: column;
+		flex-wrap: wrap;
+		justify-content: center;
+		margin: -8px -10px;
+		overflow-x: auto;
+		padding-bottom: 40px;
+		padding-top: 5px;
+		text-align: center;
+		white-space: nowrap;
+	}
+}
+
 .dark-mode .main-content {
-	background-color: #333;
+	background-color: #333333;
 }
 
 .page-title {
 	font-size: 4rem;
 	margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+	.page-title {
+		clear: both;
+		font-size: 2.5rem;
+		text-align: center;
+		white-space: normal;
+		word-wrap: break-word;
+	}
 }
 
 .dark-mode .page-title {
@@ -37,10 +66,16 @@
 	padding: 20px 200px;
 }
 
+@media (max-width: 768px) {
+	.player-container {
+		padding: 20px 0;
+	}
+}
+
 .player-card {
 	background-color: #D7D5D5;
-	border-radius: 5px;
 	border: 7px solid #262626;
+	border-radius: 5px;
 	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
 	color: #212020;
 	height: 300px;
@@ -69,8 +104,8 @@
 
 .player-role {
 	background-color: #3F3D3C;
+	border: 1px solid #000000;
 	border-radius: 50%;
-	border: 1px solid #000;
 	bottom: 10px;
 	height: 15px;
 	padding: 3px;
@@ -84,8 +119,8 @@
 .player-headshot {
 	background-color: #1A1A1A;
 	background-size: contain;
-	border-radius: 5px 5px 0 0;
 	border: 2px solid #262626;
+	border-radius: 5px 5px 0 0;
 	display: block;
 	height: 130px;
 	margin: 20px auto 10px;
@@ -109,8 +144,8 @@
 
 .team-icon {
 	background-clip: padding-box;
-	border-radius: 5px;
 	border: 2px solid transparent;
+	border-radius: 5px;
 	bottom: 20px;
 	box-sizing: border-box;
 	cursor: pointer;
@@ -162,7 +197,7 @@
 }
 
 .award-year {
-	color: #777;
+	color: #777777;
 	font-size: 0.9rem;
 	font-weight: bold;
 	margin-top: 5px;
@@ -203,8 +238,8 @@
 	position: absolute;
 	right: 0;
 	top: 0;
-	transform-origin: bottom;
 	transform: scaleY(0);
+	transform-origin: bottom;
 	transition: transform 0.2s ease-in-out;
 	z-index: -1;
 }
@@ -258,8 +293,8 @@
 .hero-card {
 	align-items: center;
 	background-color: #D7D5D5;
-	border-radius: 8px;
 	border: 4px solid black;
+	border-radius: 8px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	display: flex;
 	flex-direction: column;
@@ -268,11 +303,23 @@
 	width: calc(35% - 15px);
 }
 
+@media (max-width: 768px) {
+	.heroes {
+		align-items: center;
+		flex-direction: column;
+	}
+
+	.hero-card {
+		margin: 20px auto;
+		width: 85%;
+	}
+}
+
 .hero-headshot {
 	background-color: #427ACE;
 	background-size: contain;
-	border-radius: 10%;
 	border: 2px solid #262626;
+	border-radius: 10%;
 	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 	height: 100px;
 	margin-bottom: 0;
@@ -323,6 +370,16 @@
 	width: calc(40% - 10px);
 }
 
+@media (max-width: 768px) {
+	.hero-stats {
+		transform: translateX(35px);
+	}
+
+	.hero-stat {
+		width: 60%;
+	}
+}
+
 .dark-mode .hero-stat {
 	background-color: #E0E0E0;
 }
@@ -337,9 +394,23 @@
 	width: calc(40% - 10px);
 }
 
+@media (max-width: 768px) {
+	.hero-stat.empty {
+		width: 60%;
+	}
+}
+
 .hero-stat-name {
 	font-size: 0.9rem;
 	margin: 5px 0;
+}
+
+@media (max-width: 768px) {
+	.hero-stat-name {
+		text-align: center;
+		white-space: normal;
+		word-wrap: break-word;
+	}
 }
 
 .hero-stat-value {
@@ -357,9 +428,9 @@
 
 .pagination-buttons button {
 	background-color: #8F8F8F;
-	border-radius: 5px;
 	border: none;
-	color: #FFF;
+	border-radius: 5px;
+	color: #FFFFFF;
 	cursor: pointer;
 	font-size: 1rem;
 	padding: 5px 10px;
@@ -368,7 +439,7 @@
 
 .pagination-buttons button.active {
 	background-color: #262626;
-	color: #FFF;
+	color: #FFFFFF;
 }
 
 .pagination-buttons button:hover {

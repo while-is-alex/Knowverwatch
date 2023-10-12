@@ -16,8 +16,27 @@
 	white-space: nowrap;
 }
 
+@media (max-width: 768px) {
+	.main-content {
+		align-items: center;
+		background-color: rgba(255, 255, 255, 0.9);
+		background-size: contain;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		margin: -8px -10px;
+		overflow-x: auto;
+		padding-bottom: 40px;
+		padding-top: 5px;
+		text-align: center;
+		white-space: nowrap;
+	}
+}
+
 .dark-mode .main-content {
-	background-color: #333;
+	background-color: #333333;
 }
 
 .segment-name {
@@ -40,6 +59,18 @@
 
 .dark-mode .match-date {
 	color: #B5B5B5;
+}
+
+@media (max-width: 768px) {
+	.segment-name {
+		font-size: 2.2rem;
+		margin-bottom: 40px;
+		pointer-events: none;
+	}
+
+	.match-date {
+		font-size: 1.5rem;
+	}
 }
 
 .teams-info {
@@ -65,8 +96,8 @@
 }
 
 .team-logo:hover {
-	transform: scale(1.10);
 	filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.6));
+	transform: scale(1.10);
 }
 
 .home-team-logo {
@@ -75,6 +106,21 @@
 
 .away-team-logo {
 	margin-left: 50px;
+}
+
+@media (max-width: 768px) {
+	.team-logo {
+		height: 80px;
+		width: 80px;
+	}
+
+	.home-team-logo {
+		margin-right: 0px;
+	}
+
+	.away-team-logo {
+		margin-left: 0px;
+	}
 }
 
 .score {
@@ -93,8 +139,8 @@
 .away-team-score-container {
 	align-items: center;
 	background-color: #F2F2F2;
-	border-radius: 5px;
 	border: 2px solid #2A2A2A;
+	border-radius: 5px;
 	color: #A0A0A0;
 	display: flex;
 	font-size: 1.2rem;
@@ -118,11 +164,33 @@
 	font-weight: bold;
 }
 
+@media (max-width: 768px) {
+	.home-team-score-container,
+	.away-team-score-container {
+		height: 20px;
+		margin: 0;
+		padding: 10px 10px 10px;
+		width: 20px;
+	}
+
+	.home-team-score,
+	.away-team-score {
+		font-size: 1.7rem;
+	}
+}
+
 .score-vs {
 	color: #777777;
 	font-size: 2rem;
 	margin: 0 20px;
 	pointer-events: none;
+}
+
+@media (max-width: 768px) {
+	.score-vs {
+		font-size: 1.5rem;
+		margin: 0 10px;
+	}
 }
 
 .spoilers-link {
@@ -147,8 +215,8 @@
 
 .watch-button {
 	background-color: #DE0101;
-	border-radius: 5px;
 	border: none;
+	border-radius: 5px;
 	color: #FFFFFF;
 	display: inline-block;
 	font-size: 1rem;
@@ -156,6 +224,13 @@
 	padding: 10px 20px;
 	text-decoration: none;
 	transition: background-color 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+	.watch-button {
+		font-size: 0.8rem;
+		margin-top: 60px;
+	}
 }
 
 .watch-button:hover {
@@ -253,8 +328,8 @@
 .game-away-team-score-container {
 	align-items: center;
 	background-color: #F2F2F2;
-	border-radius: 5px;
 	border: 1px solid #2A2A2A;
+	border-radius: 5px;
 	color: #A0A0A0;
 	display: flex;
 	font-size: 1.2rem;
@@ -308,6 +383,75 @@
 	color: #FFFFFF;
 	font-size: 1.2rem;
 	margin: 0;
+}
+
+@media (max-width: 768px) {
+	.game-card {
+		align-items: center;
+		background-color: #FFFFFF;
+		border-radius: 8px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		display: flex;
+		height: 70px;
+		justify-content: space-between;
+		margin: 0 0 10px;
+		max-width: 140%;
+		min-width: 60%;
+		overflow: hidden;
+		transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+		width: 90%;
+	}
+
+	.game-home-team,
+	.game-away-team {
+		padding: 20px 10px 20px 10px;
+	}
+
+	.game-home-team-icon,
+	.game-away-team-icon {
+		height: 50px;
+		margin: 5px 5px 5px;
+		position: relative;
+		width: 50px;
+	}
+
+	.game-home-team-name,
+	.game-away-team-name {
+		display: none;
+	}
+
+	.game-home-team-score-container,
+	.game-away-team-score-container {
+		border-radius: 5px;
+		font-size: 1rem;
+		height: 30px;
+		margin: 0;
+		width: 30px;
+	}
+
+	.game-home-team-score,
+	.game-away-team-score {
+		font-size: 1.6rem;
+	}
+
+	.game-map {
+		height: 250px;
+		width: 120px;
+	}
+
+	.game-map img {
+		max-height: 200%;
+		max-width: 200%;
+		object-fit: contain;
+	}
+
+	.overlay {
+		display: none;
+	}
+
+	.overlay-text {
+		display: none;
+	}
 }
 
 .boston-filter {
@@ -366,6 +510,12 @@
 	width: 100%;
 }
 
+@media (max-width: 768px) {
+	.players-container {
+		padding: 20px 0;
+	}
+}
+
 .home-team-players,
 .away-team-players {
 	display: flex;
@@ -375,6 +525,14 @@
 	width: calc(50% - 20px);
 }
 
+@media (max-width: 768px) {
+	.home-team-players,
+	.away-team-players {
+		gap: 5px;
+		width: 50%;
+	}
+}
+
 .away-team-players {
 	align-items: flex-end;
 	flex-direction: row-reverse;
@@ -382,8 +540,8 @@
 
 .player-card {
 	background-color: #D7D5D5;
-	border-radius: 5px;
 	border: 7px solid #262626;
+	border-radius: 5px;
 	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
 	color: #212020;
 	font-size: 0.8em;
@@ -397,6 +555,13 @@
 	text-decoration: none;
 	transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 	width: 140px;
+}
+
+@media (max-width: 768px) {
+	.player-card {
+		height: 190px;
+		width: 130px;
+	}
 }
 
 .player-card:hover {
@@ -420,8 +585,8 @@
 
 .player-role {
 	background-color: #3F3D3C;
+	border: 1px solid #000000;
 	border-radius: 50%;
-	border: 1px solid #000;
 	bottom: 10px;
 	height: 10px;
 	padding: 3px;
@@ -434,8 +599,8 @@
 .player-headshot {
 	background-color: #252525;
 	background-size: contain;
-	border-radius: 5px 5px 0 0;
 	border: 2px solid #D5D4D4;
+	border-radius: 5px 5px 0 0;
 	display: block;
 	height: 80px;
 	margin: 20px auto 3px;
@@ -485,8 +650,8 @@
 	transition: all 0.2s ease-in-out;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
 	.heroes-icons {
-		max-width: 20px;
+		max-width: 35px;
 	}
 }

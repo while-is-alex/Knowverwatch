@@ -15,7 +15,26 @@
 }
 
 .dark-mode .main-content {
-	background-color: #333;
+	background-color: #333333;
+}
+
+@media (max-width: 768px) {
+	.main-content {
+		align-items: center;
+		background-color: rgba(255, 255, 255, 0.9);
+		background-size: contain;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		margin: -8px -10px;
+		overflow-x: auto;
+		padding-bottom: 40px;
+		padding-top: 5px;
+		text-align: center;
+		white-space: nowrap;
+	}
 }
 
 .page-title {
@@ -41,8 +60,8 @@
 .player-card {
 	align-items: center;
 	background-color: #D7D5D5;
-	border-radius: 5px;
 	border: 7px solid #151515;
+	border-radius: 5px;
 	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
 	color: #212020;
 	display: flex;
@@ -73,8 +92,8 @@
 
 .player-role {
 	background-color: #3F3D3C;
+	border: 1px solid #000000;
 	border-radius: 50%;
-	border: 1px solid #000;
 	bottom: 10px;
 	height: 15px;
 	padding: 3px;
@@ -87,8 +106,8 @@
 .player-headshot {
 	background-color: #1F1F1F;
 	background-size: contain;
-	border-radius: 5px 5px 0 0;
 	border: 2px solid #262626;
+	border-radius: 5px 5px 0 0;
 	display: block;
 	height: 130px;
 	margin: 20px auto 0;
@@ -138,8 +157,8 @@
 
 .pagination a {
 	background-color: #F0F0F0;
+	border: 1px solid #CCCCCC;
 	border-radius: 5px;
-	border: 1px solid #CCC;
 	color: #212020;
 	margin: 0 5px;
 	padding: 8px 12px;
@@ -152,9 +171,9 @@
 
 .pagination .current {
 	background-color: #FAB358;
-	border-radius: 5px;
 	border: 1px solid #FAB358;
-	color: #FFF;
+	border-radius: 5px;
+	color: #FFFFFF;
 	margin: 0 5px;
 	padding: 8px 12px;
 }

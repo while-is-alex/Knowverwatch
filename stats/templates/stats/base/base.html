@@ -10,12 +10,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@100;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     {% block css_styles %}
     {% endblock %}
 </head>
 
-<body>
+<body data-dark-mode="{{ request.session.is_dark_mode|default_if_none:'false'|lower|default:'false' }}"
+      data-toggle-mode-url="{% url 'toggle-mode' %}">
 
     <div class="background-container" style="background-image: url({% static 'stats/images/other/background.png' %});">
         <div class="background-center">
@@ -26,7 +29,7 @@
     <header id="main-navigation">
         <a href="{% url 'home-page' %}" id="main-logo"><img src="{% static 'stats/images/other/owl-logo.png' %}" alt="Home Page"></a>
 
-        <nav>
+        <nav id="navigation-items">
             <a href="{% url 'teams-page' %}" {% if request.path == '/teams' %}class="current"{% endif %}>Teams</a>
             <a href="{% url 'players-page' %}" {% if request.path == '/players' %}class="current"{% endif %}>Players</a>
             <a href="{% url 'compare-players' %}" {% if request.path == '/compare' %}class="current"{% endif %}>Compare</a>
@@ -37,6 +40,11 @@
                     <label>
                         <input type="text" placeholder="Find player or team" name="search">
                     </label>
+                    <button type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="search-icon" viewBox="0 0 16 16">
+                          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                        </svg>
+                    </button>
                     {% if messages %}
                         {% for message in messages %}
                             <div class="search-message">
@@ -44,10 +52,12 @@
                             </div>
                         {% endfor %}
                     {% endif %}
-                    <button type="submit">Search</button>
                 </form>
             </div>
         </nav>
+        <a href="javascript:void(0);" class="hamburger-menu" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
     </header>
 
     <div class="content-container">
@@ -66,7 +76,7 @@
 
     <footer>
         <ul class="footer-links">
-            <li><a href="https://www.ltinkedin.com/in/alexandre-rodrigues-557185119" target="_blank">LinkedIn</a></li>
+            <li><a href="https://www.linkedin.com/in/alexandre-rodrigues-557185119" target="_blank">LinkedIn</a></li>
             <li><a href="mailto:alexandre.dev.work@gmail.com">Contact Me</a></li>
             <li><a href="https://github.com/while-is-alex" target="_blank">GitHub</a></li>
         </ul>
@@ -75,46 +85,8 @@
         </div>
     </footer>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var modeToggle = document.getElementById("modeToggle");
-
-        function setInitialDarkMode() {
-          var darkMode = {{ request.session.is_dark_mode|default_if_none:"false"|lower }};
-          modeToggle.checked = darkMode;
-
-          if (darkMode) {
-            document.body.classList.add("dark-mode");
-          }
-        }
-
-        modeToggle.addEventListener("change", function () {
-          var darkMode = modeToggle.checked;
-
-          fetch("{% url 'toggle-mode' %}", {
-            method: 'POST',
-            headers: {
-              'X-CSRFToken': '{{ csrf_token }}',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ dark_mode: darkMode }),
-          })
-            .then(response => response.json())
-            .then(data => {
-              if (darkMode) {
-                document.body.classList.add("dark-mode");
-              } else {
-                document.body.classList.remove("dark-mode");
-              }
-              console.log(data);
-            })
-            .catch(error => console.error(error));
-        });
-
-        setInitialDarkMode();
-
-      });
-    </script>
+    <script src="{% static 'stats/js/dark_mode.js' %}"></script>
+    <script src="{% static 'stats/js/hamburger_menu.js' %}"></script>
 
 </body>
 </html>

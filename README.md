@@ -57,13 +57,13 @@ To run this project on AWS, you will need to provide the following environmental
 ## Preview
 The website supports a light mode as well, but all preview images are in dark mode.
 
-![home-page.png](https://ibb.co/mbPPgZ5)
-![teams.png](https://ibb.co/JrS1qQC)
-![team-details-page.png](https://ibb.co/SPLJhMY)
-![past-matches.png](https://ibb.co/Pzf6QvQ)
-![match-details.png](https://ibb.co/FDSpz7v)
-![played-in-match.png](https://ibb.co/BN1txkf)
-![players.png](https://ibb.co/CnC2XKX)
-![player-details-page.png](https://ibb.co/bzbW60R)
-![player-hero-stats.png](https://ibb.co/S3qpqHr)
-![compare-players.png](https://ibb.co/mtJKHm5)
+![home-page.png](https://i.ibb.co/MZJJQwk/standings.png)
+![teams.png](https://i.ibb.co/ssXfCHt/teams.png)
+![team-details-page.png](https://i.ibb.co/5672NSp/team-page.png)
+![past-matches.png](https://i.ibb.co/5xfRFgF/past-matches.png)
+![match-details.png](https://i.ibb.co/LZLK1pw/match-details.png)
+![played-in-match.png](https://i.ibb.co/L5G8WK0/played-in-match.png)
+![players.png](https://i.ibb.co/brwJy5y/players.png)
+![player-details-page.png](https://i.ibb.co/nzPgwG8/player-page.png)
+![player-hero-stats.png](https://i.ibb.co/G5gjgGT/hero-stats.png)
+![compare-players.png](https://i.ibb.co/d6BvQS4/compare-players.png)

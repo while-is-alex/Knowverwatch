@@ -1,3 +1,15 @@
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![Django](https://img.shields.io/badge/django-%23092E20?style=for-the-badge&logo=django&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/postgresql-%234169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Amazon Elastic Beanstalk](https://img.shields.io/badge/amazonelasticbeanstalk-%23232F3E?style=for-the-badge&logo=amazonaws&logoColor=white)
+![Amazon S3](https://img.shields.io/badge/amazons3-%23569A31?style=for-the-badge&logo=amazons3&logoColor=white)
+![Amazon RDS](https://img.shields.io/badge/amazonrds-%23527FFF?style=for-the-badge&logo=amazonrds&logoColor=white)
+![Redis](https://img.shields.io/badge/redis-%23DC382D?style=for-the-badge&logo=redis&logoColor=white)
+![Celery](https://img.shields.io/badge/celery-%2337814A?style=for-the-badge&logo=celery&logoColor=white)
+
 # Knowverwatch
 Knowverwatch is a website for Overwatch League viewers to interact with the league's API data in a visual, interactive experience.
 

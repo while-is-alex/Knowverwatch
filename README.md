@@ -4,7 +4,7 @@
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 ![Django](https://img.shields.io/badge/django-%23092E20?style=for-the-badge&logo=django&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/postgresql-%234169E1?style=for-the-badge&logo=postgresql&logoColor=white)
-![Amazon Elastic Beanstalk](https://img.shields.io/badge/amazonelasticbeanstalk-%23232F3E?style=for-the-badge&logo=amazonaws&logoColor=white)
+![Amazon Elastic Beanstalk](https://img.shields.io/badge/elasticbeanstalk-%23232F3E?style=for-the-badge&logo=amazonaws&logoColor=white)
 ![Amazon S3](https://img.shields.io/badge/amazons3-%23569A31?style=for-the-badge&logo=amazons3&logoColor=white)
 ![Amazon RDS](https://img.shields.io/badge/amazonrds-%23527FFF?style=for-the-badge&logo=amazonrds&logoColor=white)
 ![Redis](https://img.shields.io/badge/redis-%23DC382D?style=for-the-badge&logo=redis&logoColor=white)

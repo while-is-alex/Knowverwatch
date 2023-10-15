@@ -52,7 +52,7 @@ To run this project on AWS, you will need to provide the following environmental
 + Compare players page: Select players and heroes to compare player's statistics.
 
 ### Technical features
-+ Requests to Overwatch League's API simplified through OOP.
++ Requests to Overwatch League's API simplified through Object Oriented Programming.
 + Asynchronous creation and update of the database using Redis as the message broker and Celery as the worker.
 + Backend written in Python to dynamically fetch from the database the requested data.
 + Using Django Template Language, generates each individual page from a single HTML document.

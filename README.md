@@ -6,9 +6,10 @@
 ![PostgreSQL](https://img.shields.io/badge/postgresql-%234169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Redis](https://img.shields.io/badge/redis-%23DC382D?style=for-the-badge&logo=redis&logoColor=white)
 ![Celery](https://img.shields.io/badge/celery-%2337814A?style=for-the-badge&logo=celery&logoColor=white)
-![Amazon Elastic Beanstalk](https://img.shields.io/badge/elasticbeanstalk-%23232F3E?style=for-the-badge&logo=amazonaws&logoColor=white)
+![Amazon AWS](https://img.shields.io/badge/amazonaws-%23232F3E?style=for-the-badge&logo=amazonaws)
 ![Amazon S3](https://img.shields.io/badge/amazons3-%23569A31?style=for-the-badge&logo=amazons3&logoColor=white)
 ![Amazon RDS](https://img.shields.io/badge/amazonrds-%23527FFF?style=for-the-badge&logo=amazonrds&logoColor=white)
+![Amazon Elastic Beanstalk](https://img.shields.io/badge/elasticbeanstalk-%23232F3E?style=for-the-badge&logo=amazonaws&logoColor=white)
 
 # Knowverwatch
 Knowverwatch is a website for Overwatch League viewers to interact with the league's API data in a visual, interactive experience.

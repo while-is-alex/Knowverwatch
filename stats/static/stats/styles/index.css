@@ -69,6 +69,10 @@
 	font-size: 1.1rem;
 	font-weight: bold;
 	margin-top: 10px;
+	text-align: center;
+	white-space: normal;
+	width: 50%;
+	word-wrap: break-word;
 }
 
 .dark-mode .page-info {
@@ -77,11 +81,12 @@
 
 @media (max-width: 768px) {
 	.page-info {
-		font-size: 1.1rem;
+		font-size: 1rem;
 		font-weight: bold;
 		margin-top: 10px;
-		text-align: center;
+		text-align: justify;
 		white-space: normal;
+		width: 95%;
 		word-wrap: break-word;
 	}
 }
@@ -95,7 +100,7 @@
 	background-color: #F7F7F7;
 	border: 1px solid #DDDDDD;
 	margin-bottom: 20px;
-	margin-top: 60px;
+	margin-top: 20px;
 	padding: 10px 20px;
 	text-align: center;
 }

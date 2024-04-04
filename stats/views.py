@@ -153,7 +153,8 @@ class TeamDetailsView(View):
         )
 
     def get_team_matches(self, team):
-        current_year = datetime.today().year
+        # current_year = datetime.today().year
+        current_year = datetime(2023, 12, 12).year
 
         matches = Match.objects.filter(
             teams__has_key=team.id,
@@ -167,6 +168,7 @@ class TeamDetailsView(View):
 
         matches_list = [{'home': team_values[0], 'away': team_values[1], 'date': match.date, 'slug': match.slug}
                         for match in matches for team_values in [list(match.teams.values())]]
+
         return matches_list
 
     def get_top3_heroes(self, player):

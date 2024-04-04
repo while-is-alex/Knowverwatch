@@ -157,7 +157,7 @@ class TeamDetailsView(View):
         current_year = datetime(2023, 12, 12).year
 
         matches = Match.objects.filter(
-            teams__has_key=team.id,
+            teams__has_key=str(team.id),
             date__year=current_year,
         ).order_by('-date')
 
